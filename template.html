@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{player.name}} — {{player.class}}</title>
+  <meta name="description" content="{{meta.description}}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="script.js"></script>
+</head>
+<body>
+
+  <!-- @optional:player.resumeUrl -->
+  <a class="skip-quest" href="{{player.resumeUrl}}">Skip the quest — plain resume</a>
+  <!-- /@optional:player.resumeUrl -->
+
+  <header class="title" id="start">
+    <div class="panel panel--title">
+      <svg class="title__art" viewBox="0 0 32 24" width="128" height="96" role="img" aria-label="A pixel-art tavern with a red roof and warmly lit windows" shape-rendering="crispEdges">
+        <rect class="px-ink2"   x="20" y="0"  width="2" height="1"/>
+        <rect class="px-rule"   x="18" y="1"  width="5" height="1"/>
+        <rect class="px-hearth" x="13" y="2"  width="6" height="1"/>
+        <rect class="px-rule"   x="19" y="2"  width="3" height="3"/>
+        <rect class="px-hearth" x="11" y="3"  width="10" height="1"/>
+        <rect class="px-hearth" x="9"  y="4"  width="14" height="1"/>
+        <rect class="px-hearth" x="7"  y="5"  width="18" height="1"/>
+        <rect class="px-hearth" x="5"  y="6"  width="22" height="2"/>
+        <rect class="px-ink2"   x="7"  y="8"  width="18" height="9"/>
+        <rect class="px-rule"   x="7"  y="8"  width="18" height="1"/>
+        <rect class="px-rule"   x="7"  y="8"  width="1" height="9"/>
+        <rect class="px-rule"   x="24" y="8"  width="1" height="9"/>
+        <rect class="px-accent" x="10" y="11" width="3" height="3"/>
+        <rect class="px-accent" x="19" y="11" width="3" height="3"/>
+        <rect class="px-rule"   x="11" y="11" width="1" height="3"/>
+        <rect class="px-rule"   x="20" y="11" width="1" height="3"/>
+        <rect class="px-rule"   x="14" y="11" width="4" height="6"/>
+        <rect class="px-paper"  x="15" y="12" width="2" height="5"/>
+        <rect class="px-accent" x="16" y="14" width="1" height="1"/>
+        <rect class="px-rule"   x="7"  y="16" width="18" height="1"/>
+        <rect class="px-rule"   x="5"  y="17" width="22" height="2"/>
+      </svg>
+      <p class="title__over">Player profile</p>
+      <h1 class="title__name">{{player.name}}</h1>
+      <p class="title__class">{{player.class}}</p>
+      <!-- @optional:player.location -->
+      <p class="title__loc">{{player.location}}</p>
+      <!-- /@optional:player.location -->
+      <!-- @optional:player.tagline -->
+      <p class="title__tagline">{{player.tagline}}</p>
+      <!-- /@optional:player.tagline -->
+    </div>
+  </header>
+
+  <main>
+
+    <!-- @section:stats -->
+    <section class="block" id="stats" aria-labelledby="stats-h">
+      <h2 class="block__h" id="stats-h">Party stats</h2>
+      <div class="panel">
+        <ul class="stat-list">
+          <!-- @items:stats -->
+        </ul>
+      </div>
+    </section>
+    <!-- /@section:stats -->
+
+    <!-- @section:quests -->
+    <section class="block" id="quests" aria-labelledby="quests-h">
+      <h2 class="block__h" id="quests-h">Quest log</h2>
+      <ul class="quest-list">
+        <!-- @items:quests -->
+      </ul>
+    </section>
+    <!-- /@section:quests -->
+
+    <!-- @section:worldMap -->
+    <section class="block" id="map" aria-labelledby="map-h">
+      <h2 class="block__h" id="map-h">World map</h2>
+      <div class="panel">
+        <ol class="map">
+          <!-- @items:worldMap -->
+        </ol>
+      </div>
+    </section>
+    <!-- /@section:worldMap -->
+
+    <!-- @section:currentQuest -->
+    <section class="block" id="current" aria-labelledby="current-h">
+      <h2 class="block__h" id="current-h">Current quest</h2>
+      <!-- @slot:currentQuest -->
+    </section>
+    <!-- /@section:currentQuest -->
+
+    <!-- @section:languages -->
+    <section class="block" id="languages" aria-labelledby="languages-h">
+      <h2 class="block__h" id="languages-h">Languages</h2>
+      <div class="panel">
+        <ul class="lang-list">
+          <!-- @items:languages -->
+        </ul>
+      </div>
+    </section>
+    <!-- /@section:languages -->
+
+  </main>
+
+  <footer class="footer" id="contact">
+    <h2 class="block__h">Signboard</h2>
+
+    <!-- @section:contact -->
+    <div class="panel panel--sign">
+      <ul class="sign">
+        <!-- @items:contact -->
+      </ul>
+    </div>
+    <!-- /@section:contact -->
+
+    <p class="colophon">Hand-written HTML &amp; CSS · one Node build step · no framework.<br>
+    © {{year}} {{player.name}} — all rights reserved.</p>
+  </footer>
+
+</body>
+</html>

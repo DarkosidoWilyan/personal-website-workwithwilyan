@@ -1,0 +1,98 @@
+{
+  "player": {
+    "name": "Mohammad Wildan Yanuar",
+    "class": "Product Manager",
+    "tagline": "I build and ship fintech products at ALAMI. Started as a backend developer, moved to deciding what gets built.",
+    "location": "Jakarta, Indonesia",
+    "resumeUrl": "/resume.pdf",
+    "available": true,
+    "availabilityNote": "Jakarta — hybrid, remote, or on-site"
+  },
+  "stats": [
+    { "skill": "Product Management", "level": 4, "note": "4+ yrs, fintech / lending" },
+    { "skill": "Regulatory Compliance", "level": 4, "note": "OJK — lending, AML, onboarding" },
+    { "skill": "Project Management", "level": 4, "note": "" },
+    { "skill": "Requirements & UAT", "level": 4, "note": "Core banking, AML systems" },
+    { "skill": "Communication", "level": 4, "note": "" },
+    { "skill": "Leadership", "level": 3, "note": "" },
+    { "skill": "Benchmarking", "level": 3, "note": "" }
+  ],
+  "quests": [
+    {
+      "id": "accounting-migration",
+      "title": "The Ledger Migration",
+      "status": "complete",
+      "era": "ALAMI · Associate Product Manager",
+      "objective": "Migrate the company's entire Accounting System — data transfer through to user adoption.",
+      "party": "Led end-to-end",
+      "loot": ["Accounting Systems", "Data Migration", "Change Management"],
+      "xp": "~IDR 1.6 billion saved in annual operating cost",
+      "link": ""
+    },
+    {
+      "id": "core-banking",
+      "title": "The Core Banking Campaign",
+      "status": "complete",
+      "era": "ALAMI · Associate Product Manager",
+      "objective": "Support a strategic Core Banking migration by defining requirements for the supporting AML system and running UAT.",
+      "party": "Supporting role on a strategic migration",
+      "loot": ["AML", "Requirements", "UAT"],
+      "xp": "~IDR 5.8 billion saved annually (programme-level)",
+      "link": ""
+    },
+    {
+      "id": "bcf-launch",
+      "title": "Business Capital Financing",
+      "status": "complete",
+      "era": "ALAMI · Associate Product Manager",
+      "objective": "Own technical development and launch of a new financing product from zero.",
+      "party": "Product owner",
+      "loot": ["0-to-1 Product", "Financing", "Go-to-Market"],
+      "xp": "IDR 12.9 billion financed and IDR 307.8 million in fees in the initial phase",
+      "link": ""
+    },
+    {
+      "id": "ojk-compliance",
+      "title": "The Compliance Gap",
+      "status": "complete",
+      "era": "ALAMI · Associate Product Manager",
+      "objective": "Close critical OJK compliance gaps — shipped a Unique Loan ID system for partner exposure limits and a mandatory Committee Approval Flow aligned to internal SOPs.",
+      "party": "Led",
+      "loot": ["OJK Compliance", "Risk", "Internal Tooling"],
+      "xp": "",
+      "link": ""
+    },
+    {
+      "id": "onboarding-redesign",
+      "title": "Onboarding Under New Regulation",
+      "status": "complete",
+      "era": "ALAMI · Associate Product Manager",
+      "objective": "Redesign the customer Onboarding Form to meet new OJK regulations without halting financing operations.",
+      "party": "Led",
+      "loot": ["Onboarding", "OJK Compliance", "UX"],
+      "xp": "Zero business disruption during the transition",
+      "link": ""
+    }
+  ],
+  "worldMap": [
+    { "year": "2017", "title": "Information Systems, University of Indonesia", "note": "Sarjana — through Sep 2021" },
+    { "year": "2017", "title": "Staff, FUKI Fasilkom UI", "note": "Syiar department — first taste of shipping to an audience" },
+    { "year": "2020", "title": "Backend Developer Intern, PT Inovasi Digital Garuda Wirakarsa", "note": "Built the foundation API for an accounting system" },
+    { "year": "2021", "title": "Product Manager Intern, ALAMI", "note": "The switch from building to deciding" },
+    { "year": "2022", "title": "Associate Product Manager, ALAMI", "note": "" },
+    { "year": "2026", "title": "Product Manager, ALAMI", "note": "" }
+  ],
+  "currentQuest": {
+    "title": "Creating Financial Tracker for Couple",
+    "note": "One of the main factor of short lived relationship is about finance, alignment between each other is the key here."
+  },
+  "languages": [
+    { "name": "Indonesian", "level": "Native" },
+    { "name": "English", "level": "Professional working" }
+  ],
+  "contact": [
+    { "label": "Email", "url": "mailto:workwithwilyan@gmail.com" },
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/mwildanyanuar/" },
+    { "label": "GitHub", "url": "https://github.com/DarkosidoWilyan" }
+  ]
+}
