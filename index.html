@@ -10,381 +10,43 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="style.css">
   <script type="module" src="script.js"></script>
+  <script id="quest-data" type="application/json">[{"id":"accounting-migration","title":"The Accounting Migration","status":"complete","era":"ALAMI · Associate Product Manager","situation":"Oracle's accounting platform cost the company IDR 2–5 billion a year — finance needed a cheaper system without breaking a live, audited ledger.","task":"Migrate every financial record from Oracle to Jurnal before the Oracle contract expired, with full data integrity and zero disruption to daily accounting.","action":"Mapped every Oracle use case to its Jurnal equivalent, extracted and backed up the full historical dataset, ran weekly sync meetings to unblock engineering, verified migrated records line by line, wrote the integration requirements between the internal MINA system and Jurnal, and trained the finance team before cutover.","result":"100% of journal vouchers migrated and verified, the MINA–Jurnal integration shipped cleanly, and the team was fully live on Jurnal a month before the Oracle contract ended.","party":"Led end-to-end","loot":["Accounting Systems","Data Migration","Change Management"],"xp":"~IDR 1.6 billion saved in annual operating cost","link":""},{"id":"core-banking","title":"The Core Banking Campaign","status":"complete","era":"ALAMI · Associate Product Manager","objective":"Support a strategic Core Banking migration by defining requirements for the supporting AML system and running UAT.","party":"Supporting role on a strategic migration","loot":["AML","Requirements","UAT"],"xp":"~IDR 5.8 billion saved annually (programme-level)","link":""},{"id":"bcf-launch","title":"Business Capital Financing","status":"complete","era":"ALAMI · Associate Product Manager","objective":"Own technical development and launch of a new financing product from zero.","party":"Product owner","loot":["0-to-1 Product","Financing","Go-to-Market"],"xp":"IDR 12.9 billion financed and IDR 307.8 million in fees in the initial phase","link":""},{"id":"agreement-update","title":"Updating Agreement Document","status":"complete","era":"ALAMI · Associate Product Manager","situation":"ALAMI's Funder umbrella agreement needed updating — new consumer data protection clauses, updated bondholder meeting terms, and other regulatory changes all had to be folded in.","task":"Get every Funder onto the new umbrella agreement without breaking their existing one or blocking anyone from signing.","action":"Wrote the requirements for the new agreement content and how Funders would access and sign it, ran a cost analysis for the rollout, mapped the downside risks and who was authorized to sign, released the new agreement in staged batches to limit blast radius, and built the Funder-facing communication explaining what changed and why they needed to re-sign.","result":"New Funders are fully on the updated agreement; most existing Funders are still on the old one while the team weighs trimming the content further to cut the cost of repeated signature rounds.","party":"Led","loot":["Umbrella Agreement","Requirements","Funder Communications"],"xp":"","link":""},{"id":"onboarding-redesign","title":"Onboarding Under New Regulation","status":"complete","era":"ALAMI · Associate Product Manager","situation":"ALAMI had rolled out a new internal credit score, but Funders — who make the final financing call — hadn't been told what it meant for their exposure.","task":"Design and ship a notification flow that told Funders about the new credit scoring model and what would change for them.","action":"Wrote the requirements for how the new credit score would surface to Funders, tested the flow engineering built against it, and drafted the Funder-facing email announcing the change.","result":"Funders got clear, timely information about the credit score change, which kept complaints about it to a minimum.","party":"Led","loot":["Credit Scoring","Requirements","Funder Communications"],"xp":"Minimal Funder complaints after the change shipped","link":""}]</script>
 </head>
 <body>
 
-  
-  <a class="skip-quest" href="/resume.pdf">Skip the quest — plain resume</a>
-  
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
-  <header class="title" id="start">
-    <div class="panel panel--title">
-      <svg class="title__art" viewBox="0 0 32 24" width="128" height="96" role="img" aria-label="A pixel-art tavern with a red roof and warmly lit windows" shape-rendering="crispEdges">
-        <rect class="px-ink2"   x="20" y="0"  width="2" height="1"/>
-        <rect class="px-rule"   x="18" y="1"  width="5" height="1"/>
-        <rect class="px-hearth" x="13" y="2"  width="6" height="1"/>
-        <rect class="px-rule"   x="19" y="2"  width="3" height="3"/>
-        <rect class="px-hearth" x="11" y="3"  width="10" height="1"/>
-        <rect class="px-hearth" x="9"  y="4"  width="14" height="1"/>
-        <rect class="px-hearth" x="7"  y="5"  width="18" height="1"/>
-        <rect class="px-hearth" x="5"  y="6"  width="22" height="2"/>
-        <rect class="px-ink2"   x="7"  y="8"  width="18" height="9"/>
-        <rect class="px-rule"   x="7"  y="8"  width="18" height="1"/>
-        <rect class="px-rule"   x="7"  y="8"  width="1" height="9"/>
-        <rect class="px-rule"   x="24" y="8"  width="1" height="9"/>
-        <rect class="px-accent" x="10" y="11" width="3" height="3"/>
-        <rect class="px-accent" x="19" y="11" width="3" height="3"/>
-        <rect class="px-rule"   x="11" y="11" width="1" height="3"/>
-        <rect class="px-rule"   x="20" y="11" width="1" height="3"/>
-        <rect class="px-rule"   x="14" y="11" width="4" height="6"/>
-        <rect class="px-paper"  x="15" y="12" width="2" height="5"/>
-        <rect class="px-accent" x="16" y="14" width="1" height="1"/>
-        <rect class="px-rule"   x="7"  y="16" width="18" height="1"/>
-        <rect class="px-rule"   x="5"  y="17" width="22" height="2"/>
-      </svg>
-      <p class="title__over">Player profile</p>
-      <h1 class="title__name">Mohammad Wildan Yanuar</h1>
-      <p class="title__class">Product Manager</p>
+  <div class="scroll-area">
+
+    <header class="header">
+      <div class="panel panel--header header__inner">
+        <canvas class="header__avatar" id="avatar-canvas" width="104" height="104" aria-hidden="true"></canvas>
+        <div class="header__copy">
+          <div class="header__top">
+            <h1 class="header__name">Mohammad Wildan Yanuar</h1>
+            <span class="header__class">Product Manager</span>
+          </div>
+          
+          <p class="header__tagline">I build and ship fintech products at ALAMI. Started as a backend developer, moved to deciding what gets built.</p>
+          
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="quest-menu" id="quest-menu">
+        <h2 class="quest-menu__title">Quest Log</h2>
+        <ul class="quest-menu__list" id="menu-list"></ul>
+      </section>
+    </main>
+
+    <footer class="footer" id="contact">
+      <h2 class="block__h">Signboard</h2>
+
       
-      <p class="title__loc">Jakarta, Indonesia</p>
-      
-      
-      <p class="title__tagline">I build and ship fintech products at ALAMI. Started as a backend developer, moved to deciding what gets built.</p>
-      
-    </div>
-  </header>
-
-  <main>
-
-    
-    <section class="block" id="stats" aria-labelledby="stats-h">
-      <h2 class="block__h" id="stats-h">Party stats</h2>
-      <div class="panel">
-        <ul class="stat-list">
-              <li class="stat">
-      <div class="stat__row">
-        <span class="stat__name">Product Management</span>
-        <span class="pips" role="img" aria-label="Level 4 of 5">
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip" aria-hidden="true"></span>
-        </span>
-      </div>
-      <p class="stat__note">4+ yrs, fintech / lending</p>
-    </li>
-    <li class="stat">
-      <div class="stat__row">
-        <span class="stat__name">Regulatory Compliance</span>
-        <span class="pips" role="img" aria-label="Level 4 of 5">
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip" aria-hidden="true"></span>
-        </span>
-      </div>
-      <p class="stat__note">OJK — lending, AML, onboarding</p>
-    </li>
-    <li class="stat">
-      <div class="stat__row">
-        <span class="stat__name">Project Management</span>
-        <span class="pips" role="img" aria-label="Level 4 of 5">
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip" aria-hidden="true"></span>
-        </span>
-      </div>
-    </li>
-    <li class="stat">
-      <div class="stat__row">
-        <span class="stat__name">Requirements &amp; UAT</span>
-        <span class="pips" role="img" aria-label="Level 4 of 5">
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip" aria-hidden="true"></span>
-        </span>
-      </div>
-      <p class="stat__note">Core banking, AML systems</p>
-    </li>
-    <li class="stat">
-      <div class="stat__row">
-        <span class="stat__name">Communication</span>
-        <span class="pips" role="img" aria-label="Level 4 of 5">
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip" aria-hidden="true"></span>
-        </span>
-      </div>
-    </li>
-    <li class="stat">
-      <div class="stat__row">
-        <span class="stat__name">Leadership</span>
-        <span class="pips" role="img" aria-label="Level 3 of 5">
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip" aria-hidden="true"></span>
-          <span class="pip" aria-hidden="true"></span>
-        </span>
-      </div>
-    </li>
-    <li class="stat">
-      <div class="stat__row">
-        <span class="stat__name">Benchmarking</span>
-        <span class="pips" role="img" aria-label="Level 3 of 5">
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip pip--lit" aria-hidden="true"></span>
-          <span class="pip" aria-hidden="true"></span>
-          <span class="pip" aria-hidden="true"></span>
-        </span>
-      </div>
-    </li>
-        </ul>
-      </div>
-    </section>
-    
-
-    
-    <section class="block" id="quests" aria-labelledby="quests-h">
-      <h2 class="block__h" id="quests-h">Quest log</h2>
-      <ul class="quest-list">
-            <li class="quest panel" id="quest-accounting-migration">
-      <div class="quest__head">
-        <h3 class="quest__title">The Ledger Migration</h3>
-        <span class="quest__status quest__status--complete">complete</span>
-      </div>
-      <p class="quest__era">ALAMI · Associate Product Manager</p>
-      <p class="quest__objective">Migrate the company&#39;s entire Accounting System — data transfer through to user adoption.</p>
-      <dl class="quest__meta">
-        <div class="quest__meta-row">
-          <dt>Party</dt>
-          <dd>Led end-to-end</dd>
-        </div>
-        <div class="quest__meta-row">
-          <dt>Loot</dt>
-          <dd>
-            <ul class="tags">
-            <li class="tag">Accounting Systems</li>
-            <li class="tag">Data Migration</li>
-            <li class="tag">Change Management</li>
-            </ul>
-          </dd>
-        </div>
-        <div class="quest__meta-row">
-          <dt>XP</dt>
-          <dd class="quest__reward">~IDR 1.6 billion saved in annual operating cost</dd>
-        </div>
-      </dl>
-    </li>
-    <li class="quest panel" id="quest-core-banking">
-      <div class="quest__head">
-        <h3 class="quest__title">The Core Banking Campaign</h3>
-        <span class="quest__status quest__status--complete">complete</span>
-      </div>
-      <p class="quest__era">ALAMI · Associate Product Manager</p>
-      <p class="quest__objective">Support a strategic Core Banking migration by defining requirements for the supporting AML system and running UAT.</p>
-      <dl class="quest__meta">
-        <div class="quest__meta-row">
-          <dt>Party</dt>
-          <dd>Supporting role on a strategic migration</dd>
-        </div>
-        <div class="quest__meta-row">
-          <dt>Loot</dt>
-          <dd>
-            <ul class="tags">
-            <li class="tag">AML</li>
-            <li class="tag">Requirements</li>
-            <li class="tag">UAT</li>
-            </ul>
-          </dd>
-        </div>
-        <div class="quest__meta-row">
-          <dt>XP</dt>
-          <dd class="quest__reward">~IDR 5.8 billion saved annually (programme-level)</dd>
-        </div>
-      </dl>
-    </li>
-    <li class="quest panel" id="quest-bcf-launch">
-      <div class="quest__head">
-        <h3 class="quest__title">Business Capital Financing</h3>
-        <span class="quest__status quest__status--complete">complete</span>
-      </div>
-      <p class="quest__era">ALAMI · Associate Product Manager</p>
-      <p class="quest__objective">Own technical development and launch of a new financing product from zero.</p>
-      <dl class="quest__meta">
-        <div class="quest__meta-row">
-          <dt>Party</dt>
-          <dd>Product owner</dd>
-        </div>
-        <div class="quest__meta-row">
-          <dt>Loot</dt>
-          <dd>
-            <ul class="tags">
-            <li class="tag">0-to-1 Product</li>
-            <li class="tag">Financing</li>
-            <li class="tag">Go-to-Market</li>
-            </ul>
-          </dd>
-        </div>
-        <div class="quest__meta-row">
-          <dt>XP</dt>
-          <dd class="quest__reward">IDR 12.9 billion financed and IDR 307.8 million in fees in the initial phase</dd>
-        </div>
-      </dl>
-    </li>
-    <li class="quest panel" id="quest-ojk-compliance">
-      <div class="quest__head">
-        <h3 class="quest__title">The Compliance Gap</h3>
-        <span class="quest__status quest__status--complete">complete</span>
-      </div>
-      <p class="quest__era">ALAMI · Associate Product Manager</p>
-      <p class="quest__objective">Close critical OJK compliance gaps — shipped a Unique Loan ID system for partner exposure limits and a mandatory Committee Approval Flow aligned to internal SOPs.</p>
-      <dl class="quest__meta">
-        <div class="quest__meta-row">
-          <dt>Party</dt>
-          <dd>Led</dd>
-        </div>
-        <div class="quest__meta-row">
-          <dt>Loot</dt>
-          <dd>
-            <ul class="tags">
-            <li class="tag">OJK Compliance</li>
-            <li class="tag">Risk</li>
-            <li class="tag">Internal Tooling</li>
-            </ul>
-          </dd>
-        </div>
-      </dl>
-    </li>
-    <li class="quest panel" id="quest-onboarding-redesign">
-      <div class="quest__head">
-        <h3 class="quest__title">Onboarding Under New Regulation</h3>
-        <span class="quest__status quest__status--complete">complete</span>
-      </div>
-      <p class="quest__era">ALAMI · Associate Product Manager</p>
-      <p class="quest__objective">Redesign the customer Onboarding Form to meet new OJK regulations without halting financing operations.</p>
-      <dl class="quest__meta">
-        <div class="quest__meta-row">
-          <dt>Party</dt>
-          <dd>Led</dd>
-        </div>
-        <div class="quest__meta-row">
-          <dt>Loot</dt>
-          <dd>
-            <ul class="tags">
-            <li class="tag">Onboarding</li>
-            <li class="tag">OJK Compliance</li>
-            <li class="tag">UX</li>
-            </ul>
-          </dd>
-        </div>
-        <div class="quest__meta-row">
-          <dt>XP</dt>
-          <dd class="quest__reward">Zero business disruption during the transition</dd>
-        </div>
-      </dl>
-    </li>
-      </ul>
-    </section>
-    
-
-    
-    <section class="block" id="map" aria-labelledby="map-h">
-      <h2 class="block__h" id="map-h">World map</h2>
-      <div class="panel">
-        <ol class="map">
-                  <li class="map__node">
-          <span class="map__year">2017</span>
-          <div class="map__body">
-            <h3 class="map__title">Information Systems, University of Indonesia</h3>
-          <p class="map__note">Sarjana — through Sep 2021</p>
-          </div>
-        </li>
-        <li class="map__node">
-          <span class="map__year">2017</span>
-          <div class="map__body">
-            <h3 class="map__title">Staff, FUKI Fasilkom UI</h3>
-          <p class="map__note">Syiar department — first taste of shipping to an audience</p>
-          </div>
-        </li>
-        <li class="map__node">
-          <span class="map__year">2020</span>
-          <div class="map__body">
-            <h3 class="map__title">Backend Developer Intern, PT Inovasi Digital Garuda Wirakarsa</h3>
-          <p class="map__note">Built the foundation API for an accounting system</p>
-          </div>
-        </li>
-        <li class="map__node">
-          <span class="map__year">2021</span>
-          <div class="map__body">
-            <h3 class="map__title">Product Manager Intern, ALAMI</h3>
-          <p class="map__note">The switch from building to deciding</p>
-          </div>
-        </li>
-        <li class="map__node">
-          <span class="map__year">2022</span>
-          <div class="map__body">
-            <h3 class="map__title">Associate Product Manager, ALAMI</h3>
-          </div>
-        </li>
-        <li class="map__node">
-          <span class="map__year">2026</span>
-          <div class="map__body">
-            <h3 class="map__title">Product Manager, ALAMI</h3>
-          </div>
-        </li>
-        </ol>
-      </div>
-    </section>
-    
-
-    
-    <section class="block" id="current" aria-labelledby="current-h">
-      <h2 class="block__h" id="current-h">Current quest</h2>
-            <div class="panel panel--current">
-        <p class="status status--open"><span class="status__dot" aria-hidden="true"></span>Open to new quests<span class="status__note">Jakarta — hybrid, remote, or on-site</span></p>
-        <h3 class="current__title">Creating Financial Tracker for Couple</h3>
-        <p class="current__desc">One of the main factor of short lived relationship is about finance, alignment between each other is the key here.</p>
-      </div>
-    </section>
-    
-
-    
-    <section class="block" id="languages" aria-labelledby="languages-h">
-      <h2 class="block__h" id="languages-h">Languages</h2>
-      <div class="panel">
-        <ul class="lang-list">
-              <li class="lang">
-      <span class="lang__name">Indonesian</span>
-      <span class="lang__level">Native</span>
-    </li>
-    <li class="lang">
-      <span class="lang__name">English</span>
-      <span class="lang__level">Professional working</span>
-    </li>
-        </ul>
-      </div>
-    </section>
-    
-
-  </main>
-
-  <footer class="footer" id="contact">
-    <h2 class="block__h">Signboard</h2>
-
-    
-    <div class="panel panel--sign">
-      <ul class="sign">
-                <li class="sign__item">
+      <div class="panel panel--sign">
+        <ul class="sign">
+                  <li class="sign__item">
           <a class="sign__link" href="mailto:workwithwilyan@gmail.com" data-copyable>
             <span class="sign__label">Email</span>
             <span class="sign__value">workwithwilyan@gmail.com</span>
@@ -402,13 +64,59 @@
             <span class="sign__value">github.com/DarkosidoWilyan</span>
           </a>
         </li>
-      </ul>
-    </div>
-    
+        </ul>
+      </div>
+      
 
-    <p class="colophon">Hand-written HTML &amp; CSS · one Node build step · no framework.<br>
-    © 2026 Mohammad Wildan Yanuar — all rights reserved.</p>
-  </footer>
+      <p class="colophon">Hand-written HTML &amp; CSS · one Node build step · no framework.<br>
+      &copy; 2026 Mohammad Wildan Yanuar — all rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <button class="overlay__close" id="overlay-close" aria-label="Close quest">&#10005;</button>
+    <div class="overlay__stage">
+      <canvas id="scroll-canvas" width="128" height="128"></canvas>
+      <div class="overlay__parchment" id="overlay-content">
+        <h3 class="overlay__title" id="o-title"></h3>
+        <p class="overlay__era" id="o-era"></p>
+        <p class="overlay__objective" id="o-objective"></p>
+        <dl class="overlay__star" id="o-star" hidden>
+          <div>
+            <dt>Situation</dt>
+            <dd id="o-situation"></dd>
+          </div>
+          <div>
+            <dt>Task</dt>
+            <dd id="o-task"></dd>
+          </div>
+          <div>
+            <dt>Action</dt>
+            <dd id="o-action"></dd>
+          </div>
+          <div>
+            <dt>Result</dt>
+            <dd id="o-result"></dd>
+          </div>
+        </dl>
+        <dl class="overlay__meta">
+          <div>
+            <dt>Party</dt>
+            <dd id="o-party"></dd>
+          </div>
+          <div>
+            <dt>Loot</dt>
+            <dd><ul class="tags" id="o-tags"></ul></dd>
+          </div>
+          <div>
+            <dt>XP</dt>
+            <dd class="overlay__xp" id="o-xp"></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

@@ -134,7 +134,19 @@ function validate(content) {
   // quests[]
   validateArraySection("quests", content.quests, (q, i) => {
     if (!isNonEmptyString(q.title)) err(`quests[${i}].title`, "missing (required non-empty string)");
-    if (!isNonEmptyString(q.objective)) err(`quests[${i}].objective`, "missing (required non-empty string)");
+    // objective is required UNLESS the quest gives a full STAR breakdown instead.
+    const hasStar = ["situation", "task", "action", "result"].every((k) => isNonEmptyString(q[k]));
+    if (!hasStar) {
+      if (!isNonEmptyString(q.objective)) {
+        err(`quests[${i}].objective`, "missing (required unless situation/task/action/result are all provided)");
+      }
+    } else {
+      optString(`quests[${i}].objective`, q.objective);
+    }
+    optString(`quests[${i}].situation`, q.situation);
+    optString(`quests[${i}].task`, q.task);
+    optString(`quests[${i}].action`, q.action);
+    optString(`quests[${i}].result`, q.result);
     if (q.id !== undefined && q.id !== null && q.id !== "") {
       if (typeof q.id !== "string" || !/^[a-zA-Z0-9_-]+$/.test(q.id)) {
         err(`quests[${i}].id`, `letters, numbers, hyphens and underscores only, got ${JSON.stringify(q.id)}`);
@@ -387,6 +399,7 @@ function build(template, content) {
       ? get(content, "player.tagline")
       : `${get(content, "player.name") || ""} — ${get(content, "player.class") || ""}`.trim(),
     year: String(new Date().getFullYear()),
+    questsJson: JSON.stringify(content.quests || []),
   };
 
   let html = template;
@@ -425,10 +438,11 @@ function build(template, content) {
     }
   );
 
-  // 3. Scalar tokens — escaped, always.
+  // 3. Scalar tokens — escaped, always (except questsJson which is raw JSON).
   html = html.replace(/{{\s*([\w.]+)\s*}}/g, (match, pathExpr) => {
     if (Object.prototype.hasOwnProperty.call(computed, pathExpr)) {
-      return esc(computed[pathExpr]);
+      const raw = computed[pathExpr];
+      return pathExpr === "questsJson" ? raw : esc(raw);
     }
     const value = get(content, pathExpr);
     if (value === undefined || value === null) {
