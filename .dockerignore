@@ -1,0 +1,12 @@
+.git
+.hallmark
+.gitignore
+.dockerignore
+Dockerfile
+docker-compose.yml
+README.md
+build.js
+content.json
+template.html
+opencode.json
+node_modules
