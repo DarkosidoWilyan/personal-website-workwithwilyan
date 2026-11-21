@@ -409,11 +409,9 @@ function say(text, ms = 5000) {
   SAY.textContent = text;
   void SAY.offsetWidth;
   SAY.hidden = false;
-  SAY.parentElement.classList.add("is-talking");
   clearTimeout(sayTimer);
   sayTimer = setTimeout(() => {
     SAY.hidden = true;
-    SAY.parentElement.classList.remove("is-talking");
   }, ms);
 }
 
