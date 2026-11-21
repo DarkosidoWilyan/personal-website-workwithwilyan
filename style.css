@@ -466,15 +466,35 @@ a.win__x:active,
 
 /* ------------------------------------------------------ wallpaper computer */
 
+.pc {
+  position: absolute;
+  right: 5%;
+  bottom: 8%;
+  display: grid;
+  justify-items: center;
+  width: clamp(180px, 20vw, 260px);
+}
+
+html:not(.js) .pc {
+  display: none;
+}
+
+/* ------------------------------------------------------------------- buddy */
+
 .buddy {
   display: none;
 }
 
 .js .buddy {
   position: absolute;
-  right: 5%;
-  bottom: 6%;
+  top: 0;
+  left: 0;
   z-index: 1;
+  display: block;
+  width: 120px;
+  transform: translate(var(--bx, 0), var(--by, 0));
+  transition: transform var(--drift, 0s) ease-in-out;
+  will-change: transform;
 }
 
 @media (min-width: 720px) {
@@ -483,39 +503,49 @@ a.win__x:active,
   }
 }
 
-.js .buddy {
-  display: grid;
-  justify-items: center;
-  width: clamp(180px, 20vw, 260px);
-}
-
 .buddy__bear {
   position: relative;
-  z-index: 1;
-  width: 54%;
-  margin-bottom: -30%;
+  display: block;
+  width: 100%;
   padding: 0;
   border: 0;
   background: none;
   cursor: pointer;
-  animation: float 4s ease-in-out infinite;
+  animation: bob 4s ease-in-out infinite;
 }
 
 .buddy__bear img {
   display: block;
   width: 100%;
   height: auto;
-  filter: drop-shadow(3px 4px 0 rgb(31 29 36 / 0.18));
+  filter: drop-shadow(3px 6px 0 rgb(31 29 36 / 0.15));
 }
 
-.buddy__bear:hover img {
-  transform: rotate(-6deg);
+.buddy__lid {
+  position: absolute;
+  top: 29.6%;
+  width: 20.6%;
+  height: 19%;
+  border-bottom: 3px solid var(--ink);
+  border-radius: 50%;
+  background: #a27c5f;
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: blink 5s infinite;
+}
+
+.buddy__lid--l {
+  left: 24.8%;
+}
+
+.buddy__lid--r {
+  left: 52.7%;
 }
 
 .buddy__say {
   position: absolute;
-  right: 0;
   bottom: calc(100% + var(--sp-2));
+  left: 0;
   z-index: 2;
   width: max-content;
   max-width: 230px;
@@ -531,8 +561,8 @@ a.win__x:active,
 .buddy__say::after {
   content: "";
   position: absolute;
-  right: 28%;
   bottom: -9px;
+  left: 40px;
   width: 14px;
   height: 14px;
   border-right: var(--line);
@@ -541,10 +571,35 @@ a.win__x:active,
   transform: rotate(45deg);
 }
 
-.pc {
-  display: grid;
-  justify-items: center;
-  width: 100%;
+.buddy.is-east .buddy__say {
+  right: 0;
+  left: auto;
+}
+
+.buddy.is-east .buddy__say::after {
+  right: 40px;
+  left: auto;
+}
+
+.buddy.is-high .buddy__say {
+  top: calc(100% + var(--sp-2));
+  bottom: auto;
+}
+
+.buddy.is-high .buddy__say::after {
+  top: -9px;
+  bottom: auto;
+  transform: rotate(-135deg);
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-12px) rotate(5deg); }
+}
+
+@keyframes blink {
+  0%, 92%, 96%, 100% { transform: scaleY(0); }
+  94% { transform: scaleY(1); }
 }
 
 .pc__monitor {
@@ -1608,28 +1663,11 @@ a.win__x:active,
   }
 
   .js .buddy {
-    right: 12px;
-    bottom: 12px;
-    width: 96px;
-  }
-
-  .buddy__bear {
-    width: 100%;
-    margin: 0;
+    width: 84px;
   }
 
   .buddy__say {
-    right: 100%;
-    bottom: 55%;
     max-width: 200px;
-    margin-right: var(--sp-2);
-  }
-
-  .buddy__say::after {
-    right: -9px;
-    bottom: 14px;
-    border-bottom: 0;
-    border-top: var(--line);
   }
 
   .folders {

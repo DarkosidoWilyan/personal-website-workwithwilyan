@@ -428,8 +428,33 @@ function greeting() {
   return `Selamat ${part}! Welcome to Wilyan's desktop.`;
 }
 
+function initDrift() {
+  const buddy = document.getElementById("buddy");
+  let x = 0;
+  let y = 0;
+  const drift = (first = false) => {
+    const area = buddy.offsetParent;
+    if (!area) return;
+    const maxX = Math.max(0, area.clientWidth - buddy.offsetWidth);
+    const maxY = Math.max(0, area.clientHeight - buddy.offsetHeight);
+    const nx = Math.round(first ? maxX * 0.92 : Math.random() * maxX);
+    const ny = Math.round(first ? maxY * 0.8 : Math.random() * maxY);
+    const secs = first ? 0 : Math.max(6, Math.hypot(nx - x, ny - y) / 50);
+    buddy.style.setProperty("--drift", `${secs}s`);
+    buddy.style.setProperty("--bx", `${nx}px`);
+    buddy.style.setProperty("--by", `${ny}px`);
+    buddy.classList.toggle("is-east", nx > area.clientWidth / 2);
+    buddy.classList.toggle("is-high", ny < 120);
+    x = nx;
+    y = ny;
+    if (!reducedMotion.matches) setTimeout(drift, (first ? 2500 : secs * 1000) + 1000 + Math.random() * 3000);
+  };
+  drift(true);
+}
+
 function initBuddy() {
   if (!BEAR) return;
+  initDrift();
   BEAR.addEventListener("click", () => {
     say(TIPS[tip]);
     tip = (tip + 1) % TIPS.length;
