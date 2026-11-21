@@ -5,99 +5,159 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{{player.name}} — {{player.class}}</title>
   <meta name="description" content="{{meta.description}}">
+  <meta name="theme-color" content="#e9e1cc">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='3' width='28' height='22' rx='3' fill='%23e9e1cc'/%3E%3Crect x='5' y='6' width='22' height='16' rx='2' fill='%23041d0e'/%3E%3Cpath d='M9 11l3 3-3 3M14 18h6' stroke='%235dff9a' stroke-width='2' fill='none'/%3E%3Crect x='10' y='26' width='12' height='3' fill='%23c9bfa6'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Mono:wght@400;600&display=swap">
   <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add("js");</script>
   <script type="module" src="script.js"></script>
-  <script id="quest-data" type="application/json">{{questsJson}}</script>
 </head>
 <body>
 
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="desk">
+    <div class="computer">
+      <div class="monitor">
+        <div class="monitor__bezel">
+          <div class="screen" id="screen">
 
-  <div class="scroll-area">
+            <div class="boot" id="boot" aria-hidden="true">
+              <p>WILYAN BIOS v1.0 &nbsp;(C) {{year}}</p>
+              <p>Memory test ........ 640K OK</p>
+              <p>Loading WORKS.DAT .. {{worksCount}} files</p>
+              <div class="boot__bar"><span></span></div>
+              <p class="boot__skip">Press any key to skip</p>
+            </div>
 
-    <header class="header">
-      <div class="panel panel--header header__inner">
-        <canvas class="header__avatar" id="avatar-canvas" width="104" height="104" aria-hidden="true"></canvas>
-        <div class="header__copy">
-          <div class="header__top">
-            <h1 class="header__name">{{player.name}}</h1>
-            <span class="header__class">{{player.class}}</span>
+            <div class="screen__content" id="screen-content">
+
+              <header class="statusbar">
+                <span class="statusbar__os">WILYAN-OS 1.0</span>
+                <span class="statusbar__path" id="statusbar-path">C:\MENU</span>
+                <span class="statusbar__clock" id="clock" aria-hidden="true"></span>
+              </header>
+
+              <main class="views">
+
+                <section class="view view--menu" id="menu" aria-labelledby="menu-title">
+                  <div class="whoami">
+                    <p class="prompt">C:\&gt; whoami</p>
+                    <h1 class="whoami__name">{{player.name}}</h1>
+                    <p class="whoami__class">{{player.class}}</p>
+                    <!-- @optional:player.tagline -->
+                    <p class="whoami__tagline">{{player.tagline}}</p>
+                    <!-- /@optional:player.tagline -->
+                  </div>
+
+                  <!-- @section:quests -->
+                  <h2 class="menu__title" id="menu-title">Main menu — select a work</h2>
+                  <ol class="menu" id="menu-works">
+                    <!-- @items:quests.menu -->
+                  </ol>
+                  <!-- /@section:quests -->
+
+                  <h2 class="menu__title">System</h2>
+                  <ol class="menu" id="menu-system">
+                    <li>
+                      <a class="menu__item" href="#about" data-view="about">
+                        <span class="menu__key">A</span>
+                        <span class="menu__label">About me</span>
+                        <span class="menu__meta">Skills, timeline, languages</span>
+                      </a>
+                    </li>
+                    <!-- @section:contact -->
+                    <li>
+                      <a class="menu__item" href="#contact" data-view="contact">
+                        <span class="menu__key">C</span>
+                        <span class="menu__label">Contact</span>
+                        <span class="menu__meta">Email, LinkedIn, GitHub</span>
+                      </a>
+                    </li>
+                    <!-- /@section:contact -->
+                  </ol>
+
+                  <p class="hint" aria-hidden="true"><kbd>↑</kbd><kbd>↓</kbd> select &nbsp; <kbd>Enter</kbd> open &nbsp; <kbd>Esc</kbd> back</p>
+                </section>
+
+                <!-- @section:quests -->
+                <!-- @items:quests -->
+                <!-- /@section:quests -->
+
+                <section class="view doc" id="about" aria-labelledby="about-title">
+                  <p class="doc__path">C:\SYSTEM\ABOUT.TXT</p>
+                  <h2 class="doc__title" id="about-title" tabindex="-1">About me</h2>
+                  <!-- @optional:player.tagline -->
+                  <p class="doc__objective">{{player.tagline}}</p>
+                  <!-- /@optional:player.tagline -->
+                  <!-- @optional:player.location -->
+                  <p class="doc__era">Based in {{player.location}}</p>
+                  <!-- /@optional:player.location -->
+
+                  <!-- @section:currentQuest -->
+                  <h3 class="doc__h">Current project</h3>
+                  <!-- @slot:currentQuest -->
+                  <!-- /@section:currentQuest -->
+
+                  <!-- @section:stats -->
+                  <h3 class="doc__h">Skills</h3>
+                  <ul class="stats">
+                    <!-- @items:stats -->
+                  </ul>
+                  <!-- /@section:stats -->
+
+                  <!-- @section:worldMap -->
+                  <h3 class="doc__h">Timeline</h3>
+                  <ol class="log">
+                    <!-- @items:worldMap -->
+                  </ol>
+                  <!-- /@section:worldMap -->
+
+                  <!-- @section:languages -->
+                  <h3 class="doc__h">Languages</h3>
+                  <ul class="langs">
+                    <!-- @items:languages -->
+                  </ul>
+                  <!-- /@section:languages -->
+
+                  <p class="doc__actions">
+                    <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>
+                  </p>
+                </section>
+
+                <!-- @section:contact -->
+                <section class="view doc" id="contact" aria-labelledby="contact-title">
+                  <p class="doc__path">C:\SYSTEM\CONTACT.TXT</p>
+                  <h2 class="doc__title" id="contact-title" tabindex="-1">Contact</h2>
+                  <ul class="contact">
+                    <!-- @items:contact -->
+                  </ul>
+                  <p class="doc__actions">
+                    <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>
+                  </p>
+                </section>
+                <!-- /@section:contact -->
+
+              </main>
+
+              <footer class="colophon">
+                Hand-written HTML &amp; CSS · one Node build step · no framework.<br>
+                &copy; {{year}} {{player.name}}
+              </footer>
+
+            </div>
+
+            <div class="screen__fx" aria-hidden="true"></div>
           </div>
-          <!-- @optional:player.tagline -->
-          <p class="header__tagline">{{player.tagline}}</p>
-          <!-- /@optional:player.tagline -->
+        </div>
+
+        <div class="monitor__chin" aria-hidden="true">
+          <span class="monitor__brand">WILYAN&nbsp;PC</span>
+          <span class="monitor__slot"></span>
+          <span class="monitor__led"></span>
         </div>
       </div>
-    </header>
-
-    <main>
-      <section class="quest-menu" id="quest-menu">
-        <h2 class="quest-menu__title">Quest Log</h2>
-        <ul class="quest-menu__list" id="menu-list"></ul>
-      </section>
-    </main>
-
-    <footer class="footer" id="contact">
-      <h2 class="block__h">Signboard</h2>
-
-      <!-- @section:contact -->
-      <div class="panel panel--sign">
-        <ul class="sign">
-          <!-- @items:contact -->
-        </ul>
-      </div>
-      <!-- /@section:contact -->
-
-      <p class="colophon">Hand-written HTML &amp; CSS · one Node build step · no framework.<br>
-      &copy; {{year}} {{player.name}} — all rights reserved.</p>
-    </footer>
-
-  </div>
-
-  <div class="overlay" id="overlay" aria-hidden="true">
-    <button class="overlay__close" id="overlay-close" aria-label="Close quest">&#10005;</button>
-    <div class="overlay__stage">
-      <canvas id="scroll-canvas" width="128" height="128"></canvas>
-      <div class="overlay__parchment" id="overlay-content">
-        <h3 class="overlay__title" id="o-title"></h3>
-        <p class="overlay__era" id="o-era"></p>
-        <p class="overlay__objective" id="o-objective"></p>
-        <dl class="overlay__star" id="o-star" hidden>
-          <div>
-            <dt>Situation</dt>
-            <dd id="o-situation"></dd>
-          </div>
-          <div>
-            <dt>Task</dt>
-            <dd id="o-task"></dd>
-          </div>
-          <div>
-            <dt>Action</dt>
-            <dd id="o-action"></dd>
-          </div>
-          <div>
-            <dt>Result</dt>
-            <dd id="o-result"></dd>
-          </div>
-        </dl>
-        <dl class="overlay__meta">
-          <div>
-            <dt>Party</dt>
-            <dd id="o-party"></dd>
-          </div>
-          <div>
-            <dt>Loot</dt>
-            <dd><ul class="tags" id="o-tags"></ul></dd>
-          </div>
-          <div>
-            <dt>XP</dt>
-            <dd class="overlay__xp" id="o-xp"></dd>
-          </div>
-        </dl>
-      </div>
+      <div class="computer__stand" aria-hidden="true"></div>
     </div>
   </div>
 

@@ -5,116 +5,473 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Mohammad Wildan Yanuar — Product Manager</title>
   <meta name="description" content="I build and ship fintech products at ALAMI. Started as a backend developer, moved to deciding what gets built.">
+  <meta name="theme-color" content="#e9e1cc">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='3' width='28' height='22' rx='3' fill='%23e9e1cc'/%3E%3Crect x='5' y='6' width='22' height='16' rx='2' fill='%23041d0e'/%3E%3Cpath d='M9 11l3 3-3 3M14 18h6' stroke='%235dff9a' stroke-width='2' fill='none'/%3E%3Crect x='10' y='26' width='12' height='3' fill='%23c9bfa6'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Mono:wght@400;600&display=swap">
   <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add("js");</script>
   <script type="module" src="script.js"></script>
-  <script id="quest-data" type="application/json">[{"id":"accounting-migration","title":"The Accounting Migration","status":"complete","era":"ALAMI · Associate Product Manager","situation":"Oracle's accounting platform cost the company IDR 2–5 billion a year — finance needed a cheaper system without breaking a live, audited ledger.","task":"Migrate every financial record from Oracle to Jurnal before the Oracle contract expired, with full data integrity and zero disruption to daily accounting.","action":"Mapped every Oracle use case to its Jurnal equivalent, extracted and backed up the full historical dataset, ran weekly sync meetings to unblock engineering, verified migrated records line by line, wrote the integration requirements between the internal MINA system and Jurnal, and trained the finance team before cutover.","result":"100% of journal vouchers migrated and verified, the MINA–Jurnal integration shipped cleanly, and the team was fully live on Jurnal a month before the Oracle contract ended.","party":"Led end-to-end","loot":["Accounting Systems","Data Migration","Change Management"],"xp":"~IDR 1.6 billion saved in annual operating cost","link":""},{"id":"core-banking","title":"The Core Banking Campaign","status":"complete","era":"ALAMI · Associate Product Manager","objective":"Support a strategic Core Banking migration by defining requirements for the supporting AML system and running UAT.","party":"Supporting role on a strategic migration","loot":["AML","Requirements","UAT"],"xp":"~IDR 5.8 billion saved annually (programme-level)","link":""},{"id":"bcf-launch","title":"Business Capital Financing","status":"complete","era":"ALAMI · Associate Product Manager","objective":"Own technical development and launch of a new financing product from zero.","party":"Product owner","loot":["0-to-1 Product","Financing","Go-to-Market"],"xp":"IDR 12.9 billion financed and IDR 307.8 million in fees in the initial phase","link":""},{"id":"agreement-update","title":"Updating Agreement Document","status":"complete","era":"ALAMI · Associate Product Manager","situation":"ALAMI's Funder umbrella agreement needed updating — new consumer data protection clauses, updated bondholder meeting terms, and other regulatory changes all had to be folded in.","task":"Get every Funder onto the new umbrella agreement without breaking their existing one or blocking anyone from signing.","action":"Wrote the requirements for the new agreement content and how Funders would access and sign it, ran a cost analysis for the rollout, mapped the downside risks and who was authorized to sign, released the new agreement in staged batches to limit blast radius, and built the Funder-facing communication explaining what changed and why they needed to re-sign.","result":"New Funders are fully on the updated agreement; most existing Funders are still on the old one while the team weighs trimming the content further to cut the cost of repeated signature rounds.","party":"Led","loot":["Umbrella Agreement","Requirements","Funder Communications"],"xp":"","link":""},{"id":"onboarding-redesign","title":"Onboarding Under New Regulation","status":"complete","era":"ALAMI · Associate Product Manager","situation":"ALAMI had rolled out a new internal credit score, but Funders — who make the final financing call — hadn't been told what it meant for their exposure.","task":"Design and ship a notification flow that told Funders about the new credit scoring model and what would change for them.","action":"Wrote the requirements for how the new credit score would surface to Funders, tested the flow engineering built against it, and drafted the Funder-facing email announcing the change.","result":"Funders got clear, timely information about the credit score change, which kept complaints about it to a minimum.","party":"Led","loot":["Credit Scoring","Requirements","Funder Communications"],"xp":"Minimal Funder complaints after the change shipped","link":""}]</script>
 </head>
 <body>
 
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="desk">
+    <div class="computer">
+      <div class="monitor">
+        <div class="monitor__bezel">
+          <div class="screen" id="screen">
 
-  <div class="scroll-area">
+            <div class="boot" id="boot" aria-hidden="true">
+              <p>WILYAN BIOS v1.0 &nbsp;(C) 2026</p>
+              <p>Memory test ........ 640K OK</p>
+              <p>Loading WORKS.DAT .. 5 files</p>
+              <div class="boot__bar"><span></span></div>
+              <p class="boot__skip">Press any key to skip</p>
+            </div>
 
-    <header class="header">
-      <div class="panel panel--header header__inner">
-        <canvas class="header__avatar" id="avatar-canvas" width="104" height="104" aria-hidden="true"></canvas>
-        <div class="header__copy">
-          <div class="header__top">
-            <h1 class="header__name">Mohammad Wildan Yanuar</h1>
-            <span class="header__class">Product Manager</span>
+            <div class="screen__content" id="screen-content">
+
+              <header class="statusbar">
+                <span class="statusbar__os">WILYAN-OS 1.0</span>
+                <span class="statusbar__path" id="statusbar-path">C:\MENU</span>
+                <span class="statusbar__clock" id="clock" aria-hidden="true"></span>
+              </header>
+
+              <main class="views">
+
+                <section class="view view--menu" id="menu" aria-labelledby="menu-title">
+                  <div class="whoami">
+                    <p class="prompt">C:\&gt; whoami</p>
+                    <h1 class="whoami__name">Mohammad Wildan Yanuar</h1>
+                    <p class="whoami__class">Product Manager</p>
+                    
+                    <p class="whoami__tagline">I build and ship fintech products at ALAMI. Started as a backend developer, moved to deciding what gets built.</p>
+                    
+                  </div>
+
+                  
+                  <h2 class="menu__title" id="menu-title">Main menu — select a work</h2>
+                  <ol class="menu" id="menu-works">
+                            <li>
+          <a class="menu__item" href="#work-accounting-migration" data-view="work-accounting-migration">
+            <span class="menu__key">1</span>
+            <span class="menu__label">The Accounting Migration</span>
+            <span class="menu__meta">ALAMI · Associate Product Manager</span>
+          </a>
+        </li>
+        <li>
+          <a class="menu__item" href="#work-core-banking" data-view="work-core-banking">
+            <span class="menu__key">2</span>
+            <span class="menu__label">The Core Banking Campaign</span>
+            <span class="menu__meta">ALAMI · Associate Product Manager</span>
+          </a>
+        </li>
+        <li>
+          <a class="menu__item" href="#work-bcf-launch" data-view="work-bcf-launch">
+            <span class="menu__key">3</span>
+            <span class="menu__label">Business Capital Financing</span>
+            <span class="menu__meta">ALAMI · Associate Product Manager</span>
+          </a>
+        </li>
+        <li>
+          <a class="menu__item" href="#work-agreement-update" data-view="work-agreement-update">
+            <span class="menu__key">4</span>
+            <span class="menu__label">Updating Agreement Document</span>
+            <span class="menu__meta">ALAMI · Associate Product Manager</span>
+          </a>
+        </li>
+        <li>
+          <a class="menu__item" href="#work-onboarding-redesign" data-view="work-onboarding-redesign">
+            <span class="menu__key">5</span>
+            <span class="menu__label">Onboarding Under New Regulation</span>
+            <span class="menu__meta">ALAMI · Associate Product Manager</span>
+          </a>
+        </li>
+                  </ol>
+                  
+
+                  <h2 class="menu__title">System</h2>
+                  <ol class="menu" id="menu-system">
+                    <li>
+                      <a class="menu__item" href="#about" data-view="about">
+                        <span class="menu__key">A</span>
+                        <span class="menu__label">About me</span>
+                        <span class="menu__meta">Skills, timeline, languages</span>
+                      </a>
+                    </li>
+                    
+                    <li>
+                      <a class="menu__item" href="#contact" data-view="contact">
+                        <span class="menu__key">C</span>
+                        <span class="menu__label">Contact</span>
+                        <span class="menu__meta">Email, LinkedIn, GitHub</span>
+                      </a>
+                    </li>
+                    
+                  </ol>
+
+                  <p class="hint" aria-hidden="true"><kbd>↑</kbd><kbd>↓</kbd> select &nbsp; <kbd>Enter</kbd> open &nbsp; <kbd>Esc</kbd> back</p>
+                </section>
+
+                
+                      <article class="view doc" id="work-accounting-migration" aria-labelledby="work-accounting-migration-title">
+        <p class="doc__path">C:\WORKS\ACCOUNTING-MIGRATION.TXT</p>
+        <h2 class="doc__title" id="work-accounting-migration-title" tabindex="-1">The Accounting Migration</h2>
+        <p class="doc__era">ALAMI · Associate Product Manager <span class="doc__status">[COMPLETE]</span></p>
+        <dl class="doc__star">
+          <div class="doc__row">
+            <dt>Situation</dt>
+            <dd>Oracle&#39;s accounting platform cost the company IDR 2–5 billion a year — finance needed a cheaper system without breaking a live, audited ledger.</dd>
           </div>
-          
-          <p class="header__tagline">I build and ship fintech products at ALAMI. Started as a backend developer, moved to deciding what gets built.</p>
-          
+          <div class="doc__row">
+            <dt>Task</dt>
+            <dd>Migrate every financial record from Oracle to Jurnal before the Oracle contract expired, with full data integrity and zero disruption to daily accounting.</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Action</dt>
+            <dd>Mapped every Oracle use case to its Jurnal equivalent, extracted and backed up the full historical dataset, ran weekly sync meetings to unblock engineering, verified migrated records line by line, wrote the integration requirements between the internal MINA system and Jurnal, and trained the finance team before cutover.</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Result</dt>
+            <dd>100% of journal vouchers migrated and verified, the MINA–Jurnal integration shipped cleanly, and the team was fully live on Jurnal a month before the Oracle contract ended.</dd>
+          </div>
+        </dl>
+        <dl class="doc__meta">
+          <div class="doc__row">
+            <dt>Role</dt>
+            <dd>Led end-to-end</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Skills</dt>
+            <dd>
+              <ul class="tags">
+              <li class="tag">Accounting Systems</li>
+              <li class="tag">Data Migration</li>
+              <li class="tag">Change Management</li>
+              </ul>
+            </dd>
+          </div>
+          <div class="doc__row">
+            <dt>Impact</dt>
+            <dd class="doc__impact">~IDR 1.6 billion saved in annual operating cost</dd>
+          </div>
+        </dl>
+        <p class="doc__actions">
+          <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>
+        </p>
+      </article>
+      <article class="view doc" id="work-core-banking" aria-labelledby="work-core-banking-title">
+        <p class="doc__path">C:\WORKS\CORE-BANKING.TXT</p>
+        <h2 class="doc__title" id="work-core-banking-title" tabindex="-1">The Core Banking Campaign</h2>
+        <p class="doc__era">ALAMI · Associate Product Manager <span class="doc__status">[COMPLETE]</span></p>
+        <p class="doc__objective">Support a strategic Core Banking migration by defining requirements for the supporting AML system and running UAT.</p>
+        <dl class="doc__meta">
+          <div class="doc__row">
+            <dt>Role</dt>
+            <dd>Supporting role on a strategic migration</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Skills</dt>
+            <dd>
+              <ul class="tags">
+              <li class="tag">AML</li>
+              <li class="tag">Requirements</li>
+              <li class="tag">UAT</li>
+              </ul>
+            </dd>
+          </div>
+          <div class="doc__row">
+            <dt>Impact</dt>
+            <dd class="doc__impact">~IDR 5.8 billion saved annually (programme-level)</dd>
+          </div>
+        </dl>
+        <p class="doc__actions">
+          <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>
+        </p>
+      </article>
+      <article class="view doc" id="work-bcf-launch" aria-labelledby="work-bcf-launch-title">
+        <p class="doc__path">C:\WORKS\BCF-LAUNCH.TXT</p>
+        <h2 class="doc__title" id="work-bcf-launch-title" tabindex="-1">Business Capital Financing</h2>
+        <p class="doc__era">ALAMI · Associate Product Manager <span class="doc__status">[COMPLETE]</span></p>
+        <p class="doc__objective">Own technical development and launch of a new financing product from zero.</p>
+        <dl class="doc__meta">
+          <div class="doc__row">
+            <dt>Role</dt>
+            <dd>Product owner</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Skills</dt>
+            <dd>
+              <ul class="tags">
+              <li class="tag">0-to-1 Product</li>
+              <li class="tag">Financing</li>
+              <li class="tag">Go-to-Market</li>
+              </ul>
+            </dd>
+          </div>
+          <div class="doc__row">
+            <dt>Impact</dt>
+            <dd class="doc__impact">IDR 12.9 billion financed and IDR 307.8 million in fees in the initial phase</dd>
+          </div>
+        </dl>
+        <p class="doc__actions">
+          <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>
+        </p>
+      </article>
+      <article class="view doc" id="work-agreement-update" aria-labelledby="work-agreement-update-title">
+        <p class="doc__path">C:\WORKS\AGREEMENT-UPDATE.TXT</p>
+        <h2 class="doc__title" id="work-agreement-update-title" tabindex="-1">Updating Agreement Document</h2>
+        <p class="doc__era">ALAMI · Associate Product Manager <span class="doc__status">[COMPLETE]</span></p>
+        <dl class="doc__star">
+          <div class="doc__row">
+            <dt>Situation</dt>
+            <dd>ALAMI&#39;s Funder umbrella agreement needed updating — new consumer data protection clauses, updated bondholder meeting terms, and other regulatory changes all had to be folded in.</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Task</dt>
+            <dd>Get every Funder onto the new umbrella agreement without breaking their existing one or blocking anyone from signing.</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Action</dt>
+            <dd>Wrote the requirements for the new agreement content and how Funders would access and sign it, ran a cost analysis for the rollout, mapped the downside risks and who was authorized to sign, released the new agreement in staged batches to limit blast radius, and built the Funder-facing communication explaining what changed and why they needed to re-sign.</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Result</dt>
+            <dd>New Funders are fully on the updated agreement; most existing Funders are still on the old one while the team weighs trimming the content further to cut the cost of repeated signature rounds.</dd>
+          </div>
+        </dl>
+        <dl class="doc__meta">
+          <div class="doc__row">
+            <dt>Role</dt>
+            <dd>Led</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Skills</dt>
+            <dd>
+              <ul class="tags">
+              <li class="tag">Umbrella Agreement</li>
+              <li class="tag">Requirements</li>
+              <li class="tag">Funder Communications</li>
+              </ul>
+            </dd>
+          </div>
+        </dl>
+        <p class="doc__actions">
+          <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>
+        </p>
+      </article>
+      <article class="view doc" id="work-onboarding-redesign" aria-labelledby="work-onboarding-redesign-title">
+        <p class="doc__path">C:\WORKS\ONBOARDING-REDESIGN.TXT</p>
+        <h2 class="doc__title" id="work-onboarding-redesign-title" tabindex="-1">Onboarding Under New Regulation</h2>
+        <p class="doc__era">ALAMI · Associate Product Manager <span class="doc__status">[COMPLETE]</span></p>
+        <dl class="doc__star">
+          <div class="doc__row">
+            <dt>Situation</dt>
+            <dd>ALAMI had rolled out a new internal credit score, but Funders — who make the final financing call — hadn&#39;t been told what it meant for their exposure.</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Task</dt>
+            <dd>Design and ship a notification flow that told Funders about the new credit scoring model and what would change for them.</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Action</dt>
+            <dd>Wrote the requirements for how the new credit score would surface to Funders, tested the flow engineering built against it, and drafted the Funder-facing email announcing the change.</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Result</dt>
+            <dd>Funders got clear, timely information about the credit score change, which kept complaints about it to a minimum.</dd>
+          </div>
+        </dl>
+        <dl class="doc__meta">
+          <div class="doc__row">
+            <dt>Role</dt>
+            <dd>Led</dd>
+          </div>
+          <div class="doc__row">
+            <dt>Skills</dt>
+            <dd>
+              <ul class="tags">
+              <li class="tag">Credit Scoring</li>
+              <li class="tag">Requirements</li>
+              <li class="tag">Funder Communications</li>
+              </ul>
+            </dd>
+          </div>
+          <div class="doc__row">
+            <dt>Impact</dt>
+            <dd class="doc__impact">Minimal Funder complaints after the change shipped</dd>
+          </div>
+        </dl>
+        <p class="doc__actions">
+          <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>
+        </p>
+      </article>
+                
+
+                <section class="view doc" id="about" aria-labelledby="about-title">
+                  <p class="doc__path">C:\SYSTEM\ABOUT.TXT</p>
+                  <h2 class="doc__title" id="about-title" tabindex="-1">About me</h2>
+                  
+                  <p class="doc__objective">I build and ship fintech products at ALAMI. Started as a backend developer, moved to deciding what gets built.</p>
+                  
+                  
+                  <p class="doc__era">Based in Jakarta, Indonesia</p>
+                  
+
+                  
+                  <h3 class="doc__h">Current project</h3>
+                          <p class="status status--open"><span class="status__dot" aria-hidden="true"></span>Available for new work <span class="status__note">— Jakarta — hybrid, remote, or on-site</span></p>
+        <p class="current"><span class="current__label">Now building:</span> <span class="current__title">Creating Financial Tracker for Couple</span></p>
+        <p class="current__desc">One of the main factor of short lived relationship is about finance, alignment between each other is the key here.</p>
+                  
+
+                  
+                  <h3 class="doc__h">Skills</h3>
+                  <ul class="stats">
+                            <li class="stat">
+          <span class="stat__name">Product Management</span>
+          <span class="stat__bar" role="img" aria-label="Level 4 of 5">████░</span>
+          <span class="stat__note">4+ yrs, fintech / lending</span>
+        </li>
+        <li class="stat">
+          <span class="stat__name">Regulatory Compliance</span>
+          <span class="stat__bar" role="img" aria-label="Level 4 of 5">████░</span>
+          <span class="stat__note">OJK — lending, AML, onboarding</span>
+        </li>
+        <li class="stat">
+          <span class="stat__name">Project Management</span>
+          <span class="stat__bar" role="img" aria-label="Level 4 of 5">████░</span>
+        </li>
+        <li class="stat">
+          <span class="stat__name">Requirements &amp; UAT</span>
+          <span class="stat__bar" role="img" aria-label="Level 4 of 5">████░</span>
+          <span class="stat__note">Core banking, AML systems</span>
+        </li>
+        <li class="stat">
+          <span class="stat__name">Communication</span>
+          <span class="stat__bar" role="img" aria-label="Level 4 of 5">████░</span>
+        </li>
+        <li class="stat">
+          <span class="stat__name">Leadership</span>
+          <span class="stat__bar" role="img" aria-label="Level 3 of 5">███░░</span>
+        </li>
+        <li class="stat">
+          <span class="stat__name">Benchmarking</span>
+          <span class="stat__bar" role="img" aria-label="Level 3 of 5">███░░</span>
+        </li>
+                  </ul>
+                  
+
+                  
+                  <h3 class="doc__h">Timeline</h3>
+                  <ol class="log">
+                            <li class="log__row">
+          <span class="log__year">2017</span>
+          <span class="log__body">
+            <span class="log__title">Information Systems, University of Indonesia</span>
+            <span class="log__note">Sarjana — through Sep 2021</span>
+          </span>
+        </li>
+        <li class="log__row">
+          <span class="log__year">2017</span>
+          <span class="log__body">
+            <span class="log__title">Staff, FUKI Fasilkom UI</span>
+            <span class="log__note">Syiar department — first taste of shipping to an audience</span>
+          </span>
+        </li>
+        <li class="log__row">
+          <span class="log__year">2020</span>
+          <span class="log__body">
+            <span class="log__title">Backend Developer Intern, PT Inovasi Digital Garuda Wirakarsa</span>
+            <span class="log__note">Built the foundation API for an accounting system</span>
+          </span>
+        </li>
+        <li class="log__row">
+          <span class="log__year">2021</span>
+          <span class="log__body">
+            <span class="log__title">Product Manager Intern, ALAMI</span>
+            <span class="log__note">The switch from building to deciding</span>
+          </span>
+        </li>
+        <li class="log__row">
+          <span class="log__year">2022</span>
+          <span class="log__body">
+            <span class="log__title">Associate Product Manager, ALAMI</span>
+          </span>
+        </li>
+        <li class="log__row">
+          <span class="log__year">2026</span>
+          <span class="log__body">
+            <span class="log__title">Product Manager, ALAMI</span>
+          </span>
+        </li>
+                  </ol>
+                  
+
+                  
+                  <h3 class="doc__h">Languages</h3>
+                  <ul class="langs">
+                            <li class="lang">
+          <span class="lang__name">Indonesian</span>
+          <span class="lang__level">Native</span>
+        </li>
+        <li class="lang">
+          <span class="lang__name">English</span>
+          <span class="lang__level">Professional working</span>
+        </li>
+                  </ul>
+                  
+
+                  <p class="doc__actions">
+                    <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>
+                  </p>
+                </section>
+
+                
+                <section class="view doc" id="contact" aria-labelledby="contact-title">
+                  <p class="doc__path">C:\SYSTEM\CONTACT.TXT</p>
+                  <h2 class="doc__title" id="contact-title" tabindex="-1">Contact</h2>
+                  <ul class="contact">
+                            <li class="contact__item">
+          <span class="contact__label">Email</span>
+          <a class="contact__link" href="mailto:workwithwilyan@gmail.com" data-copyable>workwithwilyan@gmail.com</a>
+        </li>
+        <li class="contact__item">
+          <span class="contact__label">LinkedIn</span>
+          <a class="contact__link" href="https://www.linkedin.com/in/mwildanyanuar/" target="_blank" rel="noopener">linkedin.com/in/mwildanyanuar</a>
+        </li>
+        <li class="contact__item">
+          <span class="contact__label">GitHub</span>
+          <a class="contact__link" href="https://github.com/DarkosidoWilyan" target="_blank" rel="noopener">github.com/DarkosidoWilyan</a>
+        </li>
+                  </ul>
+                  <p class="doc__actions">
+                    <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>
+                  </p>
+                </section>
+                
+
+              </main>
+
+              <footer class="colophon">
+                Hand-written HTML &amp; CSS · one Node build step · no framework.<br>
+                &copy; 2026 Mohammad Wildan Yanuar
+              </footer>
+
+            </div>
+
+            <div class="screen__fx" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="monitor__chin" aria-hidden="true">
+          <span class="monitor__brand">WILYAN&nbsp;PC</span>
+          <span class="monitor__slot"></span>
+          <span class="monitor__led"></span>
         </div>
       </div>
-    </header>
-
-    <main>
-      <section class="quest-menu" id="quest-menu">
-        <h2 class="quest-menu__title">Quest Log</h2>
-        <ul class="quest-menu__list" id="menu-list"></ul>
-      </section>
-    </main>
-
-    <footer class="footer" id="contact">
-      <h2 class="block__h">Signboard</h2>
-
-      
-      <div class="panel panel--sign">
-        <ul class="sign">
-                  <li class="sign__item">
-          <a class="sign__link" href="mailto:workwithwilyan@gmail.com" data-copyable>
-            <span class="sign__label">Email</span>
-            <span class="sign__value">workwithwilyan@gmail.com</span>
-          </a>
-        </li>
-        <li class="sign__item">
-          <a class="sign__link" href="https://www.linkedin.com/in/mwildanyanuar/">
-            <span class="sign__label">LinkedIn</span>
-            <span class="sign__value">linkedin.com/in/mwildanyanuar</span>
-          </a>
-        </li>
-        <li class="sign__item">
-          <a class="sign__link" href="https://github.com/DarkosidoWilyan">
-            <span class="sign__label">GitHub</span>
-            <span class="sign__value">github.com/DarkosidoWilyan</span>
-          </a>
-        </li>
-        </ul>
-      </div>
-      
-
-      <p class="colophon">Hand-written HTML &amp; CSS · one Node build step · no framework.<br>
-      &copy; 2026 Mohammad Wildan Yanuar — all rights reserved.</p>
-    </footer>
-
-  </div>
-
-  <div class="overlay" id="overlay" aria-hidden="true">
-    <button class="overlay__close" id="overlay-close" aria-label="Close quest">&#10005;</button>
-    <div class="overlay__stage">
-      <canvas id="scroll-canvas" width="128" height="128"></canvas>
-      <div class="overlay__parchment" id="overlay-content">
-        <h3 class="overlay__title" id="o-title"></h3>
-        <p class="overlay__era" id="o-era"></p>
-        <p class="overlay__objective" id="o-objective"></p>
-        <dl class="overlay__star" id="o-star" hidden>
-          <div>
-            <dt>Situation</dt>
-            <dd id="o-situation"></dd>
-          </div>
-          <div>
-            <dt>Task</dt>
-            <dd id="o-task"></dd>
-          </div>
-          <div>
-            <dt>Action</dt>
-            <dd id="o-action"></dd>
-          </div>
-          <div>
-            <dt>Result</dt>
-            <dd id="o-result"></dd>
-          </div>
-        </dl>
-        <dl class="overlay__meta">
-          <div>
-            <dt>Party</dt>
-            <dd id="o-party"></dd>
-          </div>
-          <div>
-            <dt>Loot</dt>
-            <dd><ul class="tags" id="o-tags"></ul></dd>
-          </div>
-          <div>
-            <dt>XP</dt>
-            <dd class="overlay__xp" id="o-xp"></dd>
-          </div>
-        </dl>
-      </div>
+      <div class="computer__stand" aria-hidden="true"></div>
     </div>
   </div>
 

@@ -224,101 +224,132 @@ function get(obj, dottedPath) {
 
 /* --------------------------------------------------------------- renderers */
 
+/** Stable view id for a work: "work-<id>", or "work-<n>" when id is absent. */
+function workId(q, i) {
+  return isNonEmptyString(q.id) ? `work-${q.id}` : `work-${i + 1}`;
+}
+
 function renderStat(s) {
-  const pips = Array.from({ length: 5 }, (_, i) => {
-    const lit = i < s.level ? "pip pip--lit" : "pip";
-    return `          <span class="${lit}" aria-hidden="true"></span>`;
-  }).join("\n");
+  const bar = "█".repeat(s.level) + "░".repeat(5 - s.level);
   const note = isNonEmptyString(s.note)
-    ? `\n      <p class="stat__note">${esc(s.note)}</p>`
+    ? `\n          <span class="stat__note">${esc(s.note)}</span>`
     : "";
   return [
-    `    <li class="stat">`,
-    `      <div class="stat__row">`,
-    `        <span class="stat__name">${esc(s.skill)}</span>`,
-    `        <span class="pips" role="img" aria-label="Level ${s.level} of 5">`,
-    pips,
-    `        </span>`,
-    `      </div>${note}`,
-    `    </li>`,
+    `        <li class="stat">`,
+    `          <span class="stat__name">${esc(s.skill)}</span>`,
+    `          <span class="stat__bar" role="img" aria-label="Level ${s.level} of 5">${bar}</span>${note}`,
+    `        </li>`,
   ].join("\n");
 }
 
-function renderQuest(q) {
-  const href = isNonEmptyString(q.link) ? escAttrUrl(q.link, "quests[].link") : null;
-  const title = href
-    ? `<a class="quest__link" href="${href}">${esc(q.title)}</a>`
-    : esc(q.title);
-
-  const status = isNonEmptyString(q.status)
-    ? `\n        <span class="quest__status${q.status.trim().toLowerCase() === "complete" ? " quest__status--complete" : ""}">${esc(q.status)}</span>`
-    : "";
-
+/** Main-menu row for a work. */
+function renderQuestMenu(q, i) {
+  const id = workId(q, i);
   const era = isNonEmptyString(q.era)
-    ? `\n      <p class="quest__era">${esc(q.era)}</p>`
+    ? `\n            <span class="menu__meta">${esc(q.era)}</span>`
+    : "";
+  return [
+    `        <li>`,
+    `          <a class="menu__item" href="#${esc(id)}" data-view="${esc(id)}">`,
+    `            <span class="menu__key">${i + 1}</span>`,
+    `            <span class="menu__label">${esc(q.title)}</span>${era}`,
+    `          </a>`,
+    `        </li>`,
+  ].join("\n");
+}
+
+/** Full-screen document for a work. */
+function renderQuest(q, i) {
+  const id = workId(q, i);
+  const fileName = (isNonEmptyString(q.id) ? q.id : `work-${i + 1}`).toUpperCase();
+
+  const eraBits = [];
+  if (isNonEmptyString(q.era)) eraBits.push(esc(q.era));
+  if (isNonEmptyString(q.status)) eraBits.push(`<span class="doc__status">[${esc(q.status.toUpperCase())}]</span>`);
+  const era = eraBits.length > 0
+    ? `\n        <p class="doc__era">${eraBits.join(" ")}</p>`
     : "";
 
-  const anchor = isNonEmptyString(q.id) ? ` id="quest-${esc(q.id)}"` : "";
+  const hasStar = ["situation", "task", "action", "result"].every((k) => isNonEmptyString(q[k]));
+  let body;
+  if (hasStar) {
+    const rows = [
+      ["Situation", q.situation],
+      ["Task", q.task],
+      ["Action", q.action],
+      ["Result", q.result],
+    ].map(([label, text]) =>
+      `          <div class="doc__row">\n` +
+      `            <dt>${label}</dt>\n` +
+      `            <dd>${esc(text)}</dd>\n` +
+      `          </div>`
+    );
+    body = `\n        <dl class="doc__star">\n${rows.join("\n")}\n        </dl>`;
+  } else {
+    body = `\n        <p class="doc__objective">${esc(q.objective)}</p>`;
+  }
 
   const metaRows = [];
   const hasParty =
     isNonEmptyString(q.party) || (Array.isArray(q.party) && q.party.length > 0);
   if (hasParty) {
-    const partyText = Array.isArray(q.party)
-      ? q.party.map(esc).join('<span class="sep"> · </span>')
-      : esc(q.party);
+    const partyText = Array.isArray(q.party) ? q.party.map(esc).join(" · ") : esc(q.party);
     metaRows.push(
-      `        <div class="quest__meta-row">\n` +
-      `          <dt>Party</dt>\n` +
-      `          <dd>${partyText}</dd>\n` +
-      `        </div>`
+      `          <div class="doc__row">\n` +
+      `            <dt>Role</dt>\n` +
+      `            <dd>${partyText}</dd>\n` +
+      `          </div>`
     );
   }
   if (Array.isArray(q.loot) && q.loot.length > 0) {
-    const tags = q.loot
-      .map((item) => `            <li class="tag">${esc(item)}</li>`)
-      .join("\n");
+    const tags = q.loot.map((item) => `              <li class="tag">${esc(item)}</li>`).join("\n");
     metaRows.push(
-      `        <div class="quest__meta-row">\n` +
-      `          <dt>Loot</dt>\n` +
-      `          <dd>\n            <ul class="tags">\n${tags}\n            </ul>\n          </dd>\n` +
-      `        </div>`
+      `          <div class="doc__row">\n` +
+      `            <dt>Skills</dt>\n` +
+      `            <dd>\n              <ul class="tags">\n${tags}\n              </ul>\n            </dd>\n` +
+      `          </div>`
     );
   }
   if (isNonEmptyString(q.xp) || typeof q.xp === "number") {
     const xpText =
       typeof q.xp === "number" ? `${Math.round(q.xp).toLocaleString("en-US")} XP` : q.xp;
     metaRows.push(
-      `        <div class="quest__meta-row">\n` +
-      `          <dt>XP</dt>\n` +
-      `          <dd class="quest__reward">${esc(xpText)}</dd>\n` +
-      `        </div>`
+      `          <div class="doc__row">\n` +
+      `            <dt>Impact</dt>\n` +
+      `            <dd class="doc__impact">${esc(xpText)}</dd>\n` +
+      `          </div>`
     );
   }
   const meta = metaRows.length > 0
-    ? `\n      <dl class="quest__meta">\n${metaRows.join("\n")}\n      </dl>`
+    ? `\n        <dl class="doc__meta">\n${metaRows.join("\n")}\n        </dl>`
+    : "";
+
+  const href = isNonEmptyString(q.link) ? escAttrUrl(q.link, "quests[].link") : null;
+  const link = href
+    ? `\n          <a class="btn" href="${href}" target="_blank" rel="noopener">Open project ↗</a>`
     : "";
 
   return [
-    `    <li class="quest panel"${anchor}>`,
-    `      <div class="quest__head">`,
-    `        <h3 class="quest__title">${title}</h3>${status}`,
-    `      </div>${era}`,
-    `      <p class="quest__objective">${esc(q.objective)}</p>${meta}`,
-    `    </li>`,
+    `      <article class="view doc" id="${esc(id)}" aria-labelledby="${esc(id)}-title">`,
+    `        <p class="doc__path">C:\\WORKS\\${esc(fileName)}.TXT</p>`,
+    `        <h2 class="doc__title" id="${esc(id)}-title" tabindex="-1">${esc(q.title)}</h2>${era}${body}${meta}`,
+    `        <p class="doc__actions">`,
+    `          <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>${link}`,
+    `        </p>`,
+    `      </article>`,
   ].join("\n");
 }
 
 function renderMapNode(m) {
   const note = isNonEmptyString(m.note)
-    ? `\n          <p class="map__note">${esc(m.note)}</p>`
+    ? `\n            <span class="log__note">${esc(m.note)}</span>`
     : "";
   return [
-    `        <li class="map__node">`,
-    `          <span class="map__year">${esc(m.year)}</span>`,
-    `          <div class="map__body">`,
-    `            <h3 class="map__title">${esc(m.title)}</h3>${note}`,
-    `          </div>`,
+    `        <li class="log__row">`,
+    `          <span class="log__year">${esc(m.year)}</span>`,
+    `          <span class="log__body">`,
+    `            <span class="log__title">${esc(m.title)}</span>${note}`,
+    `          </span>`,
     `        </li>`,
   ].join("\n");
 }
@@ -334,28 +365,26 @@ function renderCurrentQuest(c, player) {
   let status = "";
   if (available !== null) {
     const stateClass = available ? "status status--open" : "status status--closed";
-    const stateText = available ? "Open to new quests" : "Party full — not available";
+    const stateText = available ? "Available for new work" : "Not available right now";
     const note =
       available && isNonEmptyString(player.availabilityNote)
-        ? `<span class="status__note">${esc(player.availabilityNote)}</span>`
+        ? ` <span class="status__note">— ${esc(player.availabilityNote)}</span>`
         : "";
     status = `        <p class="${stateClass}"><span class="status__dot" aria-hidden="true"></span>${stateText}${note}</p>\n`;
   }
   const body = isNonEmptyString(c.note) ? c.note : c.description;
   return [
-    `      <div class="panel panel--current">`,
-    `${status}        <h3 class="current__title">${esc(c.title)}</h3>`,
+    `${status}        <p class="current"><span class="current__label">Now building:</span> <span class="current__title">${esc(c.title)}</span></p>`,
     `        <p class="current__desc">${esc(body)}</p>`,
-    `      </div>`,
   ].join("\n");
 }
 
 function renderLanguage(l) {
   return [
-    `    <li class="lang">`,
-    `      <span class="lang__name">${esc(l.name)}</span>`,
-    `      <span class="lang__level">${esc(l.level)}</span>`,
-    `    </li>`,
+    `        <li class="lang">`,
+    `          <span class="lang__name">${esc(l.name)}</span>`,
+    `          <span class="lang__level">${esc(l.level)}</span>`,
+    `        </li>`,
   ].join("\n");
 }
 
@@ -371,22 +400,22 @@ function renderContact(c) {
   const rawUrl = isNonEmptyString(c.url) ? c.url : c.href;
   const href = escAttrUrl(rawUrl, "contact[].url");
   const display = isNonEmptyString(c.value) ? c.value : contactDisplayValue(rawUrl);
-  const value = `\n            <span class="sign__value">${esc(display)}</span>`;
   if (!href) {
     // Unsafe URL dropped: render the label as text, never a broken link.
     return [
-      `        <li class="sign__item">`,
-      `          <span class="sign__label">${esc(c.label)}</span>`,
-      `          <span class="sign__value">${esc(display)}</span>`,
+      `        <li class="contact__item">`,
+      `          <span class="contact__label">${esc(c.label)}</span>`,
+      `          <span class="contact__value">${esc(display)}</span>`,
       `        </li>`,
     ].join("\n");
   }
-  const copyable = href.startsWith("mailto:") ? ` data-copyable` : "";
+  const isMail = href.startsWith("mailto:");
+  const copyable = isMail ? ` data-copyable` : "";
+  const external = /^https?:/i.test(href) ? ` target="_blank" rel="noopener"` : "";
   return [
-    `        <li class="sign__item">`,
-    `          <a class="sign__link" href="${href}"${copyable}>`,
-    `            <span class="sign__label">${esc(c.label)}</span>${value}`,
-    `          </a>`,
+    `        <li class="contact__item">`,
+    `          <span class="contact__label">${esc(c.label)}</span>`,
+    `          <a class="contact__link" href="${href}"${copyable}${external}>${esc(display)}</a>`,
     `        </li>`,
   ].join("\n");
 }
@@ -399,7 +428,7 @@ function build(template, content) {
       ? get(content, "player.tagline")
       : `${get(content, "player.name") || ""} — ${get(content, "player.class") || ""}`.trim(),
     year: String(new Date().getFullYear()),
-    questsJson: JSON.stringify(content.quests || []),
+    worksCount: String((content.quests || []).length),
   };
 
   let html = template;
@@ -432,17 +461,25 @@ function build(template, content) {
         warn(`@section:${key} has no item renderer — section dropped`);
         return "";
       }
-      return inner.replace(new RegExp(`<!--\\s*@items:${key}\\s*-->`, "g"), () =>
-        value.map(renderItem).join("\n")
+      // `@items:key` uses the key's renderer; `@items:key.variant` uses "key.variant".
+      return inner.replace(
+        new RegExp(`<!--\\s*@items:${key}(?:\\.(\\w+))?\\s*-->`, "g"),
+        (m, variant) => {
+          const render = variant ? ITEM_RENDERERS[`${key}.${variant}`] : renderItem;
+          if (!render) {
+            warn(`@items:${key}.${variant} has no item renderer — dropped`);
+            return "";
+          }
+          return value.map(render).join("\n");
+        }
       );
     }
   );
 
-  // 3. Scalar tokens — escaped, always (except questsJson which is raw JSON).
+  // 3. Scalar tokens — escaped, always.
   html = html.replace(/{{\s*([\w.]+)\s*}}/g, (match, pathExpr) => {
     if (Object.prototype.hasOwnProperty.call(computed, pathExpr)) {
-      const raw = computed[pathExpr];
-      return pathExpr === "questsJson" ? raw : esc(raw);
+      return esc(computed[pathExpr]);
     }
     const value = get(content, pathExpr);
     if (value === undefined || value === null) {
@@ -458,6 +495,7 @@ function build(template, content) {
 const ITEM_RENDERERS = {
   stats: renderStat,
   quests: renderQuest,
+  "quests.menu": renderQuestMenu,
   worldMap: renderMapNode,
   languages: renderLanguage,
   contact: renderContact,

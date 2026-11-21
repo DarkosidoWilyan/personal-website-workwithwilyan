@@ -1,59 +1,163 @@
 "use strict";
 
+/*
+ * script.js — progressive enhancement for the "old computer" screen.
+ * Without JS every view is stacked and the menu links are plain anchors.
+ *
+ *  - Hash router: #menu, #work-<id>, #about, #contact. One view at a time.
+ *  - Keyboard: ↑/↓ move through the menu, Enter opens, Esc goes back,
+ *    number keys open a work directly.
+ *  - Boot screen once per browser session (skipped for reduced motion).
+ *  - Copy button on mailto: contacts; status-bar clock.
+ */
+
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-/* ------------------------------------------------------- quest data -------- */
+const SCREEN = document.getElementById("screen");
+const CONTENT = document.getElementById("screen-content");
+const PATH = document.getElementById("statusbar-path");
+const VIEWS = Array.from(document.querySelectorAll(".view"));
+const MENU_ITEMS = Array.from(document.querySelectorAll(".menu__item"));
+const WORK_ITEMS = Array.from(document.querySelectorAll("#menu-works .menu__item"));
 
-const QUEST_DATA = (() => {
-  const el = document.getElementById("quest-data");
-  if (!el) return [];
-  try { return JSON.parse(el.textContent); } catch { return []; }
-})();
+let lastMenuItem = null;
 
-/* ------------------------------------------------------- reveal-once ------
- * One orchestrated entrance, staggered by DOM index. One-shot: never
- * re-fires on scroll. Reduced motion: everything is simply visible.
- */
-function initReveal() {
-  if (reducedMotion.matches) return;
+/* ----------------------------------------------------------------- router */
 
-  document.documentElement.classList.add("js");
-
-  const targets = document.querySelectorAll(".header, .quest-menu, .footer");
-  targets.forEach((el, i) => {
-    el.setAttribute("data-reveal", "");
-    el.style.setProperty("--i", String(i));
-  });
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        entry.target.classList.add("is-revealed");
-        observer.unobserve(entry.target);
-      }
-    },
-    { rootMargin: "0px 0px -10% 0px", threshold: 0.05 }
-  );
-
-  targets.forEach((el) => observer.observe(el));
+function viewFromHash() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  return VIEWS.find((v) => v.id === id) || VIEWS.find((v) => v.id === "menu");
 }
 
-/* ------------------------------------------------------- copy email -------
- * mailto: rows on the signboard get a COPY button. The label swap is the
- * feedback — no toast. Silent success, visible result.
- */
-function initCopyEmail() {
-  const links = document.querySelectorAll("a[data-copyable]");
+function pathFor(view) {
+  const path = view.querySelector(".doc__path");
+  return path ? path.textContent.trim() : "C:\\MENU";
+}
 
-  links.forEach((link) => {
+function show(view, { focus = true } = {}) {
+  if (!view) return;
+  VIEWS.forEach((v) => v.classList.toggle("is-active", v === view));
+  SCREEN.dataset.route = view.id;
+  if (PATH) PATH.textContent = pathFor(view);
+  CONTENT.scrollTop = 0;
+
+  if (!focus) return;
+  if (view.id === "menu") {
+    const target = lastMenuItem || MENU_ITEMS[0];
+    if (target) target.focus({ preventScroll: true });
+  } else {
+    const heading = view.querySelector(".doc__title");
+    if (heading) heading.focus({ preventScroll: true });
+  }
+}
+
+function go(id) {
+  if (location.hash === `#${id}`) show(viewFromHash());
+  else location.hash = id;
+}
+
+function initRouter() {
+  MENU_ITEMS.forEach((item) => {
+    item.addEventListener("click", () => {
+      lastMenuItem = item;
+    });
+  });
+  window.addEventListener("hashchange", () => show(viewFromHash()));
+  show(viewFromHash(), { focus: location.hash !== "" });
+}
+
+/* --------------------------------------------------------------- keyboard */
+
+function initKeyboard() {
+  document.addEventListener("keydown", (e) => {
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    const route = SCREEN.dataset.route;
+
+    if (e.key === "Escape" && route !== "menu") {
+      e.preventDefault();
+      go("menu");
+      return;
+    }
+
+    if (route !== "menu") return;
+
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      const current = MENU_ITEMS.indexOf(document.activeElement);
+      const step = e.key === "ArrowDown" ? 1 : -1;
+      const next =
+        current === -1
+          ? step > 0 ? 0 : MENU_ITEMS.length - 1
+          : (current + step + MENU_ITEMS.length) % MENU_ITEMS.length;
+      const item = MENU_ITEMS[next];
+      item.focus();
+      item.scrollIntoView({ block: "nearest" });
+      return;
+    }
+
+    const n = Number.parseInt(e.key, 10);
+    if (n >= 1 && n <= WORK_ITEMS.length) {
+      e.preventDefault();
+      lastMenuItem = WORK_ITEMS[n - 1];
+      go(WORK_ITEMS[n - 1].dataset.view);
+      return;
+    }
+
+    const letter = e.key.toLowerCase();
+    const shortcut = MENU_ITEMS.find(
+      (item) => item.querySelector(".menu__key")?.textContent.trim().toLowerCase() === letter
+    );
+    if (shortcut && Number.isNaN(n)) {
+      e.preventDefault();
+      lastMenuItem = shortcut;
+      go(shortcut.dataset.view);
+    }
+  });
+}
+
+/* ------------------------------------------------------------------- boot */
+
+function initBoot() {
+  const BOOT_KEY = "wilyan-os-booted";
+  let booted = false;
+  try {
+    booted = sessionStorage.getItem(BOOT_KEY) === "1";
+  } catch {}
+  if (booted || reducedMotion.matches || location.hash !== "") return;
+
+  SCREEN.classList.add("is-booting");
+  const duration = Number.parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue("--dur-boot")
+  ) || 1600;
+
+  let timer = null;
+  function finish() {
+    if (!SCREEN.classList.contains("is-booting")) return;
+    clearTimeout(timer);
+    SCREEN.classList.remove("is-booting");
+    document.removeEventListener("keydown", finish, true);
+    SCREEN.removeEventListener("click", finish);
+    try {
+      sessionStorage.setItem(BOOT_KEY, "1");
+    } catch {}
+  }
+
+  timer = setTimeout(finish, duration + 300);
+  document.addEventListener("keydown", finish, true);
+  SCREEN.addEventListener("click", finish);
+}
+
+/* ------------------------------------------------------------- copy email */
+
+function initCopyEmail() {
+  document.querySelectorAll("a[data-copyable]").forEach((link) => {
     const address = link.getAttribute("href").replace(/^mailto:/i, "");
-    const item = link.closest(".sign__item");
+    const item = link.closest(".contact__item");
     if (!address || !item) return;
 
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "sign__copy";
+    button.className = "contact__copy";
     button.textContent = "Copy";
     button.setAttribute("aria-label", `Copy email address ${address}`);
 
@@ -77,293 +181,25 @@ function initCopyEmail() {
   });
 }
 
-/* ------------------------------------------------------ background scene ---
- * 320x200 pixel-art canvas — background image only, full-screen cover.
- */
-function initBackground() {
-  const canvas = document.getElementById("bg-canvas");
-  if (!canvas) return;
-  if (reducedMotion.matches) return;
+/* ------------------------------------------------------------------ clock */
 
-  const ctx = canvas.getContext("2d");
-  const BW = 320, BH = 200;
-  canvas.width = BW;
-  canvas.height = BH;
-
-  const bg = new Image();
-
-  function frame() {
-    if (!bg.complete) {
-      requestAnimationFrame(frame);
-      return;
-    }
-    ctx.drawImage(bg, 0, 0, BW, BH);
-    requestAnimationFrame(frame);
-  }
-  bg.src = "assets/bg.png";
-  requestAnimationFrame(frame);
+function initClock() {
+  const clock = document.getElementById("clock");
+  if (!clock) return;
+  const fmt = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit" });
+  const tick = () => {
+    clock.textContent = fmt.format(new Date());
+  };
+  tick();
+  setInterval(tick, 15000);
 }
 
-/* --------------------------------------------------------- avatar sprite --
- * Header bear mascot — rotating pixel frames.
- */
-function initAvatar() {
-  const canvas = document.getElementById("avatar-canvas");
-  if (!canvas) return;
+/* ------------------------------------------------------------------- init */
 
-  const ctx = canvas.getContext("2d");
-  const SIZE = 104;
-  canvas.width = SIZE;
-  canvas.height = SIZE;
-
-  const frames = [];
-  for (let i = 0; i < 8; i++) {
-    const img = new Image();
-    img.src = "assets/bear_spin_" + i + ".png";
-    frames.push(img);
-  }
-
-  const staticImg = new Image();
-  staticImg.src = "assets/bear_static.png";
-
-  function draw(img) {
-    ctx.clearRect(0, 0, SIZE, SIZE);
-    if (!img || !img.complete || !img.naturalWidth) return;
-    const s = Math.min(SIZE / img.naturalWidth, SIZE / img.naturalHeight);
-    const w = img.naturalWidth * s;
-    const h = img.naturalHeight * s;
-    ctx.drawImage(img, (SIZE - w) / 2, (SIZE - h) / 2, w, h);
-  }
-
-  if (reducedMotion.matches) {
-    staticImg.onload = () => draw(staticImg);
-    return;
-  }
-
-  const FRAME_DURATION = 340;
-
-  function frame(t) {
-    const idx = Math.floor(t / FRAME_DURATION) % frames.length;
-    const f = frames[idx];
-    if (f && f.complete && f.naturalWidth) draw(f);
-    else if (staticImg.complete && staticImg.naturalWidth) draw(staticImg);
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
+if (SCREEN && CONTENT) {
+  initBoot();
+  initRouter();
+  initKeyboard();
+  initCopyEmail();
+  initClock();
 }
-
-/* --------------------------------------------------------- camp scene ------
- * Bottom dock: warrior + bonfire + loot sack idle animation.
- */
-function initCamp() {
-  if (document.getElementById("camp-canvas")) return;
-
-  const canvas = document.createElement("canvas");
-  canvas.id = "camp-canvas";
-  canvas.width = 256;
-  canvas.height = 128;
-  canvas.setAttribute("aria-hidden", "true");
-  document.body.appendChild(canvas);
-
-  const ctx = canvas.getContext("2d");
-
-  const frames = [];
-  for (let i = 0; i < 9; i++) {
-    const img = new Image();
-    img.src = "assets/camp_" + i + ".png";
-    frames.push(img);
-  }
-
-  const staticImg = new Image();
-  staticImg.src = "assets/camp_static.png";
-
-  if (reducedMotion.matches) {
-    staticImg.onload = () => {
-      ctx.clearRect(0, 0, 256, 128);
-      ctx.drawImage(staticImg, 0, 0);
-    };
-    return;
-  }
-
-  const FRAME_DURATION = 300;
-
-  function frame(t) {
-    const idx = Math.floor(t / FRAME_DURATION) % frames.length;
-    const f = frames[idx];
-    ctx.clearRect(0, 0, 256, 128);
-    if (f && f.complete && f.naturalWidth) {
-      ctx.drawImage(f, 0, 0);
-    } else if (staticImg.complete && staticImg.naturalWidth) {
-      ctx.drawImage(staticImg, 0, 0);
-    }
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-}
-
-/* --------------------------------------------------------- quest menu ----- */
-
-function initQuestMenu() {
-  const list = document.getElementById("menu-list");
-  if (!list || QUEST_DATA.length === 0) return;
-
-  QUEST_DATA.forEach((q, i) => {
-    const item = document.createElement("button");
-    item.type = "button";
-    item.className = "quest-menu__item";
-    item.setAttribute("data-quest-index", String(i));
-    item.innerHTML =
-      '<span class="quest-menu__item-num">' + (i + 1) + '</span>' +
-      '<span class="quest-menu__item-title">' + esc(q.title) + '</span>';
-    item.addEventListener("click", () => openQuest(i));
-    list.appendChild(item);
-  });
-}
-
-function esc(s) {
-  return String(s)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-/* ------------------------------------------------------- scroll overlay --- */
-
-let overlayOpen = false;
-let animating = false;
-
-const scrollFrames = [];
-for (let i = 0; i < 9; i++) {
-  const img = new Image();
-  img.src = "assets/scroll_open_" + i + ".png";
-  scrollFrames.push(img);
-}
-
-const OVERLAY = document.getElementById("overlay");
-const SCROLL_CANVAS = document.getElementById("scroll-canvas");
-const SCROLL_CTX = SCROLL_CANVAS.getContext("2d");
-const CLOSE_BTN = document.getElementById("overlay-close");
-
-function openQuest(index) {
-  if (overlayOpen || animating) return;
-  const q = QUEST_DATA[index];
-  if (!q) return;
-
-  OVERLAY.classList.add("overlay--open");
-  OVERLAY.classList.remove("overlay--content-shown");
-  overlayOpen = true;
-
-  populateContent(q);
-  playAnimation(0, 8, function () {
-    OVERLAY.classList.add("overlay--content-shown");
-    animating = false;
-  });
-}
-
-function closeOverlay() {
-  if (!overlayOpen || animating) return;
-  OVERLAY.classList.remove("overlay--content-shown");
-  animating = true;
-  playAnimation(8, 0, function () {
-    OVERLAY.classList.remove("overlay--open");
-    overlayOpen = false;
-    animating = false;
-  });
-}
-
-function playAnimation(from, to, done) {
-  const step = from <= to ? 1 : -1;
-  let current = from;
-
-  SCROLL_CTX.clearRect(0, 0, 128, 128);
-  const f = scrollFrames[current];
-  if (f.complete) SCROLL_CTX.drawImage(f, 0, 0);
-
-  function tick() {
-    current += step;
-    if (step > 0 ? current > to : current < to) {
-      if (done) done();
-      return;
-    }
-    const f = scrollFrames[current];
-    if (f.complete) {
-      SCROLL_CTX.clearRect(0, 0, 128, 128);
-      SCROLL_CTX.drawImage(f, 0, 0);
-    }
-    setTimeout(tick, 80);
-  }
-
-  if (from !== to) {
-    setTimeout(tick, 80);
-  } else {
-    if (done) done();
-  }
-}
-
-function populateContent(q) {
-  const title = document.getElementById("o-title");
-  const era = document.getElementById("o-era");
-  const objective = document.getElementById("o-objective");
-  const star = document.getElementById("o-star");
-  const party = document.getElementById("o-party");
-  const tags = document.getElementById("o-tags");
-  const xp = document.getElementById("o-xp");
-
-  if (title) title.textContent = q.title;
-  if (era) era.textContent = q.era;
-
-  const hasStar = q.situation && q.task && q.action && q.result;
-
-  if (objective) {
-    objective.textContent = hasStar ? "" : (q.objective || "");
-    objective.style.display = hasStar ? "none" : "";
-  }
-  if (star) {
-    star.hidden = !hasStar;
-    if (hasStar) {
-      document.getElementById("o-situation").textContent = q.situation;
-      document.getElementById("o-task").textContent = q.task;
-      document.getElementById("o-action").textContent = q.action;
-      document.getElementById("o-result").textContent = q.result;
-    }
-  }
-
-  if (party) party.textContent = q.party;
-  if (tags) {
-    tags.innerHTML = "";
-    (q.loot || []).forEach(function (t) {
-      const li = document.createElement("li");
-      li.className = "tag";
-      li.textContent = t;
-      tags.appendChild(li);
-    });
-  }
-  if (xp) {
-    xp.textContent = q.xp || "";
-    xp.style.display = q.xp ? "" : "none";
-  }
-}
-
-function initOverlay() {
-  if (!OVERLAY || !SCROLL_CANVAS || !CLOSE_BTN) return;
-
-  CLOSE_BTN.addEventListener("click", closeOverlay);
-  OVERLAY.addEventListener("click", function (e) {
-    if (e.target === OVERLAY) closeOverlay();
-  });
-
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && overlayOpen) closeOverlay();
-  });
-}
-
-/* -------------------------------------------------------- init ------------ */
-
-initReveal();
-initCopyEmail();
-initBackground();
-initAvatar();
-initCamp();
-initQuestMenu();
-initOverlay();

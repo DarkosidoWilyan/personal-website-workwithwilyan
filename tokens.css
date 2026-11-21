@@ -1,53 +1,50 @@
 /* tokens.css — the whole design system. Edit here, never in style.css.
  *
- * Palette: 13 colours. One hearth-brown ramp (hue ~50) + torchlight amber
- * accent, with tavern-roof red and ivy green as small supporting accents.
- * Lightness steps mirror the previous audited night ramp, so contrast
- * targets stay approximately (WCAG 2.1, on the dark wood panels):
- *   ink on paper-2 ............ ~13:1   (body, target 7:1)
- *   ink-2 on paper-2 .......... ~8.5:1  (secondary body)
- *   muted on paper-2 .......... ~4.8:1  (labels / chrome text)
- *   accent on paper-2 ......... ~8:1    (links, pips, XP)
- *   accent-ink on accent ...... ~6.5:1  (selection, filled states)
- *   ivy on paper-2 ............ ~6:1    (availability status)
- *   focus on paper ............ ~9:1    (ring, target 3:1)
+ * Theme: an 80s beige personal computer with a green-phosphor CRT.
+ *   - case-* : the plastic monitor and stand
+ *   - desk-* : the page around the computer
+ *   - crt-*  : everything rendered on the screen
+ * Contrast on --crt-bg (WCAG 2.1): phosphor ~14:1, phosphor-2 ~9:1,
+ * phosphor-dim ~5:1, amber ~11:1.
  */
 
 :root {
-  /* -- ramp: hearth-night brown --------------------------------------- */
-  --color-paper:      oklch(15% 0.028 45);    /* page base, tavern at night   */
-  --color-paper-2:    oklch(20% 0.034 52);    /* panel surface, dark wood     */
-  --color-paper-3:    oklch(25% 0.040 56);    /* raised / unlit pips          */
-  --color-rule:       oklch(33% 0.048 58);    /* borders, wood frames         */
-  --color-rule-2:     oklch(28% 0.042 55);    /* secondary dividers           */
-  --color-muted:      oklch(63% 0.050 70);    /* labels, chrome text          */
-  --color-ink-2:      oklch(77% 0.048 78);    /* secondary body text          */
-  --color-ink:        oklch(93% 0.028 90);    /* primary body text, cream     */
-  --color-shadow:     oklch(10% 0.020 40);    /* hard offset panel shadow     */
+  /* -- desk ------------------------------------------------------------ */
+  --desk:         #efe7d6;
+  --desk-2:       #ddd2bb;
+  --desk-ink:     #4a4335;
 
-  /* -- accent: torchlight amber ---------------------------------------- */
-  --color-accent:     oklch(80% 0.150 72);    /* XP, lit pips, active         */
-  --color-accent-ink: oklch(24% 0.050 65);    /* text on accent fills         */
-  --color-focus:      oklch(86% 0.155 80);    /* :focus-visible ring          */
+  /* -- plastic case ----------------------------------------------------- */
+  --case:         #e9e1cc;
+  --case-hi:      #f7f2e4;
+  --case-lo:      #c9bfa6;
+  --case-shadow:  #a39881;
+  --case-dark:    #2b2a26;   /* inner bezel around the glass */
 
-  /* -- supporting: tavern-roof red & ivy -------------------------------- */
-  --color-hearth:     oklch(54% 0.150 38);    /* section markers, roof        */
-  --color-ivy:        oklch(72% 0.115 148);   /* availability status          */
+  /* -- CRT --------------------------------------------------------------- */
+  --crt-bg:       #04180c;
+  --crt-bg-2:     #072a15;   /* raised rows, hover fills */
+  --phosphor:     #6dffa4;   /* primary text */
+  --phosphor-2:   #3fdc7c;   /* secondary text */
+  --phosphor-dim: #23a259;   /* labels, rules */
+  --phosphor-ink: #031208;   /* text on a phosphor fill */
+  --amber:        #ffcc66;   /* impact / highlights */
+  --led:          #44ff7a;
+  --glow:         0 0 2px rgb(109 255 164 / 0.55), 0 0 10px rgb(109 255 164 / 0.25);
 
-  /* -- type (2 families — pixel for chrome only, grotesk for reading) - */
-  --font-display: "Press Start 2P", "Courier New", monospace;
-  --font-body:    "Space Grotesk", ui-sans-serif, sans-serif;
+  /* -- type ---------------------------------------------------------------- */
+  --font-crt:  "VT323", "IBM Plex Mono", ui-monospace, monospace;   /* chrome, menus, headings */
+  --font-read: "IBM Plex Mono", ui-monospace, "Courier New", monospace; /* long-form reading */
 
-  /* -- scale: major third (1.25) from 16px ---------------------------- */
-  --text-xs:   0.64rem;
-  --text-sm:   0.8rem;
+  --text-xs:   0.8rem;
+  --text-sm:   0.9rem;
   --text-base: 1rem;
   --text-md:   1.25rem;
-  --text-lg:   1.5625rem;
-  --text-xl:   1.9531rem;
-  --text-display: clamp(1.75rem, 5vw + 1rem, 3rem);
+  --text-lg:   1.5rem;
+  --text-xl:   2rem;
+  --text-display: clamp(2rem, 4vw + 1rem, 3.25rem);
 
-  /* -- space: 4pt base ------------------------------------------------ */
+  /* -- space: 4pt base ---------------------------------------------------- */
   --space-3xs: 0.125rem;
   --space-2xs: 0.25rem;
   --space-xs:  0.5rem;
@@ -56,13 +53,10 @@
   --space-lg:  1.5rem;
   --space-xl:  2.5rem;
   --space-2xl: 4rem;
-  --space-3xl: 6rem;
 
-  /* -- motion ---------------------------------------------------------- */
-  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  /* -- motion ------------------------------------------------------------- */
+  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
   --dur-micro: 120ms;
   --dur-short: 220ms;
-  --dur-long:  420ms;
+  --dur-boot:  1600ms;
 }
