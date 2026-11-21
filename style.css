@@ -86,7 +86,7 @@ kbd {
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--grad-orb);
-  box-shadow: inset -6px -8px 16px rgb(150 130 210 / 0.25), 0 6px 18px rgb(214 200 246 / 0.6);
+  box-shadow: inset -6px -8px 16px rgb(90 120 160 / 0.25), 0 6px 18px rgb(169 205 236 / 0.55);
   animation: float 7s ease-in-out infinite;
 }
 
@@ -200,8 +200,8 @@ kbd {
   text-align: center;
 }
 
-.win__bar--mint { background: var(--grad-mint); }
-.win__bar--pink { background: var(--grad-pink); }
+.win__bar--teal { background: var(--grad-teal); }
+.win__bar--warm { background: var(--grad-warm); }
 
 .win__bar--dark {
   justify-content: flex-start;
@@ -237,7 +237,7 @@ kbd {
 }
 
 a.win__x:hover {
-  background: var(--pink);
+  background: var(--orange);
 }
 
 a.win__x:active {
@@ -304,7 +304,7 @@ a.win__x:active {
 .btn:hover {
   transform: translate(-1px, -1px);
   box-shadow: var(--bevel), 4px 4px 0 var(--ink);
-  background: var(--mint);
+  background: var(--teal);
 }
 
 .btn:active {
@@ -315,7 +315,7 @@ a.win__x:active {
 .btn:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
-  background: var(--mint);
+  background: var(--teal);
 }
 
 /* ------------------------------------------------------------------ panels */
@@ -394,7 +394,7 @@ a.win__x:active {
   height: 100%;
   border: var(--line);
   border-radius: 8px;
-  background: linear-gradient(160deg, var(--lav), var(--sky) 40%, var(--mint) 72%, var(--butter));
+  background: linear-gradient(160deg, var(--slate), var(--blue) 40%, var(--teal) 72%, var(--butter));
   box-shadow: inset 0 0 18px rgb(255 255 255 / 0.7);
 }
 
@@ -464,14 +464,14 @@ a.win__x:active {
 .key .menu__label {
   padding: 2px 8px;
   border: 1.5px dashed var(--ink-mute);
-  background: var(--pink);
+  background: var(--orange);
   font-family: var(--font-ui);
   font-size: var(--fs-xs);
   letter-spacing: 0.06em;
 }
 
-.key--mint .menu__label {
-  background: var(--mint);
+.key--teal .menu__label {
+  background: var(--teal);
 }
 
 .key .menu__key {
@@ -525,7 +525,7 @@ a.win__x:active {
 .folder:hover,
 .folder:focus-visible {
   border-color: var(--ink-mute);
-  background: rgb(191 238 221 / 0.35);
+  background: rgb(168 220 207 / 0.3);
   outline: none;
 }
 
@@ -578,7 +578,7 @@ a.win__x:active {
   height: 26px;
   border: var(--line);
   border-radius: 50%;
-  background: var(--pink);
+  background: var(--orange);
   font-family: var(--font-ui);
   font-size: var(--fs-xs);
 }
@@ -640,7 +640,7 @@ a.win__x:active {
 }
 
 .announce:hover .announce__value {
-  background: var(--mint);
+  background: var(--teal);
 }
 
 .hint {
@@ -672,7 +672,7 @@ a.win__x:active {
   overflow-y: auto;
   border: var(--line);
   background: var(--white);
-  scrollbar-color: var(--lav) var(--win-2);
+  scrollbar-color: var(--slate) var(--win-2);
 }
 
 .win--notepad .win__body::-webkit-scrollbar {
@@ -686,7 +686,7 @@ a.win__x:active {
 
 .win--notepad .win__body::-webkit-scrollbar-thumb {
   border: var(--line);
-  background: var(--grad-mint);
+  background: var(--grad-teal);
 }
 
 .doc__title {
@@ -709,7 +709,7 @@ a.win__x:active {
   padding: 0 10px;
   border: 1.5px solid var(--ink);
   border-radius: 999px;
-  background: var(--mint);
+  background: var(--teal);
   color: var(--ink);
   font-family: var(--font-ui);
   font-size: 10px;
@@ -741,15 +741,15 @@ a.win__x:active {
   justify-self: start;
   padding: 2px 10px;
   border: 1.5px solid var(--ink);
-  background: var(--pink);
+  background: var(--orange);
   box-shadow: 2px 2px 0 var(--ink);
   font-family: var(--font-ui);
   font-size: var(--fs-xs);
 }
 
-.doc__star .doc__row:nth-child(2) dt { background: var(--lav); }
-.doc__star .doc__row:nth-child(3) dt { background: var(--sky); }
-.doc__star .doc__row:nth-child(4) dt { background: var(--mint); }
+.doc__star .doc__row:nth-child(2) dt { background: var(--slate); }
+.doc__star .doc__row:nth-child(3) dt { background: var(--blue); }
+.doc__star .doc__row:nth-child(4) dt { background: var(--teal); }
 .doc__meta dt { background: var(--butter); }
 
 .doc__row dd {
@@ -775,10 +775,10 @@ a.win__x:active {
   font-size: var(--fs-xs);
 }
 
-.tag:nth-child(4n + 1) { background: var(--pink); }
-.tag:nth-child(4n + 2) { background: var(--lav); }
-.tag:nth-child(4n + 3) { background: var(--sky); }
-.tag:nth-child(4n + 4) { background: var(--mint); }
+.tag:nth-child(4n + 1) { background: var(--orange); }
+.tag:nth-child(4n + 2) { background: var(--slate); }
+.tag:nth-child(4n + 3) { background: var(--blue); }
+.tag:nth-child(4n + 4) { background: var(--teal); }
 
 .doc__actions {
   display: flex;
@@ -849,10 +849,10 @@ a.win__x:active {
   background: var(--win-2);
 }
 
-.stat__bar i.on:nth-child(1) { background: var(--pink); }
-.stat__bar i.on:nth-child(2) { background: var(--lav); }
-.stat__bar i.on:nth-child(3) { background: var(--sky); }
-.stat__bar i.on:nth-child(4) { background: var(--mint); }
+.stat__bar i.on:nth-child(1) { background: var(--orange); }
+.stat__bar i.on:nth-child(2) { background: var(--slate); }
+.stat__bar i.on:nth-child(3) { background: var(--blue); }
+.stat__bar i.on:nth-child(4) { background: var(--teal); }
 .stat__bar i.on:nth-child(5) { background: var(--butter); }
 
 .stat__note {
@@ -876,7 +876,7 @@ a.win__x:active {
   align-self: start;
   padding: 0 6px;
   border: 1.5px solid var(--ink);
-  background: var(--lav);
+  background: var(--slate);
   font-family: var(--font-ui);
   font-size: var(--fs-xs);
   text-align: center;
@@ -932,12 +932,12 @@ a.win__x:active {
   height: 12px;
   border: 1.5px solid var(--ink);
   border-radius: 50%;
-  background: var(--mint);
-  box-shadow: 0 0 0 3px rgb(191 238 221 / 0.6);
+  background: var(--teal);
+  box-shadow: 0 0 0 3px rgb(168 220 207 / 0.6);
 }
 
 .status--closed .status__dot {
-  background: var(--pink);
+  background: var(--orange);
 }
 
 .status__note {
@@ -1012,7 +1012,7 @@ a.win__x:active {
 }
 
 .contact__link:hover {
-  background: var(--mint);
+  background: var(--teal);
 }
 
 .contact__copy {
@@ -1027,11 +1027,11 @@ a.win__x:active {
 }
 
 .contact__copy:hover {
-  background: var(--lav);
+  background: var(--slate);
 }
 
 .contact__copy[data-state="copied"] {
-  background: var(--mint);
+  background: var(--teal);
 }
 
 /* -------------------------------------------------------------------- boot */
@@ -1074,7 +1074,7 @@ a.win__x:active {
   display: block;
   width: 0;
   height: 100%;
-  background: repeating-linear-gradient(90deg, var(--pink) 0 9px, var(--mint) 9px 13px);
+  background: repeating-linear-gradient(90deg, var(--orange) 0 9px, var(--teal) 9px 13px);
 }
 
 .is-booting .progress span {

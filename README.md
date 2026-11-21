@@ -162,8 +162,8 @@ a good idea.)
 
 ## Design system
 
-The site is a soft pastel retro desktop: cream dotted paper, Win95-style
-windows with chunky ink outlines and pastel gradient title bars, an old
+The site is a muted retro desktop: cream dotted paper, Win95-style
+windows with chunky ink outlines and cool gradient title bars, an old
 computer, planets and sparkles. A "loading, hang tight!" window shows once per
 session, then the home screen shows a **Hello World!** window, About/Contact
 keycaps and a **My Works** window with one folder per work. Clicking a folder
@@ -175,8 +175,8 @@ On screen, quest fields are labelled for a portfolio: `party` → **Role**,
 `loot` → **Skills**, `xp` → **Impact**. `stats`, `worldMap`, `languages` and
 `currentQuest` render in the **About me** window; `contact` in **Hello!**.
 
-Locked in `tokens.css`: paper/window/ink surfaces, a pastel palette (pink,
-lavender, mint, sky, peach, butter) and its gradients, two font families
+Locked in `tokens.css`: paper/window/ink surfaces, a muted palette (blue,
+slate, teal, sage, orange, sand, butter) and its gradients, two font families
 (Silkscreen for window chrome and buttons, Space Mono for reading), a 4pt
 spacing scale. All motion (loading bar, floating planets, twinkling sparkles)
 respects `prefers-reduced-motion`; there is no audio anywhere.
