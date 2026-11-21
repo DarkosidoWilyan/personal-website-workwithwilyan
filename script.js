@@ -401,6 +401,7 @@ const WIN_LINES = {
 let buddyReady = false;
 let sayTimer = null;
 let tip = 0;
+let beingThrown = false;
 
 function say(text, ms = 5000) {
   if (!SAY) return;
@@ -432,30 +433,149 @@ function initDrift() {
   const buddy = document.getElementById("buddy");
   let x = 0;
   let y = 0;
-  const drift = (first = false) => {
+  let timer = null;
+  let frame = 0;
+  let lastBoing = 0;
+
+  const bounds = () => {
     const area = buddy.offsetParent;
-    if (!area) return;
-    const maxX = Math.max(0, area.clientWidth - buddy.offsetWidth);
-    const maxY = Math.max(0, area.clientHeight - buddy.offsetHeight);
-    const nx = Math.round(first ? maxX * 0.92 : Math.random() * maxX);
-    const ny = Math.round(first ? maxY * 0.8 : Math.random() * maxY);
-    const secs = first ? 0 : Math.max(6, Math.hypot(nx - x, ny - y) / 50);
-    buddy.style.setProperty("--drift", `${secs}s`);
-    buddy.style.setProperty("--bx", `${nx}px`);
-    buddy.style.setProperty("--by", `${ny}px`);
-    buddy.classList.toggle("is-east", nx > area.clientWidth / 2);
-    buddy.classList.toggle("is-high", ny < 120);
-    x = nx;
-    y = ny;
-    if (!reducedMotion.matches) setTimeout(drift, (first ? 2500 : secs * 1000) + 1000 + Math.random() * 3000);
+    return area
+      ? { w: area.clientWidth, h: area.clientHeight, maxX: Math.max(0, area.clientWidth - buddy.offsetWidth), maxY: Math.max(0, area.clientHeight - buddy.offsetHeight) }
+      : null;
   };
-  drift(true);
+
+  const put = (nx, ny, secs = 0) => {
+    const b = bounds();
+    if (!b) return;
+    x = Math.min(Math.max(nx, 0), b.maxX);
+    y = Math.min(Math.max(ny, 0), b.maxY);
+    buddy.style.setProperty("--drift", `${secs}s`);
+    buddy.style.setProperty("--bx", `${x}px`);
+    buddy.style.setProperty("--by", `${y}px`);
+    buddy.classList.toggle("is-east", x > b.w / 2);
+    buddy.classList.toggle("is-high", y < 120);
+  };
+
+  const stop = () => {
+    clearTimeout(timer);
+    cancelAnimationFrame(frame);
+    const m = new DOMMatrixReadOnly(getComputedStyle(buddy).transform);
+    put(m.m41, m.m42);
+  };
+
+  const schedule = (ms) => {
+    clearTimeout(timer);
+    if (!reducedMotion.matches) timer = setTimeout(drift, ms + 1000 + Math.random() * 3000);
+  };
+
+  function drift() {
+    const b = bounds();
+    if (!b) return;
+    const nx = Math.round(Math.random() * b.maxX);
+    const ny = Math.round(Math.random() * b.maxY);
+    const secs = Math.max(6, Math.hypot(nx - x, ny - y) / 50);
+    put(nx, ny, secs);
+    schedule(secs * 1000);
+  }
+
+  function fling(vx, vy) {
+    let last = performance.now();
+    const step = (now) => {
+      const dt = Math.min(now - last, 40);
+      last = now;
+      const b = bounds();
+      if (!b) return;
+      let nx = x + vx * dt;
+      let ny = y + vy * dt;
+      let hit = false;
+      if (nx < 0 || nx > b.maxX) {
+        nx = nx < 0 ? 0 : b.maxX;
+        vx = -vx * 0.8;
+        hit = true;
+      }
+      if (ny < 0 || ny > b.maxY) {
+        ny = ny < 0 ? 0 : b.maxY;
+        vy = -vy * 0.8;
+        hit = true;
+      }
+      if (hit) {
+        BEAR.classList.remove("is-boing");
+        void BEAR.offsetWidth;
+        BEAR.classList.add("is-boing");
+        if (now - lastBoing > 2500) {
+          say("Boing!", 1500);
+          lastBoing = now;
+        }
+      }
+      const drag = Math.pow(0.9985, dt);
+      vx *= drag;
+      vy *= drag;
+      put(nx, ny);
+      if (Math.hypot(vx, vy) > 0.03) frame = requestAnimationFrame(step);
+      else schedule(1500);
+    };
+    frame = requestAnimationFrame(step);
+  }
+
+  let grab = null;
+  BEAR.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0) return;
+    stop();
+    grab = { id: e.pointerId, dx: e.clientX - x, dy: e.clientY - y, sx: e.clientX, sy: e.clientY, moved: false, trail: [] };
+    BEAR.setPointerCapture(e.pointerId);
+  });
+  BEAR.addEventListener("pointermove", (e) => {
+    if (!grab || e.pointerId !== grab.id) return;
+    if (!grab.moved && Math.hypot(e.clientX - grab.sx, e.clientY - grab.sy) < 5) return;
+    if (!grab.moved) {
+      grab.moved = true;
+      buddy.classList.add("is-held");
+    }
+    put(e.clientX - grab.dx, e.clientY - grab.dy);
+    grab.trail.push({ x, y, t: e.timeStamp });
+    if (grab.trail.length > 5) grab.trail.shift();
+  });
+  const release = (e) => {
+    if (!grab || e.pointerId !== grab.id) return;
+    const { moved, trail } = grab;
+    grab = null;
+    buddy.classList.remove("is-held");
+    if (!moved) {
+      schedule(2500);
+      return;
+    }
+    beingThrown = true;
+    setTimeout(() => {
+      beingThrown = false;
+    }, 0);
+    const first = trail[0];
+    const span = first ? e.timeStamp - first.t : 0;
+    const vx = span > 0 ? (x - first.x) / span : 0;
+    const vy = span > 0 ? (y - first.y) / span : 0;
+    const speed = Math.hypot(vx, vy);
+    const cap = speed > 3 ? 3 / speed : 1;
+    if (reducedMotion.matches || speed < 0.05) schedule(2500);
+    else {
+      if (speed > 0.6) say("Wheee!", 1500);
+      fling(vx * cap, vy * cap);
+    }
+  };
+  BEAR.addEventListener("pointerup", release);
+  BEAR.addEventListener("pointercancel", release);
+  BEAR.addEventListener("dragstart", (e) => e.preventDefault());
+
+  put(bounds() ? bounds().maxX * 0.92 : 0, bounds() ? bounds().maxY * 0.8 : 0);
+  schedule(2500);
 }
 
 function initBuddy() {
   if (!BEAR) return;
   initDrift();
   BEAR.addEventListener("click", () => {
+    if (beingThrown) {
+      beingThrown = false;
+      return;
+    }
     say(TIPS[tip]);
     tip = (tip + 1) % TIPS.length;
   });

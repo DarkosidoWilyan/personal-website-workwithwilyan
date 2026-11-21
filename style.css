@@ -510,8 +510,25 @@ html:not(.js) .pc {
   padding: 0;
   border: 0;
   background: none;
-  cursor: pointer;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
   animation: bob 4s ease-in-out infinite;
+}
+
+.buddy__bear.is-boing {
+  animation: boing 0.35s ease-out, bob 4s ease-in-out infinite;
+}
+
+.js .buddy.is-held {
+  z-index: 4;
+}
+
+.is-held .buddy__bear {
+  cursor: grabbing;
+  animation: none;
+  transform: scale(1.08) rotate(-8deg);
 }
 
 .buddy__bear img {
@@ -595,6 +612,11 @@ html:not(.js) .pc {
 @keyframes bob {
   0%, 100% { transform: translateY(0) rotate(-5deg); }
   50% { transform: translateY(-12px) rotate(5deg); }
+}
+
+@keyframes boing {
+  30% { transform: scale(1.18, 0.82); }
+  60% { transform: scale(0.92, 1.08); }
 }
 
 @keyframes blink {
