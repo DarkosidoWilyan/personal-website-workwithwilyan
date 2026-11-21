@@ -837,8 +837,27 @@ html:not(.js) .pc {
   padding: 6px var(--sp-3);
   font-size: var(--fs-sm);
   font-weight: 700;
-  text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.announce__track {
+  display: inline-flex;
+  animation: marquee 14s linear infinite;
+}
+
+.announce__track > span {
+  padding-right: 4em;
+}
+
+.announce:hover .announce__track,
+.announce:focus-visible .announce__track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .announce__arrow {
@@ -1557,5 +1576,17 @@ html:not(.js) .pc {
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+
+  .announce__value {
+    text-overflow: ellipsis;
+  }
+
+  .announce__track {
+    display: inline;
+  }
+
+  .announce__track > span[aria-hidden] {
+    display: none;
   }
 }
