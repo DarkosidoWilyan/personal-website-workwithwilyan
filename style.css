@@ -466,17 +466,85 @@ a.win__x:active,
 
 /* ------------------------------------------------------ wallpaper computer */
 
-.pc {
+.buddy {
+  display: none;
+}
+
+.js .buddy {
   position: absolute;
   right: 5%;
-  bottom: 8%;
+  bottom: 6%;
+  z-index: 1;
+}
+
+@media (min-width: 720px) {
+  .js .buddy.is-talking {
+    z-index: 3;
+  }
+}
+
+.js .buddy {
   display: grid;
   justify-items: center;
   width: clamp(180px, 20vw, 260px);
 }
 
-html:not(.js) .pc {
-  display: none;
+.buddy__bear {
+  position: relative;
+  z-index: 1;
+  width: 54%;
+  margin-bottom: -30%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  animation: float 4s ease-in-out infinite;
+}
+
+.buddy__bear img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(3px 4px 0 rgb(31 29 36 / 0.18));
+}
+
+.buddy__bear:hover img {
+  transform: rotate(-6deg);
+}
+
+.buddy__say {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + var(--sp-2));
+  z-index: 2;
+  width: max-content;
+  max-width: 230px;
+  padding: var(--sp-2) var(--sp-3);
+  border: var(--line);
+  border-radius: 10px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  font-size: var(--fs-sm);
+  animation: pop var(--dur) var(--ease);
+}
+
+.buddy__say::after {
+  content: "";
+  position: absolute;
+  right: 28%;
+  bottom: -9px;
+  width: 14px;
+  height: 14px;
+  border-right: var(--line);
+  border-bottom: var(--line);
+  background: var(--white);
+  transform: rotate(45deg);
+}
+
+.pc {
+  display: grid;
+  justify-items: center;
+  width: 100%;
 }
 
 .pc__monitor {
@@ -1270,6 +1338,14 @@ html:not(.js) .pc {
   width: min(560px, 100%);
 }
 
+.boot__bear {
+  display: block;
+  width: 96px;
+  height: auto;
+  margin: 0 auto var(--sp-3);
+  animation: float 2.4s ease-in-out infinite;
+}
+
 .boot__line {
   font-size: var(--fs-sm);
 }
@@ -1529,6 +1605,31 @@ html:not(.js) .pc {
 
   .pc {
     display: none;
+  }
+
+  .js .buddy {
+    right: 12px;
+    bottom: 12px;
+    width: 96px;
+  }
+
+  .buddy__bear {
+    width: 100%;
+    margin: 0;
+  }
+
+  .buddy__say {
+    right: 100%;
+    bottom: 55%;
+    max-width: 200px;
+    margin-right: var(--sp-2);
+  }
+
+  .buddy__say::after {
+    right: -9px;
+    bottom: 14px;
+    border-bottom: 0;
+    border-top: var(--line);
   }
 
   .folders {

@@ -107,6 +107,7 @@ function openWin(win, { focus = true, target = null } = {}) {
   if (!win) return;
   const fresh = !isOpen(win);
   if (fresh) {
+    buddyReact(win);
     opened.push(win);
     win.classList.add("is-open");
     const body = win.querySelector(".win__body");
@@ -381,6 +382,65 @@ function initBoot() {
   boot.addEventListener("click", finish);
 }
 
+/* ------------------------------------------------------------------ buddy */
+
+const SAY = document.getElementById("buddy-say");
+const BEAR = document.getElementById("buddy-bear");
+const TIPS = [
+  "Hi! I'm Wilyan's space bear.",
+  "Tip: drag a window by its title bar.",
+  "Tip: press 1–5 to open a work.",
+  "Tip: the Start menu has everything.",
+  "Tip: Esc closes the top window.",
+];
+const WIN_LINES = {
+  works: "Pick a folder, any folder.",
+  about: "That's Wilyan in a nutshell.",
+  contact: "Say hi, don't be shy!",
+};
+let buddyReady = false;
+let sayTimer = null;
+let tip = 0;
+
+function say(text, ms = 5000) {
+  if (!SAY) return;
+  SAY.hidden = true;
+  SAY.textContent = text;
+  void SAY.offsetWidth;
+  SAY.hidden = false;
+  SAY.parentElement.classList.add("is-talking");
+  clearTimeout(sayTimer);
+  sayTimer = setTimeout(() => {
+    SAY.hidden = true;
+    SAY.parentElement.classList.remove("is-talking");
+  }, ms);
+}
+
+function buddyReact(win) {
+  if (!buddyReady) return;
+  if (WIN_LINES[win.id]) say(WIN_LINES[win.id]);
+  else if (win.classList.contains("doc")) say("Good read. Esc closes it.");
+}
+
+function greeting() {
+  const h = new Date().getHours();
+  const part = h < 11 ? "pagi" : h < 15 ? "siang" : h < 18 ? "sore" : "malam";
+  return `Selamat ${part}! Welcome to Wilyan's desktop.`;
+}
+
+function initBuddy() {
+  if (!BEAR) return;
+  BEAR.addEventListener("click", () => {
+    say(TIPS[tip]);
+    tip = (tip + 1) % TIPS.length;
+  });
+  const greet = () => {
+    if (document.documentElement.classList.contains("is-booting")) setTimeout(greet, 400);
+    else setTimeout(() => say(greeting(), 6000), 600);
+  };
+  greet();
+}
+
 /* ------------------------------------------------------------- copy email */
 
 function initCopyEmail() {
@@ -404,6 +464,7 @@ function initCopyEmail() {
       }
       button.dataset.state = "copied";
       button.textContent = "Copied ✓";
+      say("Copied! Talk soon.");
       clearTimeout(timer);
       timer = setTimeout(() => {
         delete button.dataset.state;
@@ -427,6 +488,7 @@ if (SCREEN && TASKS && START && START_MENU && WINS.length > 0) {
   initDrag();
   initStart();
   initClock();
+  initBuddy();
   initKeyboard();
   initCopyEmail();
 
@@ -438,4 +500,5 @@ if (SCREEN && TASKS && START && START_MENU && WINS.length > 0) {
   if (hello && (!deepLink || compact.matches === false)) openWin(hello, { focus: false });
   if (deepLink) openWin(deepLink, { target: document.getElementById(deepId) });
   else history.replaceState(null, "", location.pathname + location.search);
+  buddyReady = true;
 }
