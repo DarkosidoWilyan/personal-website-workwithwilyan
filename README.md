@@ -83,7 +83,8 @@ The full schema, section by section:
     { "year": "2022", "title": "…", "note": "optional" }
   ],
   "currentQuest": {                     // delete the whole key → section hidden
-    "title": "…", "note": "…"           // required ("description" also accepted for note)
+    "title": "…", "note": "…",          // required ("description" also accepted for note)
+    "link": "https://…"                 // optional → "Visit …" button
   },
   "languages": [                        // empty array → section hidden
     { "name": "Indonesian", "level": "Native" } // both required; level is free text

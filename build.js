@@ -381,9 +381,13 @@ function renderCurrentQuest(c, player) {
     status = `        <p class="${stateClass}"><span class="status__dot" aria-hidden="true"></span>${stateText}${note}</p>\n`;
   }
   const body = isNonEmptyString(c.note) ? c.note : c.description;
+  const href = isNonEmptyString(c.link) ? escAttrUrl(c.link, "currentQuest.link") : null;
+  const visit = href
+    ? `\n        <p class="current__link"><a class="btn" href="${href}" target="_blank" rel="noopener">Visit ${esc(c.link.replace(/^https?:\/\//, "").replace(/\/$/, ""))} ↗</a></p>`
+    : "";
   return [
     `${status}        <p class="current"><span class="current__label">Now building:</span> <span class="current__title">${esc(c.title)}</span></p>`,
-    `        <p class="current__desc">${esc(body)}</p>`,
+    `        <p class="current__desc">${esc(body)}</p>${visit}`,
   ].join("\n");
 }
 

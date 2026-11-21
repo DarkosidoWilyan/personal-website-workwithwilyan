@@ -92,8 +92,9 @@
     { "year": "2026", "title": "Product Manager, ALAMI", "note": "" }
   ],
   "currentQuest": {
-    "title": "Creating Financial Tracker for Couple",
-    "note": "One of the main factor of short lived relationship is about finance, alignment between each other is the key here."
+    "title": "NotoArta — money tracker for couples",
+    "link": "https://notoarta.com",
+    "note": "One of the main factor of short lived relationship is about finance, alignment between each other is the key here. NotoArta gives couples one shared space to track household income, spending and personal wallets, without bank account access."
   },
   "languages": [
     { "name": "Indonesian", "level": "Native" },

@@ -1154,6 +1154,10 @@ html:not(.js) .pc {
   font-size: var(--fs-sm);
 }
 
+.current__link {
+  margin-top: var(--sp-3);
+}
+
 /* ----------------------------------------------------------------- contact */
 
 .panel--contact {
