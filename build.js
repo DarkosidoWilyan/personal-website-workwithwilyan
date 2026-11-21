@@ -230,19 +230,21 @@ function workId(q, i) {
 }
 
 function renderStat(s) {
-  const bar = "█".repeat(s.level) + "░".repeat(5 - s.level);
+  const cells = Array.from({ length: 5 }, (_, k) =>
+    `<i${k < s.level ? ' class="on"' : ""}></i>`
+  ).join("");
   const note = isNonEmptyString(s.note)
     ? `\n          <span class="stat__note">${esc(s.note)}</span>`
     : "";
   return [
     `        <li class="stat">`,
     `          <span class="stat__name">${esc(s.skill)}</span>`,
-    `          <span class="stat__bar" role="img" aria-label="Level ${s.level} of 5">${bar}</span>${note}`,
+    `          <span class="stat__bar" role="img" aria-label="Level ${s.level} of 5">${cells}</span>${note}`,
     `        </li>`,
   ].join("\n");
 }
 
-/** Main-menu row for a work. */
+/** Folder icon for a work in the "My Works" window. */
 function renderQuestMenu(q, i) {
   const id = workId(q, i);
   const era = isNonEmptyString(q.era)
@@ -250,22 +252,22 @@ function renderQuestMenu(q, i) {
     : "";
   return [
     `        <li>`,
-    `          <a class="menu__item" href="#${esc(id)}" data-view="${esc(id)}">`,
-    `            <span class="menu__key">${i + 1}</span>`,
+    `          <a class="menu__item folder" href="#${esc(id)}" data-view="${esc(id)}">`,
+    `            <span class="folder__icon" aria-hidden="true"><span class="menu__key">${i + 1}</span></span>`,
     `            <span class="menu__label">${esc(q.title)}</span>${era}`,
     `          </a>`,
     `        </li>`,
   ].join("\n");
 }
 
-/** Full-screen document for a work. */
+/** Note Pad window for a work. */
 function renderQuest(q, i) {
   const id = workId(q, i);
-  const fileName = (isNonEmptyString(q.id) ? q.id : `work-${i + 1}`).toUpperCase();
+  const fileName = (isNonEmptyString(q.id) ? q.id : `work-${i + 1}`).toLowerCase();
 
   const eraBits = [];
   if (isNonEmptyString(q.era)) eraBits.push(esc(q.era));
-  if (isNonEmptyString(q.status)) eraBits.push(`<span class="doc__status">[${esc(q.status.toUpperCase())}]</span>`);
+  if (isNonEmptyString(q.status)) eraBits.push(`<span class="doc__status">${esc(q.status)}</span>`);
   const era = eraBits.length > 0
     ? `\n        <p class="doc__era">${eraBits.join(" ")}</p>`
     : "";
@@ -330,12 +332,18 @@ function renderQuest(q, i) {
     : "";
 
   return [
-    `      <article class="view doc" id="${esc(id)}" aria-labelledby="${esc(id)}-title">`,
-    `        <p class="doc__path">C:\\WORKS\\${esc(fileName)}.TXT</p>`,
+    `      <article class="view win win--notepad doc" id="${esc(id)}" aria-labelledby="${esc(id)}-title">`,
+    `        <header class="win__bar">`,
+    `          <span class="win__title doc__path">${esc(fileName)}.txt — Note Pad</span>`,
+    `          <a class="win__x" href="#menu" aria-label="Close and go back to My Works">✕</a>`,
+    `        </header>`,
+    `        <div class="win__menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>Format</span><span>View</span><span>Help</span></div>`,
+    `        <div class="win__body">`,
     `        <h2 class="doc__title" id="${esc(id)}-title" tabindex="-1">${esc(q.title)}</h2>${era}${body}${meta}`,
     `        <p class="doc__actions">`,
-    `          <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>${link}`,
+    `          <a class="btn btn--back" href="#menu">← Back to My Works</a>${link}`,
     `        </p>`,
+    `        </div>`,
     `      </article>`,
   ].join("\n");
 }

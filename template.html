@@ -5,160 +5,222 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{{player.name}} — {{player.class}}</title>
   <meta name="description" content="{{meta.description}}">
-  <meta name="theme-color" content="#e9e1cc">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='3' width='28' height='22' rx='3' fill='%23e9e1cc'/%3E%3Crect x='5' y='6' width='22' height='16' rx='2' fill='%23041d0e'/%3E%3Cpath d='M9 11l3 3-3 3M14 18h6' stroke='%235dff9a' stroke-width='2' fill='none'/%3E%3Crect x='10' y='26' width='12' height='3' fill='%23c9bfa6'/%3E%3C/svg%3E">
+  <meta name="theme-color" content="#f4efe4">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='20' rx='2' fill='%23f7f6f3' stroke='%231f1d24' stroke-width='2'/%3E%3Crect x='6' y='6' width='20' height='14' fill='%23d9c6f5'/%3E%3Crect x='6' y='13' width='20' height='7' fill='%23bfeee0'/%3E%3Cpath d='M10 27h12' stroke='%231f1d24' stroke-width='3'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Mono:wght@400;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
   <link rel="stylesheet" href="style.css">
   <script>document.documentElement.classList.add("js");</script>
   <script type="module" src="script.js"></script>
 </head>
 <body>
 
-  <div class="desk">
-    <div class="computer">
-      <div class="monitor">
-        <div class="monitor__bezel">
-          <div class="screen" id="screen">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="sparkle" viewBox="0 0 40 40">
+      <path d="M20 1 C21.6 14 26 18.4 39 20 C26 21.6 21.6 26 20 39 C18.4 26 14 21.6 1 20 C14 18.4 18.4 14 20 1 Z" fill="#fff" stroke="#1f1d24" stroke-width="2" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
 
-            <div class="boot" id="boot" aria-hidden="true">
-              <p>WILYAN BIOS v1.0 &nbsp;(C) {{year}}</p>
-              <p>Memory test ........ 640K OK</p>
-              <p>Loading WORKS.DAT .. {{worksCount}} files</p>
-              <div class="boot__bar"><span></span></div>
-              <p class="boot__skip">Press any key to skip</p>
+  <div class="sky" aria-hidden="true">
+    <span class="planet planet--xl planet--ringed" style="--x:4%;--y:62%"></span>
+    <span class="planet planet--sm" style="--x:91%;--y:14%"></span>
+    <span class="planet planet--md planet--ringed" style="--x:86%;--y:78%"></span>
+    <svg class="sparkle" style="--x:12%;--y:8%;--s:34px"><use href="#sparkle"/></svg>
+    <svg class="sparkle" style="--x:48%;--y:4%;--s:22px"><use href="#sparkle"/></svg>
+    <svg class="sparkle" style="--x:95%;--y:42%;--s:28px"><use href="#sparkle"/></svg>
+    <svg class="sparkle" style="--x:3%;--y:34%;--s:18px"><use href="#sparkle"/></svg>
+    <svg class="sparkle" style="--x:70%;--y:93%;--s:24px"><use href="#sparkle"/></svg>
+  </div>
+
+  <div class="boot" id="boot" aria-hidden="true">
+    <div class="win win--boot">
+      <header class="win__bar win__bar--pink">
+        <span class="win__title">It's loading, hang tight!</span>
+        <span class="win__x">✕</span>
+      </header>
+      <div class="win__body">
+        <p class="boot__line">Opening {{worksCount}} works…</p>
+        <div class="progress"><span></span></div>
+        <p class="boot__skip">Click or press any key to skip</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="desktop" id="desktop">
+
+    <main class="views" id="views">
+
+      <!-- ============================================================ HOME -->
+      <section class="view view--menu" id="menu" aria-labelledby="hello-title">
+
+        <div class="win win--hello">
+          <header class="win__bar">
+            <span class="win__title" id="hello-title">Hello World!</span>
+            <span class="win__x" aria-hidden="true">✕</span>
+          </header>
+          <div class="win__body">
+            <div class="panel panel--hello">
+              <span class="planet planet--sm planet--ringed" aria-hidden="true" style="--x:80%;--y:16%"></span>
+              <span class="planet planet--xs" aria-hidden="true" style="--x:93%;--y:42%"></span>
+              <svg class="sparkle" aria-hidden="true" style="--x:62%;--y:12%;--s:18px"><use href="#sparkle"/></svg>
+              <p class="panel__eyebrow">Hi, I'm</p>
+              <h1 class="hello__name">{{player.name}}</h1>
+              <p class="hello__class">{{player.class}}</p>
             </div>
-
-            <div class="screen__content" id="screen-content">
-
-              <header class="statusbar">
-                <span class="statusbar__os">WILYAN-OS 1.0</span>
-                <span class="statusbar__path" id="statusbar-path">C:\MENU</span>
-                <span class="statusbar__clock" id="clock" aria-hidden="true"></span>
-              </header>
-
-              <main class="views">
-
-                <section class="view view--menu" id="menu" aria-labelledby="menu-title">
-                  <div class="whoami">
-                    <p class="prompt">C:\&gt; whoami</p>
-                    <h1 class="whoami__name">{{player.name}}</h1>
-                    <p class="whoami__class">{{player.class}}</p>
-                    <!-- @optional:player.tagline -->
-                    <p class="whoami__tagline">{{player.tagline}}</p>
-                    <!-- /@optional:player.tagline -->
-                  </div>
-
-                  <!-- @section:quests -->
-                  <h2 class="menu__title" id="menu-title">Main menu — select a work</h2>
-                  <ol class="menu" id="menu-works">
-                    <!-- @items:quests.menu -->
-                  </ol>
-                  <!-- /@section:quests -->
-
-                  <h2 class="menu__title">System</h2>
-                  <ol class="menu" id="menu-system">
-                    <li>
-                      <a class="menu__item" href="#about" data-view="about">
-                        <span class="menu__key">A</span>
-                        <span class="menu__label">About me</span>
-                        <span class="menu__meta">Skills, timeline, languages</span>
-                      </a>
-                    </li>
-                    <!-- @section:contact -->
-                    <li>
-                      <a class="menu__item" href="#contact" data-view="contact">
-                        <span class="menu__key">C</span>
-                        <span class="menu__label">Contact</span>
-                        <span class="menu__meta">Email, LinkedIn, GitHub</span>
-                      </a>
-                    </li>
-                    <!-- /@section:contact -->
-                  </ol>
-
-                  <p class="hint" aria-hidden="true"><kbd>↑</kbd><kbd>↓</kbd> select &nbsp; <kbd>Enter</kbd> open &nbsp; <kbd>Esc</kbd> back</p>
-                </section>
-
-                <!-- @section:quests -->
-                <!-- @items:quests -->
-                <!-- /@section:quests -->
-
-                <section class="view doc" id="about" aria-labelledby="about-title">
-                  <p class="doc__path">C:\SYSTEM\ABOUT.TXT</p>
-                  <h2 class="doc__title" id="about-title" tabindex="-1">About me</h2>
-                  <!-- @optional:player.tagline -->
-                  <p class="doc__objective">{{player.tagline}}</p>
-                  <!-- /@optional:player.tagline -->
-                  <!-- @optional:player.location -->
-                  <p class="doc__era">Based in {{player.location}}</p>
-                  <!-- /@optional:player.location -->
-
-                  <!-- @section:currentQuest -->
-                  <h3 class="doc__h">Current project</h3>
-                  <!-- @slot:currentQuest -->
-                  <!-- /@section:currentQuest -->
-
-                  <!-- @section:stats -->
-                  <h3 class="doc__h">Skills</h3>
-                  <ul class="stats">
-                    <!-- @items:stats -->
-                  </ul>
-                  <!-- /@section:stats -->
-
-                  <!-- @section:worldMap -->
-                  <h3 class="doc__h">Timeline</h3>
-                  <ol class="log">
-                    <!-- @items:worldMap -->
-                  </ol>
-                  <!-- /@section:worldMap -->
-
-                  <!-- @section:languages -->
-                  <h3 class="doc__h">Languages</h3>
-                  <ul class="langs">
-                    <!-- @items:languages -->
-                  </ul>
-                  <!-- /@section:languages -->
-
-                  <p class="doc__actions">
-                    <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>
-                  </p>
-                </section>
-
-                <!-- @section:contact -->
-                <section class="view doc" id="contact" aria-labelledby="contact-title">
-                  <p class="doc__path">C:\SYSTEM\CONTACT.TXT</p>
-                  <h2 class="doc__title" id="contact-title" tabindex="-1">Contact</h2>
-                  <ul class="contact">
-                    <!-- @items:contact -->
-                  </ul>
-                  <p class="doc__actions">
-                    <a class="btn btn--back" href="#menu">&lt; Back to menu <kbd>Esc</kbd></a>
-                  </p>
-                </section>
-                <!-- /@section:contact -->
-
-              </main>
-
-              <footer class="colophon">
-                Hand-written HTML &amp; CSS · one Node build step · no framework.<br>
-                &copy; {{year}} {{player.name}}
-              </footer>
-
-            </div>
-
-            <div class="screen__fx" aria-hidden="true"></div>
+            <!-- @optional:player.tagline -->
+            <p class="hello__tagline">{{player.tagline}}</p>
+            <!-- /@optional:player.tagline -->
+            <p class="win__actions">
+              <a class="btn" href="#works">Continue</a>
+            </p>
           </div>
         </div>
 
-        <div class="monitor__chin" aria-hidden="true">
-          <span class="monitor__brand">WILYAN&nbsp;PC</span>
-          <span class="monitor__slot"></span>
-          <span class="monitor__led"></span>
+        <div class="pc" aria-hidden="true">
+          <div class="pc__monitor">
+            <div class="pc__screen"><span>Hello!</span></div>
+          </div>
+          <div class="pc__neck"></div>
+          <div class="pc__base"></div>
+          <span class="pc__caption">Old Computer</span>
         </div>
-      </div>
-      <div class="computer__stand" aria-hidden="true"></div>
-    </div>
+
+        <nav class="keys" aria-label="About and contact">
+          <a class="menu__item key" href="#about" data-view="about">
+            <span class="menu__key">A</span>
+            <span class="menu__label">About</span>
+          </a>
+          <!-- @section:contact -->
+          <a class="menu__item key key--mint" href="#contact" data-view="contact">
+            <span class="menu__key">C</span>
+            <span class="menu__label">Contact</span>
+          </a>
+          <!-- /@section:contact -->
+        </nav>
+
+        <!-- @section:quests -->
+        <div class="win win--works" id="works">
+          <header class="win__bar win__bar--mint">
+            <span class="win__title" id="works-title" tabindex="-1">C:\My Works</span>
+            <span class="win__x" aria-hidden="true">✕</span>
+          </header>
+          <div class="win__menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+          <div class="win__body">
+            <ol class="menu folders" id="menu-works" aria-label="My works">
+              <!-- @items:quests.menu -->
+            </ol>
+          </div>
+          <footer class="win__status"><span>{{worksCount}} object(s)</span><span>Double-click? Nah, one click is fine.</span></footer>
+        </div>
+        <!-- /@section:quests -->
+
+        <!-- @section:currentQuest -->
+        <a class="announce" href="#about">
+          <span class="announce__label">Now building:</span>
+          <span class="announce__value">{{currentQuest.title}}</span>
+          <span class="announce__arrow" aria-hidden="true">▾</span>
+        </a>
+        <!-- /@section:currentQuest -->
+
+        <p class="hint" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> select &nbsp; <kbd>Enter</kbd> open &nbsp; <kbd>Esc</kbd> close</p>
+      </section>
+
+      <!-- ============================================================ WORKS -->
+      <!-- @section:quests -->
+      <!-- @items:quests -->
+      <!-- /@section:quests -->
+
+      <!-- ============================================================ ABOUT -->
+      <section class="view win win--about doc" id="about" aria-labelledby="about-title">
+        <header class="win__bar">
+          <span class="win__title doc__path">About me</span>
+          <a class="win__x" href="#menu" aria-label="Close and go back home">✕</a>
+        </header>
+        <div class="win__body">
+          <div class="panel panel--about">
+            <span class="planet planet--sm planet--ringed" aria-hidden="true" style="--x:84%;--y:24%"></span>
+            <svg class="sparkle" aria-hidden="true" style="--x:70%;--y:60%;--s:20px"><use href="#sparkle"/></svg>
+            <h2 class="doc__title" id="about-title" tabindex="-1">About me</h2>
+            <!-- @optional:player.tagline -->
+            <p class="doc__objective">{{player.tagline}}</p>
+            <!-- /@optional:player.tagline -->
+            <!-- @optional:player.location -->
+            <p class="doc__era">Based in {{player.location}}</p>
+            <!-- /@optional:player.location -->
+          </div>
+
+          <div class="about-grid">
+            <!-- @section:currentQuest -->
+            <div class="card">
+              <h3 class="card__h">Current project</h3>
+              <!-- @slot:currentQuest -->
+            </div>
+            <!-- /@section:currentQuest -->
+
+            <!-- @section:stats -->
+            <div class="card">
+              <h3 class="card__h">Skills</h3>
+              <ul class="stats">
+                <!-- @items:stats -->
+              </ul>
+            </div>
+            <!-- /@section:stats -->
+
+            <!-- @section:worldMap -->
+            <div class="card">
+              <h3 class="card__h">Timeline</h3>
+              <ol class="log">
+                <!-- @items:worldMap -->
+              </ol>
+            </div>
+            <!-- /@section:worldMap -->
+
+            <!-- @section:languages -->
+            <div class="card">
+              <h3 class="card__h">Languages</h3>
+              <ul class="langs">
+                <!-- @items:languages -->
+              </ul>
+            </div>
+            <!-- /@section:languages -->
+          </div>
+
+          <p class="doc__actions">
+            <a class="btn btn--back" href="#menu">← Back home</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================================== CONTACT -->
+      <!-- @section:contact -->
+      <section class="view win win--contact doc" id="contact" aria-labelledby="contact-title">
+        <header class="win__bar win__bar--dark">
+          <span class="win__title doc__path">Hello!</span>
+          <a class="win__x" href="#menu" aria-label="Close and go back home">✕</a>
+        </header>
+        <div class="win__body">
+          <div class="panel panel--contact">
+            <span class="planet planet--md planet--ringed" aria-hidden="true" style="--x:78%;--y:22%"></span>
+            <svg class="sparkle" aria-hidden="true" style="--x:14%;--y:20%;--s:26px"><use href="#sparkle"/></svg>
+            <h2 class="doc__title" id="contact-title" tabindex="-1">Let's work together!</h2>
+            <p class="contact__lede">Pick a channel — I usually reply within a day.</p>
+          </div>
+          <ul class="contact">
+            <!-- @items:contact -->
+          </ul>
+          <p class="doc__actions">
+            <a class="btn btn--back" href="#menu">← Back home</a>
+          </p>
+        </div>
+      </section>
+      <!-- /@section:contact -->
+
+    </main>
+
+    <footer class="colophon">
+      Hand-written HTML &amp; CSS · one Node build step · no framework · &copy; {{year}} {{player.name}}
+    </footer>
   </div>
 
 </body>

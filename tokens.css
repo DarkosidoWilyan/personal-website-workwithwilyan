@@ -1,62 +1,66 @@
 /* tokens.css — the whole design system. Edit here, never in style.css.
  *
- * Theme: an 80s beige personal computer with a green-phosphor CRT.
- *   - case-* : the plastic monitor and stand
- *   - desk-* : the page around the computer
- *   - crt-*  : everything rendered on the screen
- * Contrast on --crt-bg (WCAG 2.1): phosphor ~14:1, phosphor-2 ~9:1,
- * phosphor-dim ~5:1, amber ~11:1.
+ * Theme: a soft pastel retro desktop — cream paper, Win95-style windows
+ * with chunky ink outlines, pastel gradient title bars, planets & sparkles.
+ * Body text is --ink on --win / --paper (~15:1).
  */
 
 :root {
-  /* -- desk ------------------------------------------------------------ */
-  --desk:         #efe7d6;
-  --desk-2:       #ddd2bb;
-  --desk-ink:     #4a4335;
+  /* -- surfaces -------------------------------------------------------- */
+  --paper:      #f4efe4;
+  --paper-2:    #ebe4d4;
+  --win:        #f7f6f3;
+  --win-2:      #e7e5e0;
+  --win-shade:  #c4c1ba;
+  --white:      #ffffff;
+  --ink:        #1f1d24;
+  --ink-soft:   #4a4652;
+  --ink-mute:   #6f6a78;
 
-  /* -- plastic case ----------------------------------------------------- */
-  --case:         #e9e1cc;
-  --case-hi:      #f7f2e4;
-  --case-lo:      #c9bfa6;
-  --case-shadow:  #a39881;
-  --case-dark:    #2b2a26;   /* inner bezel around the glass */
+  /* -- pastels --------------------------------------------------------- */
+  --pink:    #f8c6da;
+  --lav:     #d6c8f6;
+  --mint:    #bfeedd;
+  --sky:     #c3e3f8;
+  --peach:   #ffdcc2;
+  --butter:  #fbf0b8;
+  --butter-2:#e8d98b;
 
-  /* -- CRT --------------------------------------------------------------- */
-  --crt-bg:       #04180c;
-  --crt-bg-2:     #072a15;   /* raised rows, hover fills */
-  --phosphor:     #6dffa4;   /* primary text */
-  --phosphor-2:   #3fdc7c;   /* secondary text */
-  --phosphor-dim: #23a259;   /* labels, rules */
-  --phosphor-ink: #031208;   /* text on a phosphor fill */
-  --amber:        #ffcc66;   /* impact / highlights */
-  --led:          #44ff7a;
-  --glow:         0 0 2px rgb(109 255 164 / 0.55), 0 0 10px rgb(109 255 164 / 0.25);
+  --grad-bar:   linear-gradient(90deg, var(--pink), var(--lav) 50%, var(--mint));
+  --grad-mint:  linear-gradient(90deg, var(--mint), var(--sky) 60%, var(--lav));
+  --grad-pink:  linear-gradient(90deg, var(--pink), #fbd3e2 60%, var(--peach));
+  --grad-panel: linear-gradient(135deg, #f9cce1 0%, #e2cdf6 35%, #c9def7 65%, #c6f1dd 100%);
+  --grad-sunset:linear-gradient(170deg, #f6b9d6 0%, #f9cfc3 45%, #fbe7b0 100%);
+  --grad-orb:   radial-gradient(circle at 32% 28%, #fff 0 12%, #fbe0f0 30%, #d7d3f7 58%, #b9ecdf 85%);
 
-  /* -- type ---------------------------------------------------------------- */
-  --font-crt:  "VT323", "IBM Plex Mono", ui-monospace, monospace;   /* chrome, menus, headings */
-  --font-read: "IBM Plex Mono", ui-monospace, "Courier New", monospace; /* long-form reading */
+  /* -- lines & depth --------------------------------------------------- */
+  --line:   2px solid var(--ink);
+  --shadow: 5px 5px 0 var(--ink);
+  --shadow-sm: 3px 3px 0 var(--ink);
+  --bevel:  inset 2px 2px 0 var(--white), inset -2px -2px 0 var(--win-shade);
 
-  --text-xs:   0.8rem;
-  --text-sm:   0.9rem;
-  --text-base: 1rem;
-  --text-md:   1.25rem;
-  --text-lg:   1.5rem;
-  --text-xl:   2rem;
-  --text-display: clamp(2rem, 4vw + 1rem, 3.25rem);
+  /* -- type ------------------------------------------------------------ */
+  --font-ui:   "Silkscreen", "Space Mono", ui-monospace, monospace;
+  --font-body: "Space Mono", ui-monospace, "Courier New", monospace;
 
-  /* -- space: 4pt base ---------------------------------------------------- */
-  --space-3xs: 0.125rem;
-  --space-2xs: 0.25rem;
-  --space-xs:  0.5rem;
-  --space-sm:  0.75rem;
-  --space-md:  1rem;
-  --space-lg:  1.5rem;
-  --space-xl:  2.5rem;
-  --space-2xl: 4rem;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: clamp(1.25rem, 2.4vw, 1.6rem);
+  --fs-xl: clamp(1.8rem, 4.4vw, 3rem);
 
-  /* -- motion ------------------------------------------------------------- */
-  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-micro: 120ms;
-  --dur-short: 220ms;
-  --dur-boot:  1600ms;
+  /* -- space ----------------------------------------------------------- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+
+  /* -- motion ---------------------------------------------------------- */
+  --ease:     cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur:      220ms;
+  --dur-boot: 1400ms;
 }

@@ -11,11 +11,11 @@ add a project, a skill, a timeline entry, or a link.
 | File | What it is | Edit it? |
 | --- | --- | --- |
 | `content.json` | All repeating content (stats, quests, map, contact) | **Yes — the only file you edit** |
-| `template.html` | One-off chrome: the computer, CRT screen, boot screen, menu shell | Rarely |
+| `template.html` | One-off chrome: desktop windows, old computer, loading window, folders shell | Rarely |
 | `build.js` | Zero-dependency Node build script | No |
 | `tokens.css` | Design tokens: palette, fonts, spacing, motion | Rarely |
 | `style.css` | Page styles (imports `tokens.css`) | Rarely |
-| `script.js` | Progressive enhancement (screen router, keyboard menu, boot screen, copy-email) | Rarely |
+| `script.js` | Progressive enhancement (window router, keyboard navigation, loading window, copy-email) | Rarely |
 | `index.html` | **Build output. Committed. Deploy this.** | Never — overwritten |
 
 ## How to add a quest
@@ -37,7 +37,7 @@ Open `content.json` and add an entry to the `quests` array:
 ```
 
 Then run `node build.js`. That's it — the work appears as a new numbered
-entry in the computer's main menu and gets its own screen at `#work-<id>`.
+folder in the **My Works** window and gets its own Note Pad window at `#work-<id>`.
 
 Rules of the schema:
 
@@ -162,16 +162,21 @@ a good idea.)
 
 ## Design system
 
-The site is an 80s beige personal computer with a green-phosphor CRT. Visitors
-"boot" it once per session, then pick a work from a DOS-style main menu
-(↑/↓ + Enter, number keys, or click); Esc returns to the menu. Every menu entry
-is a plain `#anchor` link, so without JavaScript the screens simply stack.
+The site is a soft pastel retro desktop: cream dotted paper, Win95-style
+windows with chunky ink outlines and pastel gradient title bars, an old
+computer, planets and sparkles. A "loading, hang tight!" window shows once per
+session, then the home screen shows a **Hello World!** window, About/Contact
+keycaps and a **My Works** window with one folder per work. Clicking a folder
+(or ←/→ + Enter, or number keys) opens that work as a Note Pad window; ✕ or Esc
+closes it. Every folder is a plain `#anchor` link, so without JavaScript the
+windows simply stack.
 
 On screen, quest fields are labelled for a portfolio: `party` → **Role**,
 `loot` → **Skills**, `xp` → **Impact**. `stats`, `worldMap`, `languages` and
-`currentQuest` render on the **About me** screen; `contact` on **Contact**.
+`currentQuest` render in the **About me** window; `contact` in **Hello!**.
 
-Locked in `tokens.css`: desk, beige-plastic and CRT colour groups, two font
-families (VT323 for screen chrome and menus, IBM Plex Mono for reading), a 4pt
-spacing scale. All motion (boot bar, flicker, cursor blink) respects
-`prefers-reduced-motion`; there is no audio anywhere.
+Locked in `tokens.css`: paper/window/ink surfaces, a pastel palette (pink,
+lavender, mint, sky, peach, butter) and its gradients, two font families
+(Silkscreen for window chrome and buttons, Space Mono for reading), a 4pt
+spacing scale. All motion (loading bar, floating planets, twinkling sparkles)
+respects `prefers-reduced-motion`; there is no audio anywhere.
