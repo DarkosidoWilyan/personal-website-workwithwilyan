@@ -1,133 +1,339 @@
 "use strict";
 
 /*
- * script.js — progressive enhancement for the pastel retro desktop.
- * Without JS every window is stacked and the folders are plain anchors.
+ * script.js — turns the page into a little desktop OS.
+ * Without JS every window is stacked and every link is a plain #anchor.
  *
- *  - Hash router: #menu (home), #work-<id>, #about, #contact. One view at a time.
- *    Hashes pointing inside home (e.g. #works) scroll there instead.
- *  - Keyboard: arrows move between folders/keys, Enter opens, Esc closes,
- *    number keys open a work, A / C open About / Contact.
+ *  - Window manager: open / focus / minimize / close / drag ([data-win]).
+ *  - Taskbar: one button per open window, Start menu, clock.
+ *  - The URL hash follows the focused window, so #work-<id> deep-links work.
+ *  - Keyboard: Esc closes the top window, number keys open a work,
+ *    A / C / W open About / Contact / My Works, arrows move between folders.
  *  - Loading window once per browser session (skipped for reduced motion).
  *  - Copy button on mailto: contacts.
  */
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const compact = window.matchMedia("(max-width: 719px)");
 
-const ROOT = document.getElementById("views");
-const VIEWS = Array.from(document.querySelectorAll(".view"));
-const WORK_ITEMS = Array.from(document.querySelectorAll("#menu-works .menu__item"));
-const KEY_ITEMS = Array.from(document.querySelectorAll(".keys .menu__item"));
-const MENU_ITEMS = [...WORK_ITEMS, ...KEY_ITEMS];
-const HOME = VIEWS.find((v) => v.id === "menu");
+const SCREEN = document.getElementById("screen");
+const TASKS = document.getElementById("tasks");
+const START = document.getElementById("start");
+const START_MENU = document.getElementById("start-menu");
+const WINS = Array.from(document.querySelectorAll("[data-win]"));
+const FOLDERS = Array.from(document.querySelectorAll("#menu-works .folder"));
+const BOOT_KEY = "wilyan-desktop-booted";
 
-let lastMenuItem = null;
+const GAP = 16;
+let zTop = 10;
+let cascade = 0;
+const opened = []; // open windows, in the order they were opened (taskbar order)
+const stack = []; // open windows, bottom → top
 
-/* ----------------------------------------------------------------- router */
+const isOpen = (w) => opened.includes(w);
+const isMin = (w) => w.classList.contains("is-min");
+const topWin = () => [...stack].reverse().find((w) => !isMin(w)) || null;
+const winFor = (id) => {
+  const el = id ? document.getElementById(id) : null;
+  return el ? el.closest("[data-win]") : null;
+};
 
-function targetFromHash() {
-  const id = decodeURIComponent(location.hash.slice(1));
-  return id ? document.getElementById(id) : null;
-}
+/* ---------------------------------------------------------------- placement */
 
-function viewFor(target) {
-  if (!target) return HOME;
-  return VIEWS.find((v) => v === target || v.contains(target)) || HOME;
-}
+function place(win) {
+  if (win.dataset.placed) return;
+  win.dataset.placed = "1";
+  const sw = SCREEN.clientWidth;
+  const sh = SCREEN.clientHeight;
+  const w = win.offsetWidth;
+  const iconsRight = (document.querySelector(".icons")?.getBoundingClientRect().right || 0) + GAP;
+  let left;
+  let top;
 
-function show({ focus = true } = {}) {
-  const target = targetFromHash();
-  const view = viewFor(target);
-  const changed = ROOT.dataset.route !== view.id;
-
-  VIEWS.forEach((v) => v.classList.toggle("is-active", v === view));
-  ROOT.dataset.route = view.id;
-  view.querySelectorAll(".win__body").forEach((b) => (b.scrollTop = 0));
-
-  if (target && target !== view && view.contains(target)) {
-    target.scrollIntoView({ block: "start", behavior: reducedMotion.matches ? "auto" : "smooth" });
-    const first = target.closest(".win")?.querySelector(".menu__item") || target;
-    first.focus({ preventScroll: true });
-    return;
-  }
-
-  if (changed) window.scrollTo(0, 0);
-  if (!focus) return;
-
-  if (view === HOME) {
-    const item = lastMenuItem || MENU_ITEMS[0];
-    if (item) {
-      item.focus({ preventScroll: true });
-      item.scrollIntoView({ block: "nearest" });
-    }
+  if (win.id === "hello") {
+    left = iconsRight;
+    top = GAP + 8;
+  } else if (win.id === "works") {
+    const right = iconsRight + Math.min(440, sw - GAP * 2) + GAP * 2;
+    left = right + w <= sw - GAP ? right : Math.max(iconsRight, sw - w - GAP);
+    top = right + w <= sw - GAP ? GAP * 5 : GAP * 9;
   } else {
-    view.querySelector(".doc__title")?.focus({ preventScroll: true });
+    left = Math.round((sw - w) / 2) + cascade * 28;
+    top = GAP + 12 + cascade * 28;
+    cascade = (cascade + 1) % 6;
+  }
+  move(win, left, Math.min(top, Math.max(GAP, sh - win.offsetHeight - GAP)));
+}
+
+function move(win, left, top) {
+  const sw = SCREEN.clientWidth;
+  const sh = SCREEN.clientHeight;
+  const w = win.offsetWidth;
+  const x = Math.min(Math.max(left, 80 - w), sw - 80);
+  const y = Math.min(Math.max(top, 0), sh - 40);
+  win.style.left = `${Math.round(x)}px`;
+  win.style.top = `${Math.round(y)}px`;
+}
+
+/* ----------------------------------------------------------- window manager */
+
+function syncHash() {
+  const top = topWin();
+  const url = top ? `#${top.id}` : location.pathname + location.search;
+  if ((top ? `#${top.id}` : "") !== location.hash) history.replaceState(null, "", url);
+}
+
+function focusInside(win) {
+  const el =
+    win.querySelector("[data-autofocus]") ||
+    win.querySelector(".doc__title") ||
+    win.querySelector(".folder") ||
+    win;
+  el.focus({ preventScroll: true });
+}
+
+function raise(win, { focus = false } = {}) {
+  const i = stack.indexOf(win);
+  if (i !== -1) stack.splice(i, 1);
+  stack.push(win);
+  win.style.zIndex = String(++zTop);
+  WINS.forEach((w) => w.classList.toggle("is-top", w === win));
+  if (focus) focusInside(win);
+  renderTasks();
+  syncHash();
+}
+
+function openWin(win, { focus = true, target = null } = {}) {
+  if (!win) return;
+  const fresh = !isOpen(win);
+  if (fresh) {
+    opened.push(win);
+    win.classList.add("is-open");
+    const body = win.querySelector(".win__body");
+    if (body) body.scrollTop = 0;
+    place(win);
+  }
+  win.classList.remove("is-min");
+  raise(win, { focus });
+  if (target && target !== win) {
+    target.scrollIntoView({ block: "nearest" });
+    target.focus?.({ preventScroll: true });
   }
 }
 
-function go(id) {
-  if (location.hash === `#${id}`) show();
-  else location.hash = id;
+function afterHide(win) {
+  win.classList.remove("is-top");
+  const next = topWin();
+  if (next) raise(next, { focus: true });
+  else {
+    renderTasks();
+    syncHash();
+    START.focus({ preventScroll: true });
+  }
 }
 
-function initRouter() {
-  MENU_ITEMS.forEach((item) => {
-    item.addEventListener("click", () => {
-      lastMenuItem = item;
+function closeWin(win) {
+  if (!isOpen(win)) return;
+  opened.splice(opened.indexOf(win), 1);
+  stack.splice(stack.indexOf(win), 1);
+  win.classList.remove("is-open", "is-min");
+  afterHide(win);
+}
+
+function minimizeWin(win) {
+  if (!isOpen(win) || isMin(win)) return;
+  win.classList.add("is-min");
+  afterHide(win);
+}
+
+/* ------------------------------------------------------------------ chrome */
+
+function addMinimize(win) {
+  const bar = win.querySelector(".win__bar");
+  const close = bar?.querySelector(".win__x");
+  if (!bar || !close) return;
+  const min = document.createElement("button");
+  min.type = "button";
+  min.className = "win__min";
+  min.setAttribute("aria-label", "Minimize");
+  min.textContent = "_";
+  bar.insertBefore(min, close);
+}
+
+function renderTasks() {
+  const top = topWin();
+  TASKS.replaceChildren(
+    ...opened.map((win) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "task";
+      b.textContent = win.dataset.title || win.id;
+      b.setAttribute("aria-pressed", String(win === top));
+      b.addEventListener("click", () => {
+        if (win === top) minimizeWin(win);
+        else openWin(win);
+      });
+      return b;
+    })
+  );
+}
+
+function initDrag() {
+  WINS.forEach((win) => {
+    const bar = win.querySelector(".win__bar");
+    if (!bar) return;
+    bar.addEventListener("pointerdown", (e) => {
+      if (compact.matches || e.button !== 0 || e.target.closest("a, button")) return;
+      e.preventDefault();
+      raise(win);
+      const dx = e.clientX - win.offsetLeft;
+      const dy = e.clientY - win.offsetTop;
+      bar.setPointerCapture(e.pointerId);
+      win.classList.add("is-dragging");
+      const onMove = (ev) => move(win, ev.clientX - dx, ev.clientY - dy);
+      const onUp = () => {
+        win.classList.remove("is-dragging");
+        bar.removeEventListener("pointermove", onMove);
+        bar.removeEventListener("pointerup", onUp);
+        bar.removeEventListener("pointercancel", onUp);
+      };
+      bar.addEventListener("pointermove", onMove);
+      bar.addEventListener("pointerup", onUp);
+      bar.addEventListener("pointercancel", onUp);
     });
   });
-  window.addEventListener("hashchange", () => show());
-  show({ focus: location.hash !== "" });
+}
+
+/* -------------------------------------------------------------- start menu */
+
+function toggleStart(open = START_MENU.hidden) {
+  START_MENU.hidden = !open;
+  START.setAttribute("aria-expanded", String(open));
+  if (open) START_MENU.querySelector(".start-menu__item")?.focus();
+}
+
+function initStart() {
+  START.addEventListener("click", () => toggleStart());
+  document.addEventListener("pointerdown", (e) => {
+    if (!START_MENU.hidden && !e.target.closest("#start-menu, #start")) toggleStart(false);
+  });
+  START_MENU.querySelector("[data-restart]")?.addEventListener("click", () => {
+    try {
+      sessionStorage.removeItem(BOOT_KEY);
+    } catch {}
+    location.href = location.pathname + location.search;
+  });
+}
+
+function initClock() {
+  const clock = document.getElementById("clock");
+  if (!clock) return;
+  const fmt = new Intl.DateTimeFormat([], { hour: "2-digit", minute: "2-digit" });
+  const tick = () => {
+    const now = new Date();
+    clock.textContent = fmt.format(now);
+    clock.dateTime = now.toISOString();
+  };
+  tick();
+  setInterval(tick, 15000);
+}
+
+/* ------------------------------------------------------------------ router */
+
+function openFromHash() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  const target = id ? document.getElementById(id) : null;
+  const win = winFor(id);
+  if (win) openWin(win, { target });
+}
+
+function initLinks() {
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    const ownWin = link.closest("[data-win]");
+
+    if (ownWin && link.classList.contains("win__x")) {
+      e.preventDefault();
+      closeWin(ownWin);
+      return;
+    }
+
+    const id = decodeURIComponent(link.getAttribute("href").slice(1));
+    const win = winFor(id);
+    if (!win) return;
+    e.preventDefault();
+    if (!START_MENU.hidden) toggleStart(false);
+    if (ownWin && link.classList.contains("btn--back") && ownWin !== win) closeWin(ownWin);
+    openWin(win, { target: document.getElementById(id) });
+  });
+
+  document.addEventListener("click", (e) => {
+    const min = e.target.closest(".win__min");
+    if (min) minimizeWin(min.closest("[data-win]"));
+  });
+
+  WINS.forEach((win) => {
+    win.addEventListener("pointerdown", () => {
+      if (stack[stack.length - 1] !== win) raise(win);
+    });
+  });
+
+  window.addEventListener("hashchange", openFromHash);
+  window.addEventListener("resize", () => {
+    opened.forEach((w) => move(w, w.offsetLeft, w.offsetTop));
+  });
 }
 
 /* --------------------------------------------------------------- keyboard */
 
 const NEXT = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
+const SHORTCUTS = { a: "about", c: "contact", w: "works", h: "hello" };
 
 function initKeyboard() {
   document.addEventListener("keydown", (e) => {
     if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
     if (e.target.closest?.("input, textarea, select")) return;
-    const route = ROOT.dataset.route;
 
-    if (e.key === "Escape" && route !== "menu") {
+    if (e.key === "Escape") {
       e.preventDefault();
-      go("menu");
+      if (!START_MENU.hidden) {
+        toggleStart(false);
+        START.focus();
+      } else {
+        const top = topWin();
+        if (top) closeWin(top);
+      }
       return;
     }
 
-    if (route !== "menu") return;
-
-    if (e.key in NEXT) {
-      const current = MENU_ITEMS.indexOf(document.activeElement);
-      if (current === -1 && document.activeElement !== document.body) return;
+    if (e.key in NEXT && FOLDERS.includes(document.activeElement)) {
       e.preventDefault();
-      const step = NEXT[e.key];
-      const next =
-        current === -1
-          ? step > 0 ? 0 : MENU_ITEMS.length - 1
-          : (current + step + MENU_ITEMS.length) % MENU_ITEMS.length;
-      MENU_ITEMS[next].focus();
-      MENU_ITEMS[next].scrollIntoView({ block: "nearest" });
+      const i = FOLDERS.indexOf(document.activeElement);
+      FOLDERS[(i + NEXT[e.key] + FOLDERS.length) % FOLDERS.length].focus();
+      return;
+    }
+
+    if (e.key in NEXT && !START_MENU.hidden) {
+      const items = Array.from(START_MENU.querySelectorAll(".start-menu__item"));
+      const i = items.indexOf(document.activeElement);
+      if (i === -1) return;
+      e.preventDefault();
+      items[(i + NEXT[e.key] + items.length) % items.length].focus();
       return;
     }
 
     const n = Number.parseInt(e.key, 10);
-    if (n >= 1 && n <= WORK_ITEMS.length) {
+    if (n >= 1 && n <= FOLDERS.length) {
       e.preventDefault();
-      lastMenuItem = WORK_ITEMS[n - 1];
-      go(lastMenuItem.dataset.view);
+      openWin(winFor(FOLDERS[n - 1].getAttribute("href").slice(1)));
       return;
     }
 
-    const letter = e.key.toLowerCase();
-    const shortcut = KEY_ITEMS.find(
-      (item) => item.querySelector(".menu__key")?.textContent.trim().toLowerCase() === letter
-    );
-    if (shortcut) {
+    const win = winFor(SHORTCUTS[e.key.toLowerCase()]);
+    if (win) {
       e.preventDefault();
-      lastMenuItem = shortcut;
-      go(shortcut.dataset.view);
+      openWin(win);
     }
   });
 }
@@ -135,7 +341,6 @@ function initKeyboard() {
 /* ------------------------------------------------------------------- boot */
 
 function initBoot() {
-  const BOOT_KEY = "wilyan-desktop-booted";
   const boot = document.getElementById("boot");
   let booted = false;
   try {
@@ -200,9 +405,25 @@ function initCopyEmail() {
 
 /* ------------------------------------------------------------------- init */
 
-if (ROOT && HOME) {
+if (SCREEN && TASKS && START && START_MENU && WINS.length > 0) {
+  WINS.forEach((win) => {
+    win.tabIndex = -1;
+    addMinimize(win);
+  });
   initBoot();
-  initRouter();
+  initLinks();
+  initDrag();
+  initStart();
+  initClock();
   initKeyboard();
   initCopyEmail();
+
+  const deepId = decodeURIComponent(location.hash.slice(1));
+  const deepLink = winFor(deepId);
+  const works = document.getElementById("works");
+  const hello = document.getElementById("hello");
+  if (works && works !== deepLink) openWin(works, { focus: false });
+  if (hello && (!deepLink || compact.matches === false)) openWin(hello, { focus: false });
+  if (deepLink) openWin(deepLink, { target: document.getElementById(deepId) });
+  else history.replaceState(null, "", location.pathname + location.search);
 }

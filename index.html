@@ -22,17 +22,6 @@
     </symbol>
   </svg>
 
-  <div class="sky" aria-hidden="true">
-    <span class="planet planet--xl planet--ringed" style="--x:4%;--y:62%"></span>
-    <span class="planet planet--sm" style="--x:91%;--y:14%"></span>
-    <span class="planet planet--md planet--ringed" style="--x:86%;--y:78%"></span>
-    <svg class="sparkle" style="--x:12%;--y:8%;--s:34px"><use href="#sparkle"/></svg>
-    <svg class="sparkle" style="--x:48%;--y:4%;--s:22px"><use href="#sparkle"/></svg>
-    <svg class="sparkle" style="--x:95%;--y:42%;--s:28px"><use href="#sparkle"/></svg>
-    <svg class="sparkle" style="--x:3%;--y:34%;--s:18px"><use href="#sparkle"/></svg>
-    <svg class="sparkle" style="--x:70%;--y:93%;--s:24px"><use href="#sparkle"/></svg>
-  </div>
-
   <div class="boot" id="boot" aria-hidden="true">
     <div class="win win--boot">
       <header class="win__bar win__bar--warm">
@@ -47,68 +36,90 @@
     </div>
   </div>
 
-  <div class="desktop" id="desktop">
+  <div class="os" id="os">
 
-    <main class="views" id="views">
+    <div class="screen" id="screen">
 
-      <!-- ============================================================ HOME -->
-      <section class="view view--menu" id="menu" aria-labelledby="hello-title">
-
-        <div class="win win--hello">
-          <header class="win__bar">
-            <span class="win__title" id="hello-title">Hello World!</span>
-            <span class="win__x" aria-hidden="true">✕</span>
-          </header>
-          <div class="win__body">
-            <div class="panel panel--hello">
-              <span class="planet planet--sm planet--ringed" aria-hidden="true" style="--x:80%;--y:16%"></span>
-              <span class="planet planet--xs" aria-hidden="true" style="--x:93%;--y:42%"></span>
-              <svg class="sparkle" aria-hidden="true" style="--x:62%;--y:12%;--s:18px"><use href="#sparkle"/></svg>
-              <p class="panel__eyebrow">Hi, I'm</p>
-              <h1 class="hello__name">Mohammad Wildan Yanuar</h1>
-              <p class="hello__class">Product Manager</p>
-            </div>
-            
-            <p class="hello__tagline">I build and ship fintech products at ALAMI. Started as a backend developer, moved to deciding what gets built.</p>
-            
-            <p class="win__actions">
-              <a class="btn" href="#works">Continue</a>
-            </p>
-          </div>
-        </div>
-
-        <div class="pc" aria-hidden="true">
+      <div class="wallpaper" aria-hidden="true">
+        <span class="planet planet--xl planet--ringed" style="--x:58%;--y:88%"></span>
+        <span class="planet planet--sm" style="--x:91%;--y:10%"></span>
+        <span class="planet planet--md planet--ringed" style="--x:72%;--y:30%"></span>
+        <svg class="sparkle" style="--x:20%;--y:12%;--s:34px"><use href="#sparkle"/></svg>
+        <svg class="sparkle" style="--x:48%;--y:6%;--s:22px"><use href="#sparkle"/></svg>
+        <svg class="sparkle" style="--x:96%;--y:46%;--s:28px"><use href="#sparkle"/></svg>
+        <svg class="sparkle" style="--x:34%;--y:70%;--s:18px"><use href="#sparkle"/></svg>
+        <svg class="sparkle" style="--x:78%;--y:62%;--s:24px"><use href="#sparkle"/></svg>
+        <div class="pc">
           <div class="pc__monitor">
             <div class="pc__screen"><span>Hello!</span></div>
           </div>
           <div class="pc__neck"></div>
           <div class="pc__base"></div>
-          <span class="pc__caption">Old Computer</span>
         </div>
+      </div>
 
-        <nav class="keys" aria-label="About and contact">
-          <a class="menu__item key" href="#about" data-view="about">
-            <span class="menu__key">A</span>
-            <span class="menu__label">About</span>
-          </a>
-          
-          <a class="menu__item key key--teal" href="#contact" data-view="contact">
-            <span class="menu__key">C</span>
-            <span class="menu__label">Contact</span>
-          </a>
-          
-        </nav>
-
+      <nav class="icons" aria-label="Desktop">
+        <a class="icon" href="#hello"><span class="ico ico--pc" aria-hidden="true"></span><span class="icon__label">Hello World!</span></a>
         
-        <div class="win win--works" id="works">
-          <header class="win__bar win__bar--teal">
-            <span class="win__title" id="works-title" tabindex="-1">C:\My Works</span>
-            <span class="win__x" aria-hidden="true">✕</span>
-          </header>
-          <div class="win__menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
-          <div class="win__body">
-            <ol class="menu folders" id="menu-works" aria-label="My works">
-                      <li>
+        <a class="icon" href="#works"><span class="ico ico--folder" aria-hidden="true"></span><span class="icon__label">My Works</span></a>
+        
+        <a class="icon" href="#about"><span class="ico ico--doc" aria-hidden="true"></span><span class="icon__label">About me</span></a>
+        
+        <a class="icon" href="#contact"><span class="ico ico--mail" aria-hidden="true"></span><span class="icon__label">Contact</span></a>
+        
+      </nav>
+
+      <main class="windows" id="windows">
+
+      <!-- ============================================================ HELLO -->
+      <section class="win win--hello" id="hello" data-win data-title="Hello World!" aria-labelledby="hello-title">
+        <header class="win__bar">
+          <span class="win__title" id="hello-title">Hello World!</span>
+          <a class="win__x" href="#works" aria-label="Close">✕</a>
+        </header>
+        <div class="win__body">
+          <div class="panel panel--hello">
+            <span class="planet planet--sm planet--ringed" aria-hidden="true" style="--x:80%;--y:20%"></span>
+            <span class="planet planet--xs" aria-hidden="true" style="--x:93%;--y:46%"></span>
+            <svg class="sparkle" aria-hidden="true" style="--x:62%;--y:14%;--s:18px"><use href="#sparkle"/></svg>
+            <p class="panel__eyebrow">Hi, I'm</p>
+            <h1 class="hello__name">Mohammad Wildan Yanuar</h1>
+            <p class="hello__class">Product Manager</p>
+          </div>
+          
+          <p class="hello__tagline">I build and ship fintech products at ALAMI. Started as a backend developer, moved to deciding what gets built.</p>
+          
+          <p class="hello__links">
+            
+            <a class="btn" href="#works" data-autofocus>My Works</a>
+            
+            <a class="btn" href="#about">About me</a>
+            
+            <a class="btn" href="#contact">Contact</a>
+            
+          </p>
+          
+          <a class="announce" href="#about">
+            <span class="announce__label">Now building:</span>
+            <span class="announce__value">Creating Financial Tracker for Couple</span>
+            <span class="announce__arrow" aria-hidden="true">▸</span>
+          </a>
+          
+        </div>
+        <footer class="win__status"><span>&copy; 2026 Mohammad Wildan Yanuar</span><span>Hand-written HTML &amp; CSS</span></footer>
+      </section>
+
+      <!-- ============================================================ MY WORKS -->
+      
+      <section class="win win--works" id="works" data-win data-title="My Works" aria-labelledby="works-title">
+        <header class="win__bar win__bar--teal">
+          <span class="win__title" id="works-title">C:\My Works</span>
+          <a class="win__x" href="#hello" aria-label="Close">✕</a>
+        </header>
+        <div class="win__menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+        <div class="win__body">
+          <ol class="menu folders" id="menu-works" aria-label="My works">
+                    <li>
           <a class="menu__item folder" href="#work-accounting-migration" data-view="work-accounting-migration">
             <span class="folder__icon" aria-hidden="true"><span class="menu__key">1</span></span>
             <span class="menu__label">The Accounting Migration</span>
@@ -143,29 +154,18 @@
             <span class="menu__meta">ALAMI · Associate Product Manager</span>
           </a>
         </li>
-            </ol>
-          </div>
-          <footer class="win__status"><span>5 object(s)</span><span>Double-click? Nah, one click is fine.</span></footer>
+          </ol>
         </div>
-        
-
-        
-        <a class="announce" href="#about">
-          <span class="announce__label">Now building:</span>
-          <span class="announce__value">Creating Financial Tracker for Couple</span>
-          <span class="announce__arrow" aria-hidden="true">▾</span>
-        </a>
-        
-
-        <p class="hint" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> select &nbsp; <kbd>Enter</kbd> open &nbsp; <kbd>Esc</kbd> close</p>
+        <footer class="win__status"><span>5 object(s)</span><span>Double-click? Nah, one click is fine.</span></footer>
       </section>
+      
 
       <!-- ============================================================ WORKS -->
       
-            <article class="view win win--notepad doc" id="work-accounting-migration" aria-labelledby="work-accounting-migration-title">
+            <article class="win win--notepad doc" id="work-accounting-migration" data-win data-title="accounting-migration.txt" aria-labelledby="work-accounting-migration-title">
         <header class="win__bar">
           <span class="win__title doc__path">accounting-migration.txt — Note Pad</span>
-          <a class="win__x" href="#menu" aria-label="Close and go back to My Works">✕</a>
+          <a class="win__x" href="#works" aria-label="Close">✕</a>
         </header>
         <div class="win__menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>Format</span><span>View</span><span>Help</span></div>
         <div class="win__body">
@@ -210,14 +210,14 @@
           </div>
         </dl>
         <p class="doc__actions">
-          <a class="btn btn--back" href="#menu">← Back to My Works</a>
+          <a class="btn btn--back" href="#works">← Back to My Works</a>
         </p>
         </div>
       </article>
-      <article class="view win win--notepad doc" id="work-core-banking" aria-labelledby="work-core-banking-title">
+      <article class="win win--notepad doc" id="work-core-banking" data-win data-title="core-banking.txt" aria-labelledby="work-core-banking-title">
         <header class="win__bar">
           <span class="win__title doc__path">core-banking.txt — Note Pad</span>
-          <a class="win__x" href="#menu" aria-label="Close and go back to My Works">✕</a>
+          <a class="win__x" href="#works" aria-label="Close">✕</a>
         </header>
         <div class="win__menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>Format</span><span>View</span><span>Help</span></div>
         <div class="win__body">
@@ -245,14 +245,14 @@
           </div>
         </dl>
         <p class="doc__actions">
-          <a class="btn btn--back" href="#menu">← Back to My Works</a>
+          <a class="btn btn--back" href="#works">← Back to My Works</a>
         </p>
         </div>
       </article>
-      <article class="view win win--notepad doc" id="work-bcf-launch" aria-labelledby="work-bcf-launch-title">
+      <article class="win win--notepad doc" id="work-bcf-launch" data-win data-title="bcf-launch.txt" aria-labelledby="work-bcf-launch-title">
         <header class="win__bar">
           <span class="win__title doc__path">bcf-launch.txt — Note Pad</span>
-          <a class="win__x" href="#menu" aria-label="Close and go back to My Works">✕</a>
+          <a class="win__x" href="#works" aria-label="Close">✕</a>
         </header>
         <div class="win__menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>Format</span><span>View</span><span>Help</span></div>
         <div class="win__body">
@@ -280,14 +280,14 @@
           </div>
         </dl>
         <p class="doc__actions">
-          <a class="btn btn--back" href="#menu">← Back to My Works</a>
+          <a class="btn btn--back" href="#works">← Back to My Works</a>
         </p>
         </div>
       </article>
-      <article class="view win win--notepad doc" id="work-agreement-update" aria-labelledby="work-agreement-update-title">
+      <article class="win win--notepad doc" id="work-agreement-update" data-win data-title="agreement-update.txt" aria-labelledby="work-agreement-update-title">
         <header class="win__bar">
           <span class="win__title doc__path">agreement-update.txt — Note Pad</span>
-          <a class="win__x" href="#menu" aria-label="Close and go back to My Works">✕</a>
+          <a class="win__x" href="#works" aria-label="Close">✕</a>
         </header>
         <div class="win__menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>Format</span><span>View</span><span>Help</span></div>
         <div class="win__body">
@@ -328,14 +328,14 @@
           </div>
         </dl>
         <p class="doc__actions">
-          <a class="btn btn--back" href="#menu">← Back to My Works</a>
+          <a class="btn btn--back" href="#works">← Back to My Works</a>
         </p>
         </div>
       </article>
-      <article class="view win win--notepad doc" id="work-onboarding-redesign" aria-labelledby="work-onboarding-redesign-title">
+      <article class="win win--notepad doc" id="work-onboarding-redesign" data-win data-title="onboarding-redesign.txt" aria-labelledby="work-onboarding-redesign-title">
         <header class="win__bar">
           <span class="win__title doc__path">onboarding-redesign.txt — Note Pad</span>
-          <a class="win__x" href="#menu" aria-label="Close and go back to My Works">✕</a>
+          <a class="win__x" href="#works" aria-label="Close">✕</a>
         </header>
         <div class="win__menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>Format</span><span>View</span><span>Help</span></div>
         <div class="win__body">
@@ -380,17 +380,17 @@
           </div>
         </dl>
         <p class="doc__actions">
-          <a class="btn btn--back" href="#menu">← Back to My Works</a>
+          <a class="btn btn--back" href="#works">← Back to My Works</a>
         </p>
         </div>
       </article>
       
 
       <!-- ============================================================ ABOUT -->
-      <section class="view win win--about doc" id="about" aria-labelledby="about-title">
+      <section class="win win--about doc" id="about" data-win data-title="About me" aria-labelledby="about-title">
         <header class="win__bar">
           <span class="win__title doc__path">About me</span>
-          <a class="win__x" href="#menu" aria-label="Close and go back home">✕</a>
+          <a class="win__x" href="#hello" aria-label="Close">✕</a>
         </header>
         <div class="win__body">
           <div class="panel panel--about">
@@ -520,17 +520,17 @@
           </div>
 
           <p class="doc__actions">
-            <a class="btn btn--back" href="#menu">← Back home</a>
+            <a class="btn btn--back" href="#hello">← Back home</a>
           </p>
         </div>
       </section>
 
       <!-- ========================================================== CONTACT -->
       
-      <section class="view win win--contact doc" id="contact" aria-labelledby="contact-title">
+      <section class="win win--contact doc" id="contact" data-win data-title="Contact" aria-labelledby="contact-title">
         <header class="win__bar win__bar--dark">
           <span class="win__title doc__path">Hello!</span>
-          <a class="win__x" href="#menu" aria-label="Close and go back home">✕</a>
+          <a class="win__x" href="#hello" aria-label="Close">✕</a>
         </header>
         <div class="win__body">
           <div class="panel panel--contact">
@@ -554,17 +554,58 @@
         </li>
           </ul>
           <p class="doc__actions">
-            <a class="btn btn--back" href="#menu">← Back home</a>
+            <a class="btn btn--back" href="#hello">← Back home</a>
           </p>
         </div>
       </section>
       
 
-    </main>
+      </main>
+    </div>
 
-    <footer class="colophon">
-      Hand-written HTML &amp; CSS · one Node build step · no framework · &copy; 2026 Mohammad Wildan Yanuar
-    </footer>
+    <div class="taskbar" id="taskbar">
+      <button class="start" id="start" type="button" aria-expanded="false" aria-controls="start-menu">
+        <span class="start__logo" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Start
+      </button>
+      <div class="start-menu win" id="start-menu" hidden>
+        <div class="start-menu__banner" aria-hidden="true"><span>Mohammad Wildan Yanuar</span></div>
+        <div class="start-menu__body">
+          
+          <p class="start-menu__h">My Works</p>
+          <ul class="start-menu__list">
+            <li>
+              <a class="start-menu__item" href="#work-accounting-migration"><span class="ico ico--doc ico--sm" aria-hidden="true"></span><span>The Accounting Migration</span></a>
+            </li>
+            <li>
+              <a class="start-menu__item" href="#work-core-banking"><span class="ico ico--doc ico--sm" aria-hidden="true"></span><span>The Core Banking Campaign</span></a>
+            </li>
+            <li>
+              <a class="start-menu__item" href="#work-bcf-launch"><span class="ico ico--doc ico--sm" aria-hidden="true"></span><span>Business Capital Financing</span></a>
+            </li>
+            <li>
+              <a class="start-menu__item" href="#work-agreement-update"><span class="ico ico--doc ico--sm" aria-hidden="true"></span><span>Updating Agreement Document</span></a>
+            </li>
+            <li>
+              <a class="start-menu__item" href="#work-onboarding-redesign"><span class="ico ico--doc ico--sm" aria-hidden="true"></span><span>Onboarding Under New Regulation</span></a>
+            </li>
+          </ul>
+          <hr>
+          
+          <ul class="start-menu__list">
+            <li><a class="start-menu__item" href="#hello"><span class="ico ico--pc ico--sm" aria-hidden="true"></span><span>Hello World!</span></a></li>
+            <li><a class="start-menu__item" href="#about"><span class="ico ico--doc ico--sm" aria-hidden="true"></span><span>About me</span></a></li>
+            
+            <li><a class="start-menu__item" href="#contact"><span class="ico ico--mail ico--sm" aria-hidden="true"></span><span>Contact</span></a></li>
+            
+          </ul>
+          <hr>
+          <button class="start-menu__item" type="button" data-restart><span class="ico ico--power ico--sm" aria-hidden="true"></span><span>Restart…</span></button>
+        </div>
+      </div>
+      <div class="tasks" id="tasks" role="toolbar" aria-label="Open windows"></div>
+      <div class="tray"><time class="tray__clock" id="clock"></time></div>
+    </div>
+
   </div>
 
 </body>

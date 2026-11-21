@@ -22,17 +22,6 @@
     </symbol>
   </svg>
 
-  <div class="sky" aria-hidden="true">
-    <span class="planet planet--xl planet--ringed" style="--x:4%;--y:62%"></span>
-    <span class="planet planet--sm" style="--x:91%;--y:14%"></span>
-    <span class="planet planet--md planet--ringed" style="--x:86%;--y:78%"></span>
-    <svg class="sparkle" style="--x:12%;--y:8%;--s:34px"><use href="#sparkle"/></svg>
-    <svg class="sparkle" style="--x:48%;--y:4%;--s:22px"><use href="#sparkle"/></svg>
-    <svg class="sparkle" style="--x:95%;--y:42%;--s:28px"><use href="#sparkle"/></svg>
-    <svg class="sparkle" style="--x:3%;--y:34%;--s:18px"><use href="#sparkle"/></svg>
-    <svg class="sparkle" style="--x:70%;--y:93%;--s:24px"><use href="#sparkle"/></svg>
-  </div>
-
   <div class="boot" id="boot" aria-hidden="true">
     <div class="win win--boot">
       <header class="win__bar win__bar--warm">
@@ -47,84 +36,95 @@
     </div>
   </div>
 
-  <div class="desktop" id="desktop">
+  <div class="os" id="os">
 
-    <main class="views" id="views">
+    <div class="screen" id="screen">
 
-      <!-- ============================================================ HOME -->
-      <section class="view view--menu" id="menu" aria-labelledby="hello-title">
-
-        <div class="win win--hello">
-          <header class="win__bar">
-            <span class="win__title" id="hello-title">Hello World!</span>
-            <span class="win__x" aria-hidden="true">✕</span>
-          </header>
-          <div class="win__body">
-            <div class="panel panel--hello">
-              <span class="planet planet--sm planet--ringed" aria-hidden="true" style="--x:80%;--y:16%"></span>
-              <span class="planet planet--xs" aria-hidden="true" style="--x:93%;--y:42%"></span>
-              <svg class="sparkle" aria-hidden="true" style="--x:62%;--y:12%;--s:18px"><use href="#sparkle"/></svg>
-              <p class="panel__eyebrow">Hi, I'm</p>
-              <h1 class="hello__name">{{player.name}}</h1>
-              <p class="hello__class">{{player.class}}</p>
-            </div>
-            <!-- @optional:player.tagline -->
-            <p class="hello__tagline">{{player.tagline}}</p>
-            <!-- /@optional:player.tagline -->
-            <p class="win__actions">
-              <a class="btn" href="#works">Continue</a>
-            </p>
-          </div>
-        </div>
-
-        <div class="pc" aria-hidden="true">
+      <div class="wallpaper" aria-hidden="true">
+        <span class="planet planet--xl planet--ringed" style="--x:58%;--y:88%"></span>
+        <span class="planet planet--sm" style="--x:91%;--y:10%"></span>
+        <span class="planet planet--md planet--ringed" style="--x:72%;--y:30%"></span>
+        <svg class="sparkle" style="--x:20%;--y:12%;--s:34px"><use href="#sparkle"/></svg>
+        <svg class="sparkle" style="--x:48%;--y:6%;--s:22px"><use href="#sparkle"/></svg>
+        <svg class="sparkle" style="--x:96%;--y:46%;--s:28px"><use href="#sparkle"/></svg>
+        <svg class="sparkle" style="--x:34%;--y:70%;--s:18px"><use href="#sparkle"/></svg>
+        <svg class="sparkle" style="--x:78%;--y:62%;--s:24px"><use href="#sparkle"/></svg>
+        <div class="pc">
           <div class="pc__monitor">
             <div class="pc__screen"><span>Hello!</span></div>
           </div>
           <div class="pc__neck"></div>
           <div class="pc__base"></div>
-          <span class="pc__caption">Old Computer</span>
         </div>
+      </div>
 
-        <nav class="keys" aria-label="About and contact">
-          <a class="menu__item key" href="#about" data-view="about">
-            <span class="menu__key">A</span>
-            <span class="menu__label">About</span>
-          </a>
-          <!-- @section:contact -->
-          <a class="menu__item key key--teal" href="#contact" data-view="contact">
-            <span class="menu__key">C</span>
-            <span class="menu__label">Contact</span>
-          </a>
-          <!-- /@section:contact -->
-        </nav>
-
+      <nav class="icons" aria-label="Desktop">
+        <a class="icon" href="#hello"><span class="ico ico--pc" aria-hidden="true"></span><span class="icon__label">Hello World!</span></a>
         <!-- @section:quests -->
-        <div class="win win--works" id="works">
-          <header class="win__bar win__bar--teal">
-            <span class="win__title" id="works-title" tabindex="-1">C:\My Works</span>
-            <span class="win__x" aria-hidden="true">✕</span>
-          </header>
-          <div class="win__menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
-          <div class="win__body">
-            <ol class="menu folders" id="menu-works" aria-label="My works">
-              <!-- @items:quests.menu -->
-            </ol>
-          </div>
-          <footer class="win__status"><span>{{worksCount}} object(s)</span><span>Double-click? Nah, one click is fine.</span></footer>
-        </div>
+        <a class="icon" href="#works"><span class="ico ico--folder" aria-hidden="true"></span><span class="icon__label">My Works</span></a>
         <!-- /@section:quests -->
+        <a class="icon" href="#about"><span class="ico ico--doc" aria-hidden="true"></span><span class="icon__label">About me</span></a>
+        <!-- @section:contact -->
+        <a class="icon" href="#contact"><span class="ico ico--mail" aria-hidden="true"></span><span class="icon__label">Contact</span></a>
+        <!-- /@section:contact -->
+      </nav>
 
-        <!-- @section:currentQuest -->
-        <a class="announce" href="#about">
-          <span class="announce__label">Now building:</span>
-          <span class="announce__value">{{currentQuest.title}}</span>
-          <span class="announce__arrow" aria-hidden="true">▾</span>
-        </a>
-        <!-- /@section:currentQuest -->
+      <main class="windows" id="windows">
 
-        <p class="hint" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> select &nbsp; <kbd>Enter</kbd> open &nbsp; <kbd>Esc</kbd> close</p>
+      <!-- ============================================================ HELLO -->
+      <section class="win win--hello" id="hello" data-win data-title="Hello World!" aria-labelledby="hello-title">
+        <header class="win__bar">
+          <span class="win__title" id="hello-title">Hello World!</span>
+          <a class="win__x" href="#works" aria-label="Close">✕</a>
+        </header>
+        <div class="win__body">
+          <div class="panel panel--hello">
+            <span class="planet planet--sm planet--ringed" aria-hidden="true" style="--x:80%;--y:20%"></span>
+            <span class="planet planet--xs" aria-hidden="true" style="--x:93%;--y:46%"></span>
+            <svg class="sparkle" aria-hidden="true" style="--x:62%;--y:14%;--s:18px"><use href="#sparkle"/></svg>
+            <p class="panel__eyebrow">Hi, I'm</p>
+            <h1 class="hello__name">{{player.name}}</h1>
+            <p class="hello__class">{{player.class}}</p>
+          </div>
+          <!-- @optional:player.tagline -->
+          <p class="hello__tagline">{{player.tagline}}</p>
+          <!-- /@optional:player.tagline -->
+          <p class="hello__links">
+            <!-- @section:quests -->
+            <a class="btn" href="#works" data-autofocus>My Works</a>
+            <!-- /@section:quests -->
+            <a class="btn" href="#about">About me</a>
+            <!-- @section:contact -->
+            <a class="btn" href="#contact">Contact</a>
+            <!-- /@section:contact -->
+          </p>
+          <!-- @section:currentQuest -->
+          <a class="announce" href="#about">
+            <span class="announce__label">Now building:</span>
+            <span class="announce__value">{{currentQuest.title}}</span>
+            <span class="announce__arrow" aria-hidden="true">▸</span>
+          </a>
+          <!-- /@section:currentQuest -->
+        </div>
+        <footer class="win__status"><span>&copy; {{year}} {{player.name}}</span><span>Hand-written HTML &amp; CSS</span></footer>
       </section>
+
+      <!-- ============================================================ MY WORKS -->
+      <!-- @section:quests -->
+      <section class="win win--works" id="works" data-win data-title="My Works" aria-labelledby="works-title">
+        <header class="win__bar win__bar--teal">
+          <span class="win__title" id="works-title">C:\My Works</span>
+          <a class="win__x" href="#hello" aria-label="Close">✕</a>
+        </header>
+        <div class="win__menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+        <div class="win__body">
+          <ol class="menu folders" id="menu-works" aria-label="My works">
+            <!-- @items:quests.menu -->
+          </ol>
+        </div>
+        <footer class="win__status"><span>{{worksCount}} object(s)</span><span>Double-click? Nah, one click is fine.</span></footer>
+      </section>
+      <!-- /@section:quests -->
 
       <!-- ============================================================ WORKS -->
       <!-- @section:quests -->
@@ -132,10 +132,10 @@
       <!-- /@section:quests -->
 
       <!-- ============================================================ ABOUT -->
-      <section class="view win win--about doc" id="about" aria-labelledby="about-title">
+      <section class="win win--about doc" id="about" data-win data-title="About me" aria-labelledby="about-title">
         <header class="win__bar">
           <span class="win__title doc__path">About me</span>
-          <a class="win__x" href="#menu" aria-label="Close and go back home">✕</a>
+          <a class="win__x" href="#hello" aria-label="Close">✕</a>
         </header>
         <div class="win__body">
           <div class="panel panel--about">
@@ -187,17 +187,17 @@
           </div>
 
           <p class="doc__actions">
-            <a class="btn btn--back" href="#menu">← Back home</a>
+            <a class="btn btn--back" href="#hello">← Back home</a>
           </p>
         </div>
       </section>
 
       <!-- ========================================================== CONTACT -->
       <!-- @section:contact -->
-      <section class="view win win--contact doc" id="contact" aria-labelledby="contact-title">
+      <section class="win win--contact doc" id="contact" data-win data-title="Contact" aria-labelledby="contact-title">
         <header class="win__bar win__bar--dark">
           <span class="win__title doc__path">Hello!</span>
-          <a class="win__x" href="#menu" aria-label="Close and go back home">✕</a>
+          <a class="win__x" href="#hello" aria-label="Close">✕</a>
         </header>
         <div class="win__body">
           <div class="panel panel--contact">
@@ -210,17 +210,44 @@
             <!-- @items:contact -->
           </ul>
           <p class="doc__actions">
-            <a class="btn btn--back" href="#menu">← Back home</a>
+            <a class="btn btn--back" href="#hello">← Back home</a>
           </p>
         </div>
       </section>
       <!-- /@section:contact -->
 
-    </main>
+      </main>
+    </div>
 
-    <footer class="colophon">
-      Hand-written HTML &amp; CSS · one Node build step · no framework · &copy; {{year}} {{player.name}}
-    </footer>
+    <div class="taskbar" id="taskbar">
+      <button class="start" id="start" type="button" aria-expanded="false" aria-controls="start-menu">
+        <span class="start__logo" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Start
+      </button>
+      <div class="start-menu win" id="start-menu" hidden>
+        <div class="start-menu__banner" aria-hidden="true"><span>{{player.name}}</span></div>
+        <div class="start-menu__body">
+          <!-- @section:quests -->
+          <p class="start-menu__h">My Works</p>
+          <ul class="start-menu__list">
+<!-- @items:quests.start -->
+          </ul>
+          <hr>
+          <!-- /@section:quests -->
+          <ul class="start-menu__list">
+            <li><a class="start-menu__item" href="#hello"><span class="ico ico--pc ico--sm" aria-hidden="true"></span><span>Hello World!</span></a></li>
+            <li><a class="start-menu__item" href="#about"><span class="ico ico--doc ico--sm" aria-hidden="true"></span><span>About me</span></a></li>
+            <!-- @section:contact -->
+            <li><a class="start-menu__item" href="#contact"><span class="ico ico--mail ico--sm" aria-hidden="true"></span><span>Contact</span></a></li>
+            <!-- /@section:contact -->
+          </ul>
+          <hr>
+          <button class="start-menu__item" type="button" data-restart><span class="ico ico--power ico--sm" aria-hidden="true"></span><span>Restart…</span></button>
+        </div>
+      </div>
+      <div class="tasks" id="tasks" role="toolbar" aria-label="Open windows"></div>
+      <div class="tray"><time class="tray__clock" id="clock"></time></div>
+    </div>
+
   </div>
 
 </body>

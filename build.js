@@ -332,16 +332,16 @@ function renderQuest(q, i) {
     : "";
 
   return [
-    `      <article class="view win win--notepad doc" id="${esc(id)}" aria-labelledby="${esc(id)}-title">`,
+    `      <article class="win win--notepad doc" id="${esc(id)}" data-win data-title="${esc(fileName)}.txt" aria-labelledby="${esc(id)}-title">`,
     `        <header class="win__bar">`,
     `          <span class="win__title doc__path">${esc(fileName)}.txt — Note Pad</span>`,
-    `          <a class="win__x" href="#menu" aria-label="Close and go back to My Works">✕</a>`,
+    `          <a class="win__x" href="#works" aria-label="Close">✕</a>`,
     `        </header>`,
     `        <div class="win__menubar" aria-hidden="true"><span>File</span><span>Edit</span><span>Format</span><span>View</span><span>Help</span></div>`,
     `        <div class="win__body">`,
     `        <h2 class="doc__title" id="${esc(id)}-title" tabindex="-1">${esc(q.title)}</h2>${era}${body}${meta}`,
     `        <p class="doc__actions">`,
-    `          <a class="btn btn--back" href="#menu">← Back to My Works</a>${link}`,
+    `          <a class="btn btn--back" href="#works">← Back to My Works</a>${link}`,
     `        </p>`,
     `        </div>`,
     `      </article>`,
@@ -430,6 +430,16 @@ function renderContact(c) {
 
 /* ------------------------------------------------------------------ engine */
 
+/** Entry for a work in the taskbar's Start menu. */
+function renderQuestStart(q, i) {
+  const id = workId(q, i);
+  return [
+    `            <li>`,
+    `              <a class="start-menu__item" href="#${esc(id)}"><span class="ico ico--doc ico--sm" aria-hidden="true"></span><span>${esc(q.title)}</span></a>`,
+    `            </li>`,
+  ].join("\n");
+}
+
 function build(template, content) {
   const computed = {
     "meta.description": isNonEmptyString(get(content, "player.tagline"))
@@ -504,6 +514,7 @@ const ITEM_RENDERERS = {
   stats: renderStat,
   quests: renderQuest,
   "quests.menu": renderQuestMenu,
+  "quests.start": renderQuestStart,
   worldMap: renderMapNode,
   languages: renderLanguage,
   contact: renderContact,
