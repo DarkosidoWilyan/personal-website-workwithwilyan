@@ -69,7 +69,7 @@ function move(win, left, top) {
   const sw = SCREEN.clientWidth;
   const sh = SCREEN.clientHeight;
   const w = win.offsetWidth;
-  const x = Math.min(Math.max(left, 80 - w), sw - 80);
+  const x = Math.min(Math.max(left, 80 - w), sw - w);
   const y = Math.min(Math.max(top, 0), sh - 40);
   win.style.left = `${Math.round(x)}px`;
   win.style.top = `${Math.round(y)}px`;
@@ -240,8 +240,16 @@ function initClock() {
 
 /* ------------------------------------------------------------------ router */
 
+function hashId(hash) {
+  try {
+    return decodeURIComponent(hash.slice(1));
+  } catch {
+    return "";
+  }
+}
+
 function openFromHash() {
-  const id = decodeURIComponent(location.hash.slice(1));
+  const id = hashId(location.hash);
   const target = id ? document.getElementById(id) : null;
   const win = winFor(id);
   if (win) openWin(win, { target });
@@ -249,6 +257,7 @@ function openFromHash() {
 
 function initLinks() {
   document.addEventListener("click", (e) => {
+    if (e.defaultPrevented || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
     const link = e.target.closest('a[href^="#"]');
     if (!link) return;
     const ownWin = link.closest("[data-win]");
@@ -259,7 +268,7 @@ function initLinks() {
       return;
     }
 
-    const id = decodeURIComponent(link.getAttribute("href").slice(1));
+    const id = hashId(link.getAttribute("href"));
     const win = winFor(id);
     if (!win) return;
     e.preventDefault();
@@ -276,6 +285,9 @@ function initLinks() {
   WINS.forEach((win) => {
     win.addEventListener("pointerdown", () => {
       if (stack[stack.length - 1] !== win) raise(win);
+    });
+    win.addEventListener("focusin", () => {
+      if (isOpen(win) && !isMin(win) && stack[stack.length - 1] !== win) raise(win);
     });
   });
 
@@ -418,7 +430,7 @@ if (SCREEN && TASKS && START && START_MENU && WINS.length > 0) {
   initKeyboard();
   initCopyEmail();
 
-  const deepId = decodeURIComponent(location.hash.slice(1));
+  const deepId = hashId(location.hash);
   const deepLink = winFor(deepId);
   const works = document.getElementById("works");
   const hello = document.getElementById("hello");
