@@ -11,11 +11,11 @@ add a project, a skill, a timeline entry, or a link.
 | File | What it is | Edit it? |
 | --- | --- | --- |
 | `content.json` | All repeating content (stats, quests, map, contact) | **Yes — the only file you edit** |
-| `template.html` | One-off chrome: title screen shell, section headers, pixel art | Rarely |
+| `template.html` | One-off chrome: desktop windows, old computer, loading window, folders shell | Rarely |
 | `build.js` | Zero-dependency Node build script | No |
 | `tokens.css` | Design tokens: palette, fonts, spacing, motion | Rarely |
 | `style.css` | Page styles (imports `tokens.css`) | Rarely |
-| `script.js` | Progressive enhancement (reveal, copy-email) | Rarely |
+| `script.js` | Progressive enhancement (window router, keyboard navigation, loading window, copy-email) | Rarely |
 | `index.html` | **Build output. Committed. Deploy this.** | Never — overwritten |
 
 ## How to add a quest
@@ -36,7 +36,8 @@ Open `content.json` and add an entry to the `quests` array:
 }
 ```
 
-Then run `node build.js`. That's it.
+Then run `node build.js`. That's it — the work appears as a new numbered
+folder in the **My Works** window and gets its own Note Pad window at `#work-<id>`.
 
 Rules of the schema:
 
@@ -161,8 +162,21 @@ a good idea.)
 
 ## Design system
 
-Locked in `tokens.css`: 13 colours (one hearth-brown ramp + torchlight amber
-accent, with tavern-roof red and ivy green as supporting accents),
-two font families (Press Start 2P for chrome/labels/section headings,
-Space Grotesk for reading), a 4pt spacing scale, three easings.
-All motion respects `prefers-reduced-motion`; there is no audio anywhere.
+The site is a muted retro desktop: cream dotted paper, Win95-style
+windows with chunky ink outlines and cool gradient title bars, an old
+computer, planets and sparkles. A "loading, hang tight!" window shows once per
+session, then the home screen shows a **Hello World!** window, About/Contact
+keycaps and a **My Works** window with one folder per work. Clicking a folder
+(or ←/→ + Enter, or number keys) opens that work as a Note Pad window; ✕ or Esc
+closes it. Every folder is a plain `#anchor` link, so without JavaScript the
+windows simply stack.
+
+On screen, quest fields are labelled for a portfolio: `party` → **Role**,
+`loot` → **Skills**, `xp` → **Impact**. `stats`, `worldMap`, `languages` and
+`currentQuest` render in the **About me** window; `contact` in **Hello!**.
+
+Locked in `tokens.css`: paper/window/ink surfaces, a muted palette (blue,
+slate, teal, sage, orange, sand, butter) and its gradients, two font families
+(Silkscreen for window chrome and buttons, Space Mono for reading), a 4pt
+spacing scale. All motion (loading bar, floating planets, twinkling sparkles)
+respects `prefers-reduced-motion`; there is no audio anywhere.
