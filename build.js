@@ -455,6 +455,13 @@ function build(template, content) {
 
   let html = template;
 
+  // 0. "Now building" bar links to the current project when it has a safe link.
+  const cq = content.currentQuest || {};
+  const cqHref = isNonEmptyString(cq.link) ? escAttrUrl(cq.link, "currentQuest.link") : null;
+  html = html
+    .replace(/{{@announceAttrs}}/g, cqHref ? `href="${cqHref}" target="_blank" rel="noopener"` : `href="#about"`)
+    .replace(/{{@announceArrow}}/g, cqHref ? "↗" : "▸");
+
   // 1. Optional regions: kept only when the value is a non-empty string.
   html = html.replace(
     /<!--\s*@optional:([\w.]+)\s*-->([\s\S]*?)<!--\s*\/@optional:\1\s*-->/g,

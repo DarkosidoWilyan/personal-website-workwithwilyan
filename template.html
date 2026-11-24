@@ -106,10 +106,10 @@
             <!-- /@section:contact -->
           </p>
           <!-- @section:currentQuest -->
-          <a class="announce" href="#about">
+          <a class="announce" {{@announceAttrs}}>
             <span class="announce__label">Now building:</span>
             <span class="announce__value"><span class="announce__track"><span>{{currentQuest.title}}</span><span aria-hidden="true">{{currentQuest.title}}</span></span></span>
-            <span class="announce__arrow" aria-hidden="true">▸</span>
+            <span class="announce__arrow" aria-hidden="true">{{@announceArrow}}</span>
           </a>
           <!-- /@section:currentQuest -->
         </div>
