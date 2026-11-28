@@ -89,7 +89,18 @@ kbd {
 .planet--xs { --d: 22px; }
 .planet--sm { --d: 46px; }
 .planet--md { --d: 78px; }
-.planet--xl { --d: 160px; }
+.planet--xl {
+  --d: clamp(280px, 30vw, 430px);
+  background: url("assets/dystopian-planet.png") center / cover;
+  box-shadow: inset -24px -32px 56px rgb(2 20 48 / 0.42), 0 12px 44px rgb(47 128 237 / 0.34);
+  filter: saturate(1.12) contrast(1.06);
+}
+
+.planet--xl.planet--ringed::after {
+  border-width: 2px;
+  border-color: rgb(190 238 255 / 0.72);
+  box-shadow: 0 0 10px rgb(47 128 237 / 0.35), 0 0 0 1px rgb(255 255 255 / 0.28);
+}
 
 .planet--ringed::after {
   content: "";
@@ -1672,8 +1683,15 @@ a.win__x:active,
     flex-basis: 110px;
   }
 
-  .planet--xl {
-    --d: 110px;
+  .wallpaper .planet:not(.planet--xl) {
+    display: none;
+  }
+
+  .wallpaper .planet--xl {
+    --x: 68% !important;
+    --y: 18% !important;
+    --d: min(78vw, 300px);
+    opacity: 0.66;
   }
 }
 
