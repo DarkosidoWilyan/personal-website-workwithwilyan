@@ -92,8 +92,8 @@ kbd {
 .planet--xl {
   --d: clamp(280px, 30vw, 430px);
   background: url("assets/dystopian-planet.png") center / cover;
-  box-shadow: inset -24px -32px 56px rgb(2 20 48 / 0.42), 0 12px 44px rgb(47 128 237 / 0.34);
-  filter: saturate(1.12) contrast(1.06);
+  box-shadow: inset -24px -32px 56px rgb(24 71 138 / 0.28), 0 12px 44px rgb(47 128 237 / 0.3);
+  filter: hue-rotate(12deg) saturate(0.9) contrast(0.92) brightness(1.06);
 }
 
 .planet--xl.planet--ringed::after {
@@ -122,6 +122,10 @@ kbd {
 
 .wallpaper .planet {
   opacity: 0.78;
+}
+
+.wallpaper .planet--xl {
+  opacity: 0.68;
 }
 
 .wallpaper .sparkle:nth-of-type(2n) { animation-delay: -1.4s; }
