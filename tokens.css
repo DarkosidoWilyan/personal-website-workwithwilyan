@@ -1,38 +1,38 @@
 /* tokens.css — the whole design system. Edit here, never in style.css.
  *
- * Theme: a muted retro desktop — cream paper, Win95-style windows
- * with chunky ink outlines, cool gradient title bars, planets & sparkles.
- * Body text is --ink on --win / --paper (~15:1).
+ * Theme: a Bliss-inspired retro desktop — sky blues, grass greens,
+ * cloud whites, glossy orbs, and chunky ink-outlined windows.
+ * Body text is --ink on --win / --paper (~12:1).
  */
 
 :root {
   /* -- surfaces -------------------------------------------------------- */
-  --paper:      #f4efe4;
-  --paper-2:    #ebe4d4;
-  --win:        #f7f6f3;
-  --win-2:      #e7e5e0;
-  --win-shade:  #c4c1ba;
+  --paper:      #eaf4fb;
+  --paper-2:    #d8ebf7;
+  --win:        #f7f6ee;
+  --win-2:      #dfdcd1;
+  --win-shade:  #aaa79b;
   --white:      #ffffff;
-  --ink:        #1f1d24;
-  --ink-soft:   #4a4652;
-  --ink-mute:   #6f6a78;
+  --ink:        #182640;
+  --ink-soft:   #334563;
+  --ink-mute:   #65738d;
 
   /* -- palette ------------------------------------------------------- */
-  --blue:    #a9cdec;
-  --slate:   #b9c4dc;
-  --teal:    #a8dccf;
-  --sage:    #c8dbb2;
-  --orange:  #f4bd8c;
-  --sand:    #efdcae;
-  --butter:  #f5e7a9;
-  --butter-2:#dccb80;
+  --blue:    #2f80ed;
+  --slate:   #91c7ff;
+  --teal:    #4faf38;
+  --sage:    #a4d95f;
+  --orange:  #f05a28;
+  --sand:    #ffd55c;
+  --butter:  #ffd23f;
+  --butter-2:#d8a923;
 
-  --grad-bar:   linear-gradient(90deg, var(--blue), var(--teal) 55%, var(--sage));
-  --grad-teal:  linear-gradient(90deg, var(--teal), var(--sage) 60%, var(--sand));
-  --grad-warm:  linear-gradient(90deg, var(--orange), var(--sand));
-  --grad-panel: linear-gradient(135deg, #b4c9e6 0%, #bcdbe9 35%, #c2e2d4 68%, #e4e3bf 100%);
-  --grad-sunset:linear-gradient(170deg, #f2c191 0%, #f1d8a6 50%, #d9e3c0 100%);
-  --grad-orb:   radial-gradient(circle at 32% 28%, #fff 0 12%, #dde8f5 30%, #b6cde8 58%, #a6d9ca 85%);
+  --grad-bar:   linear-gradient(180deg, #9fd0ff 0%, #4a94ed 38%, #1167d4 100%);
+  --grad-teal:  linear-gradient(180deg, #c6ec8d 0%, #62ba37 45%, #2f8c1f 100%);
+  --grad-warm:  linear-gradient(180deg, #ffd978 0%, #f18b3d 100%);
+  --grad-panel: linear-gradient(160deg, #91c7ff 0%, #d4efff 42%, #b6e478 76%, #73bd43 100%);
+  --grad-sunset:linear-gradient(165deg, #9fd0ff 0%, #e2f4ff 48%, #a4d95f 100%);
+  --grad-orb:   radial-gradient(circle at 32% 28%, rgb(255 255 255 / 0.96) 0 12%, rgb(184 224 255 / 0.84) 30%, rgb(70 145 232 / 0.74) 58%, rgb(91 177 56 / 0.68) 85%);
 
   /* -- lines & depth --------------------------------------------------- */
   --line:   2px solid var(--ink);
