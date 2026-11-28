@@ -110,7 +110,7 @@ kbd {
 }
 
 .wallpaper .planet {
-  opacity: 0.58;
+  opacity: 0.78;
 }
 
 .wallpaper .sparkle:nth-of-type(2n) { animation-delay: -1.4s; }
